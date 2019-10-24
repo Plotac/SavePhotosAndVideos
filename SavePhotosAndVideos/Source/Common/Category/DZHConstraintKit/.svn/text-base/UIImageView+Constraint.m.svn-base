@@ -1,0 +1,67 @@
+//
+//  UIImageView+Constraint.m
+//
+//  ImageView
+//
+//  Created by Ja on 2018/3/6.
+//  Copyright © 2018年 gw. All rights reserved.
+//
+
+#import "UIImageView+Constraint.h"
+
+@implementation UIImageView (Constraint)
+
++ (instancetype)dzh_imageViewWithImage:(id)image
+                             superView:(UIView *)superView
+                           constraints:(DZHConstraintMaker)constraints {
+    return [self dzh_imageViewWithImage:image
+                           cornerRadius:0
+                              superView:superView
+                            constraints:constraints];
+}
+
++ (instancetype)dzh_imageViewWithImage:(id)image
+                          cornerRadius:(CGFloat)cornerRadius
+                             superView:(UIView *)superView
+                           constraints:(DZHConstraintMaker)constraints {
+    return [self dzh_imageViewWithImage:image
+                           cornerRadius:cornerRadius
+            userInteractionEnableOpened:NO
+                              superView:superView
+                            constraints:constraints];
+}
+
++ (instancetype)dzh_imageViewWithImage:(id)image
+                          cornerRadius:(CGFloat)cornerRadius
+           userInteractionEnableOpened:(BOOL)isOpen
+                             superView:(UIView *)superView
+                           constraints:(DZHConstraintMaker)constraints {
+    UIImageView *imgView = [[[UIImageView alloc] init]autorelease];
+    if (image != nil) {
+        if ([image isKindOfClass:[NSString class]]) {
+            imgView.image = [UIImage imageNamed:image];
+        } else {
+            imgView.image = image;
+        }
+    }
+    
+    imgView.userInteractionEnabled = isOpen;
+
+    [superView addSubview:imgView];
+    
+    if (constraints && superView) {
+        [imgView mas_makeConstraints:^(MASConstraintMaker *make) {
+            constraints(make);
+        }];
+    }
+    
+    if (cornerRadius) {
+        imgView.layer.masksToBounds = YES;
+        imgView.layer.cornerRadius = cornerRadius;
+        imgView.clipsToBounds = YES;
+    }
+    
+    return imgView;
+}
+
+@end

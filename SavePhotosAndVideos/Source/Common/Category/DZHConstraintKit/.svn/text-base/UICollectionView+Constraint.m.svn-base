@@ -1,0 +1,70 @@
+//
+//  UIImageView+Constraint.m
+//
+//  ImageView
+//
+//  Created by Ja on 2018/3/6.
+//  Copyright © 2018年 gw. All rights reserved.
+//
+
+#import "UICollectionView+Constraint.h"
+
+@implementation UICollectionView (Constraint)
+
++ (instancetype)dzh_collectionViewWithSuperView:(UIView *)superView
+                                    constraints:(DZHConstraintMaker)constraints {
+    return [self dzh_collectionViewWithItemSize:CGSizeZero
+                                      superView:superView
+                                    constraints:constraints];
+}
+
++ (instancetype)dzh_collectionViewWithItemSize:(CGSize)itemSize
+                                     superView:(UIView *)superView
+                                   constraints:(DZHConstraintMaker)constraints {
+    return [self dzh_collectionViewWithFlowLayoutSize:itemSize
+                                          itemSpacing:10
+                                          lineSpacing:10
+                                            superView:superView
+                                          constraints:constraints];
+}
+
++ (instancetype)dzh_collectionViewWithFlowLayoutSize:(CGSize)itemSize
+                                         itemSpacing:(CGFloat)minimumInteritemSpacing
+                                         lineSpacing:(CGFloat)minimumLineSpacing
+                                           superView:(UIView *)superView
+                                         constraints:(DZHConstraintMaker)constraints {
+    
+    UICollectionViewFlowLayout *layout = [[[UICollectionViewFlowLayout alloc]init]autorelease];
+    
+    if (!CGSizeEqualToSize(itemSize, CGSizeZero)) {
+        layout.itemSize = itemSize;
+    }
+    if (minimumInteritemSpacing) {
+        layout.minimumInteritemSpacing = minimumInteritemSpacing;
+    }
+    if (minimumLineSpacing) {
+        layout.minimumLineSpacing = minimumLineSpacing;
+    }
+    
+    UICollectionView *collection = [[[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout]autorelease];
+    collection.backgroundColor = [UIColor whiteColor];
+    collection.pagingEnabled = YES;
+    collection.showsHorizontalScrollIndicator = NO;
+    [superView addSubview:collection];
+    
+    if (superView) {
+        if (constraints) {
+            [collection mas_makeConstraints:^(MASConstraintMaker *make) {
+                constraints(make);
+            }];
+        } else {
+            [collection mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.edges.mas_equalTo(superView);
+            }];
+        }
+    }
+    
+    return collection;
+}
+
+@end

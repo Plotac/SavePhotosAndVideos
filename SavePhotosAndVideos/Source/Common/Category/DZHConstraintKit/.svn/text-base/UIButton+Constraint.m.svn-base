@@ -1,0 +1,149 @@
+//
+//  UIButton+Constraint.m
+//
+//  Button
+//
+//  Created by Ja on 2018/3/6.
+//  Copyright © 2018年 gw. All rights reserved.
+//
+
+#import "UIButton+Constraint.h"
+
+
+@implementation UIButton (Constraint)
+
++ (instancetype)dzh_buttonWithTitle:(NSString *)title
+                       cornerRadius:(CGFloat)cornerRadius
+                      superViewView:(UIView *)superView
+                        constraints:(DZHConstraintMaker)constraints {
+    return [self private_buttonWithTitle:title
+                              titleColor:nil
+                                    font:nil
+                                   image:nil
+                             selectImage:nil
+                            cornerRadius:cornerRadius
+                               superView:superView
+                             constraints:constraints];
+}
+
++ (instancetype)dzh_buttonWithTitle:(NSString *)title
+                         titleColor:(UIColor *)titleColor
+                               font:(UIFont *)font
+                       cornerRadius:(CGFloat)cornerRadius
+                      superViewView:(UIView *)superView
+                        constraints:(DZHConstraintMaker)constraints {
+    return [self private_buttonWithTitle:title
+                              titleColor:titleColor
+                                    font:font
+                                   image:nil
+                             selectImage:nil
+                            cornerRadius:cornerRadius
+                               superView:superView
+                             constraints:constraints];
+}
+
++ (instancetype)dzh_buttonWithImage:(id)image
+                       cornerRadius:(CGFloat)cornerRadius
+                      superViewView:(UIView *)superView
+                        constraints:(DZHConstraintMaker)constraints {
+    return [self private_buttonWithTitle:nil
+                              titleColor:nil
+                                    font:nil
+                                   image:image
+                             selectImage:nil
+                            cornerRadius:cornerRadius
+                               superView:superView
+                             constraints:constraints];
+}
+
++ (instancetype)dzh_buttonWithImage:(id)image
+                        selectImage:(id)selectImage
+                       cornerRadius:(CGFloat)cornerRadius
+                      superViewView:(UIView *)superView
+                        constraints:(DZHConstraintMaker)constraints {
+    return [self private_buttonWithTitle:nil
+                              titleColor:nil
+                                    font:nil
+                                   image:image
+                             selectImage:selectImage
+                            cornerRadius:cornerRadius
+                               superView:superView
+                             constraints:constraints];
+}
+
+#pragma mark - Private
+/**
+ *  Private Method
+ *
+ *  @param title            标题
+ *  @param titleColor       标题颜色   默认白色
+ *  @param font             标题字体   默认17号字
+ *
+ *  image、selectImage说明:  既可传入UIImage类型  也可传入图片名字的字符串
+ *  @param image            正常状态的图片
+ *  @param selectImage      选中状态的图片
+ *
+ *  @param cornerRadius     圆角
+ *  @param superView        父视图
+ *  @param constaints       约束
+ *
+ *  @return UIButton
+ */
++ (instancetype)private_buttonWithTitle:(NSString *)title
+                             titleColor:(UIColor *)titleColor
+                                   font:(UIFont *)font
+                                  image:(id)image
+                            selectImage:(id)selectImage
+                           cornerRadius:(CGFloat)cornerRadius
+                              superView:(UIView *)superView
+                            constraints:(DZHConstraintMaker)constaints {
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+
+    [button setTitle:title ? title : @"" forState:UIControlStateNormal];
+    [button setTitleColor:titleColor ? titleColor : [UIColor whiteColor] forState:UIControlStateNormal];
+    button.titleLabel.font = font ? font :[UIFont systemFontOfSize:17.0f];
+    
+    UIImage *normalImg = nil;
+    if (image != nil ) {
+        if ([image isKindOfClass:[NSString class]]) {
+            normalImg = [UIImage imageNamed:image];
+        } else if ([image isKindOfClass:[UIImage class]]) {
+            normalImg = image;
+        }
+    }
+    
+    UIImage *selectedImg = nil;
+    if (selectImage != nil) {
+        if ([selectImage isKindOfClass:[NSString class]]) {
+            selectedImg = [UIImage imageNamed:selectImage];
+        } else if ([selectImage isKindOfClass:[UIImage class]]) {
+            selectedImg = selectImage;
+        }
+    }
+
+    if (normalImg) {
+        [button setImage:normalImg forState:UIControlStateNormal];
+    }
+    
+    if (selectedImg) {
+        [button setImage:selectedImg forState:UIControlStateSelected];
+    }
+    
+    if (cornerRadius) {
+        button.clipsToBounds = YES;
+        button.layer.cornerRadius = cornerRadius;
+        button.layer.masksToBounds = YES;
+    }
+    
+    [superView addSubview:button];
+    
+    if (superView && constaints) {
+        [button mas_makeConstraints:^(MASConstraintMaker *make) {
+            constaints(make);
+        }];
+    }
+    
+    return button;
+}
+
+@end

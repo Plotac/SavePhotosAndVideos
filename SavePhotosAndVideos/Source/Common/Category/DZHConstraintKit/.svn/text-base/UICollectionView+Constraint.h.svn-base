@@ -1,0 +1,59 @@
+//
+//  UICollectionView+Constraint.h
+//
+//  CollectionView
+//
+//  Created by Ja on 2018/3/6.
+//  Copyright © 2018年 gw. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+typedef void(^DZHConstraintMaker)(MASConstraintMaker *make);
+
+@interface UICollectionView (Constraint)
+
+/* ! 自定义布局请勿使用本类中的方法 */
+
+/**
+ *  UICollectionView
+ *
+ *  @param superView   父视图
+ *  @param constraints 约束
+ *
+ *  @return UICollectionView
+ */
++ (instancetype)dzh_collectionViewWithSuperView:(UIView *)superView
+                                    constraints:(DZHConstraintMaker)constraints;
+
+/**
+ *  UICollectionView
+ *
+ *  @param itemSize    设置每个item的固定大小
+ *  @param superView   父视图
+ *  @param constraints 约束
+ *
+ *  @return UICollectionView
+ */
++ (instancetype)dzh_collectionViewWithItemSize:(CGSize)itemSize
+                                     superView:(UIView *)superView
+                                   constraints:(DZHConstraintMaker)constraints;
+
+/**
+ *  UICollectionView
+ *
+ *  @param itemSize                设置每个item的固定大小
+ *  @param minimumInteritemSpacing 设置最小列间距
+ *  @param minimumLineSpacing      设置最小行间距
+ *  @param superView               父视图
+ *  @param constraints             约束
+ *
+ *  @return UICollectionView
+ */
++ (instancetype)dzh_collectionViewWithFlowLayoutSize:(CGSize)itemSize
+                                         itemSpacing:(CGFloat)minimumInteritemSpacing
+                                         lineSpacing:(CGFloat)minimumLineSpacing
+                                           superView:(UIView *)superView
+                                         constraints:(DZHConstraintMaker)constraints;
+
+@end

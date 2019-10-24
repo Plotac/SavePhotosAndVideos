@@ -11,6 +11,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "-[SPBaseViewController setNavBarItems]:SPBaseViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.navUIDelegate.leftNavBarItemCustomViews">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[SPAlbum encodeWithCoder:]:SPVideoFileManager.m">
          <PersistentStrings>
             <PersistentString
@@ -36,10 +44,10 @@
          contextName = "-[SPAlbum initWithAlbumName:]:SPVideoFileManager.m">
          <PersistentStrings>
             <PersistentString
-               value = "self.currentTimeStr">
+               value = "self.currentTimeStampStr">
             </PersistentString>
             <PersistentString
-               value = "self.currentTimeStampStr">
+               value = "self.currentTimeStr">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

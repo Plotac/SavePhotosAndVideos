@@ -10,6 +10,16 @@
 		0914DD06235DAE20009C555B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0914DD05235DAE20009C555B /* AppDelegate.m */; };
 		0914DD11235DAE23009C555B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0914DD10235DAE23009C555B /* Assets.xcassets */; };
 		0914DD17235DAE23009C555B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0914DD16235DAE23009C555B /* main.m */; };
+		0987147A23613C4E00F49BFA /* SPNewAlbumOperationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0987147923613C4E00F49BFA /* SPNewAlbumOperationView.m */; };
+		0987148F2361408600F49BFA /* UICollectionView+Constraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 0987147F2361408600F49BFA /* UICollectionView+Constraint.m */; };
+		098714902361408600F49BFA /* UIView+Constraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 098714832361408600F49BFA /* UIView+Constraint.m */; };
+		098714912361408600F49BFA /* UILabel+Constraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 098714842361408600F49BFA /* UILabel+Constraint.m */; };
+		098714922361408600F49BFA /* UITableView+Constraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 098714872361408600F49BFA /* UITableView+Constraint.m */; };
+		098714932361408600F49BFA /* UIImageView+Constraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 098714882361408600F49BFA /* UIImageView+Constraint.m */; };
+		098714942361408600F49BFA /* UITextField+Constraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 098714892361408600F49BFA /* UITextField+Constraint.m */; };
+		098714952361408600F49BFA /* UIButton+Constraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 0987148B2361408600F49BFA /* UIButton+Constraint.m */; };
+		098714962361408600F49BFA /* UIScrollView+Contraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 0987148D2361408600F49BFA /* UIScrollView+Contraint.m */; };
+		0987149B2361761900F49BFA /* SPAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0987149A2361761900F49BFA /* SPAlbumCell.m */; };
 		09E222BF235FEB35007EB242 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09E222B4235FEB35007EB242 /* Images.xcassets */; };
 		09E222D1235FEBDA007EB242 /* JAUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 09E222C9235FEBDA007EB242 /* JAUtilities.m */; };
 		09E222D4235FEC4B007EB242 /* SPNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09E222D3235FEC4B007EB242 /* SPNavigationController.m */; };
@@ -36,6 +46,27 @@
 		0914DD10235DAE23009C555B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0914DD15235DAE23009C555B /* SPAVInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = SPAVInfo.plist; sourceTree = "<group>"; };
 		0914DD16235DAE23009C555B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		0987147823613C4E00F49BFA /* SPNewAlbumOperationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPNewAlbumOperationView.h; sourceTree = "<group>"; };
+		0987147923613C4E00F49BFA /* SPNewAlbumOperationView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPNewAlbumOperationView.m; sourceTree = "<group>"; };
+		0987147E2361408600F49BFA /* UITableView+Constraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+Constraint.h"; sourceTree = "<group>"; };
+		0987147F2361408600F49BFA /* UICollectionView+Constraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+Constraint.m"; sourceTree = "<group>"; };
+		098714802361408600F49BFA /* UITextField+Constraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+Constraint.h"; sourceTree = "<group>"; };
+		098714812361408600F49BFA /* UIImageView+Constraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Constraint.h"; sourceTree = "<group>"; };
+		098714822361408600F49BFA /* UIButton+Constraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Constraint.h"; sourceTree = "<group>"; };
+		098714832361408600F49BFA /* UIView+Constraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Constraint.m"; sourceTree = "<group>"; };
+		098714842361408600F49BFA /* UILabel+Constraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Constraint.m"; sourceTree = "<group>"; };
+		098714852361408600F49BFA /* UIScrollView+Contraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+Contraint.h"; sourceTree = "<group>"; };
+		098714862361408600F49BFA /* UICollectionView+Constraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionView+Constraint.h"; sourceTree = "<group>"; };
+		098714872361408600F49BFA /* UITableView+Constraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+Constraint.m"; sourceTree = "<group>"; };
+		098714882361408600F49BFA /* UIImageView+Constraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Constraint.m"; sourceTree = "<group>"; };
+		098714892361408600F49BFA /* UITextField+Constraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+Constraint.m"; sourceTree = "<group>"; };
+		0987148A2361408600F49BFA /* UIView+Constraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Constraint.h"; sourceTree = "<group>"; };
+		0987148B2361408600F49BFA /* UIButton+Constraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Constraint.m"; sourceTree = "<group>"; };
+		0987148D2361408600F49BFA /* UIScrollView+Contraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Contraint.m"; sourceTree = "<group>"; };
+		0987148E2361408600F49BFA /* UILabel+Constraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+Constraint.h"; sourceTree = "<group>"; };
+		09871497236142F200F49BFA /* JAConstraintKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAConstraintKit.h; sourceTree = "<group>"; };
+		098714992361761900F49BFA /* SPAlbumCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPAlbumCell.h; sourceTree = "<group>"; };
+		0987149A2361761900F49BFA /* SPAlbumCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPAlbumCell.m; sourceTree = "<group>"; };
 		09E222B4235FEB35007EB242 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		09E222C9235FEBDA007EB242 /* JAUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAUtilities.m; sourceTree = "<group>"; };
 		09E222CA235FEBDA007EB242 /* JAUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAUtilities.h; sourceTree = "<group>"; };
@@ -117,6 +148,47 @@
 			path = SavePhotosAndVideos;
 			sourceTree = "<group>";
 		};
+		0987147C23613D9900F49BFA /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				0987147D2361408600F49BFA /* DZHConstraintKit */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		0987147D2361408600F49BFA /* DZHConstraintKit */ = {
+			isa = PBXGroup;
+			children = (
+				09871497236142F200F49BFA /* JAConstraintKit.h */,
+				0987148A2361408600F49BFA /* UIView+Constraint.h */,
+				098714832361408600F49BFA /* UIView+Constraint.m */,
+				0987148E2361408600F49BFA /* UILabel+Constraint.h */,
+				098714842361408600F49BFA /* UILabel+Constraint.m */,
+				098714822361408600F49BFA /* UIButton+Constraint.h */,
+				0987148B2361408600F49BFA /* UIButton+Constraint.m */,
+				098714802361408600F49BFA /* UITextField+Constraint.h */,
+				098714892361408600F49BFA /* UITextField+Constraint.m */,
+				098714812361408600F49BFA /* UIImageView+Constraint.h */,
+				098714882361408600F49BFA /* UIImageView+Constraint.m */,
+				098714852361408600F49BFA /* UIScrollView+Contraint.h */,
+				0987148D2361408600F49BFA /* UIScrollView+Contraint.m */,
+				0987147E2361408600F49BFA /* UITableView+Constraint.h */,
+				098714872361408600F49BFA /* UITableView+Constraint.m */,
+				098714862361408600F49BFA /* UICollectionView+Constraint.h */,
+				0987147F2361408600F49BFA /* UICollectionView+Constraint.m */,
+			);
+			path = DZHConstraintKit;
+			sourceTree = "<group>";
+		};
+		09871498236175E700F49BFA /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				098714992361761900F49BFA /* SPAlbumCell.h */,
+				0987149A2361761900F49BFA /* SPAlbumCell.m */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		09E222B3235FEB35007EB242 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
@@ -159,6 +231,7 @@
 			isa = PBXGroup;
 			children = (
 				09E222CB235FEBDA007EB242 /* SPAV.pch */,
+				0987147C23613D9900F49BFA /* Category */,
 				09E22307235FF942007EB242 /* Manager */,
 				09E222C8235FEBDA007EB242 /* Tools */,
 			);
@@ -245,6 +318,9 @@
 		09E22300235FF836007EB242 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				09871498236175E700F49BFA /* Cell */,
+				0987147823613C4E00F49BFA /* SPNewAlbumOperationView.h */,
+				0987147923613C4E00F49BFA /* SPNewAlbumOperationView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -358,15 +434,25 @@
 				0914DD06235DAE20009C555B /* AppDelegate.m in Sources */,
 				09E222F6235FF3AD007EB242 /* ViewController+MASAdditions.m in Sources */,
 				09E222F5235FF3AD007EB242 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
+				0987148F2361408600F49BFA /* UICollectionView+Constraint.m in Sources */,
 				09E222F7235FF3AD007EB242 /* MASCompositeConstraint.m in Sources */,
 				09E222F9235FF3AD007EB242 /* MASLayoutConstraint.m in Sources */,
+				098714962361408600F49BFA /* UIScrollView+Contraint.m in Sources */,
+				098714942361408600F49BFA /* UITextField+Constraint.m in Sources */,
 				09E222FB235FF3AD007EB242 /* View+MASAdditions.m in Sources */,
+				098714912361408600F49BFA /* UILabel+Constraint.m in Sources */,
 				09E222FA235FF3AD007EB242 /* NSArray+MASAdditions.m in Sources */,
 				0914DD17235DAE23009C555B /* main.m in Sources */,
+				0987147A23613C4E00F49BFA /* SPNewAlbumOperationView.m in Sources */,
 				09E2230A235FF96F007EB242 /* SPVideoFileManager.m in Sources */,
+				098714902361408600F49BFA /* UIView+Constraint.m in Sources */,
+				0987149B2361761900F49BFA /* SPAlbumCell.m in Sources */,
+				098714952361408600F49BFA /* UIButton+Constraint.m in Sources */,
 				09E222D4235FEC4B007EB242 /* SPNavigationController.m in Sources */,
+				098714922361408600F49BFA /* UITableView+Constraint.m in Sources */,
 				09E222FE235FF3AD007EB242 /* MASViewAttribute.m in Sources */,
 				09E222FC235FF3AD007EB242 /* MASConstraint.m in Sources */,
+				098714932361408600F49BFA /* UIImageView+Constraint.m in Sources */,
 				09E222D1235FEBDA007EB242 /* JAUtilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

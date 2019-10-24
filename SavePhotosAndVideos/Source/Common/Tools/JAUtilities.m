@@ -2,13 +2,17 @@
 //  JAUtilities.m
 //  JACardViewDemo
 //
-//  Created by Ja on 2018/10/24.
-//  Copyright © 2018年 Ja. All rights reserved.
+//  Created by JA on 2018/10/24.
+//  Copyright © 2018年 JA. All rights reserved.
 //
 
 #import "JAUtilities.h"
 
 @implementation JAUtilities
+
++ (UIColor *)colorWithR:(CGFloat)r G:(CGFloat)g B:(CGFloat)b alpha:(CGFloat)alpha {
+    return [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:alpha];
+}
 
 + (UIColor *)colorWithHexString:(NSString *)color {
 

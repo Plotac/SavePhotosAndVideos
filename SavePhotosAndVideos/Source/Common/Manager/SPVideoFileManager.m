@@ -2,8 +2,8 @@
 //  SPVideoFileManager.m
 //  SavePhotosAndVideos
 //
-//  Created by Ja on 2019/10/23.
-//  Copyright © 2019 Ja. All rights reserved.
+//  Created by JA on 2019/10/23.
+//  Copyright © 2019 JA. All rights reserved.
 //
 
 #import "SPVideoFileManager.h"
@@ -32,7 +32,20 @@
     [self saveAllAlbums];
 }
 
-- (void)deleteAlbumWithAlbumID:(NSString*)albumID {}
+- (void)deleteAlbumWithAlbumID:(NSString*)albumID {
+    
+    NSArray *filterArray = [NSArray arrayWithArray:self.albums];
+    for (NSInteger i=0; i<filterArray.count; i++) {
+        SPAlbum *album = [filterArray objectAtIndex:i];
+        if ([album.albumID isEqualToString:albumID]) {
+            @synchronized (self.albums) {
+                [self.albums removeObjectAtIndex:i];
+                [self saveAllAlbums];
+                return;
+            }
+        }
+    }
+}
 
 - (void)synchronizeLocalAlbums {
     NSString *albumsPath = [NSString stringWithFormat:@"%@/Albums",NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject];
@@ -73,6 +86,9 @@
 
 @interface SPAlbum ()
 
+@property (nonatomic,copy) NSString *albumID;
+@property (nonatomic,copy) NSString *creationTimeString;
+
 @end
 
 @implementation SPAlbum
@@ -81,10 +97,19 @@
     self = [super init];
     if (self) {
         self.albumName = albumName;
-        self.albumID = [self currentTimeStampStr];
-        self.creationTimeString = [self currentTimeStr];
+        self.albumID = [self getCurrentTimeStampStr];
+        self.videoCount = 0;
+        self.creationTimeString = [self getCurrentTimeStr];
     }
     return self;
+}
+
+- (NSString *)albumID {
+    return _albumID;
+}
+
+- (NSString *)creationTimeString {
+    return _creationTimeString;
 }
 
 + (BOOL)supportsSecureCoding {
@@ -95,6 +120,9 @@
     self = [super init];
     if (self) {
         self.albumName = [coder decodeObjectForKey:@"albumName"];
+        self.albumRemark = [coder decodeObjectForKey:@"albumRemark"];
+        self.videoCount = [coder decodeIntForKey:@"videoCount"];
+        self.locked = [coder decodeBoolForKey:@"locked"];
         self.albumID = [coder decodeObjectForKey:@"albumID"];
         self.creationTimeString = [coder decodeObjectForKey:@"creationTimeString"];
     }
@@ -103,6 +131,9 @@
 
 - (void)encodeWithCoder:(NSCoder *)coder {
     [coder encodeObject:self.albumName forKey:@"albumName"];
+    [coder encodeObject:self.albumRemark forKey:@"albumRemark"];
+    [coder encodeInt:self.videoCount forKey:@"videoCount"];
+    [coder encodeBool:self.locked forKey:@"locked"];
     [coder encodeObject:self.albumID forKey:@"albumID"];
     [coder encodeObject:self.creationTimeString forKey:@"creationTimeString"];
 }
@@ -111,7 +142,7 @@
 /*
  获取当前时间戳
  */
-- (NSString *)currentTimeStampStr {
+- (NSString *)getCurrentTimeStampStr {
     NSDate* date = [NSDate dateWithTimeIntervalSinceNow:0];
     NSTimeInterval time=[date timeIntervalSince1970]*1000;// *1000是精确到毫秒，不乘就是精确到秒
     NSString *timeString = [NSString stringWithFormat:@"%.0f", time];
@@ -121,11 +152,11 @@
 /*
  获取当前时间
  */
- - (NSString *)currentTimeStr {
+ - (NSString *)getCurrentTimeStr {
     NSDate *currentDate = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"YYYY年MM月dd日 HH:mm"];
-    NSString *dateString = [dateFormatter stringFromDate:currentDate];//将时间转化成字符串
+    NSString *dateString = [dateFormatter stringFromDate:currentDate];
     return dateString;
 }
 

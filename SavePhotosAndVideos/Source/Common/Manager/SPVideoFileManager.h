@@ -2,8 +2,8 @@
 //  SPVideoFileManager.h
 //  SavePhotosAndVideos
 //
-//  Created by Ja on 2019/10/23.
-//  Copyright © 2019 Ja. All rights reserved.
+//  Created by JA on 2019/10/23.
+//  Copyright © 2019 JA. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -17,8 +17,14 @@
 
 + (instancetype)defaultSPVideoFileManager;
 
+/*
+ 添加新相册
+ */
 - (void)addNewAlbum:(SPAlbum*)album;
 
+/*
+ 删除相册
+ */
 - (void)deleteAlbumWithAlbumID:(NSString*)albumID;
 
 /*
@@ -48,13 +54,28 @@
 @property (nonatomic,copy) NSString *albumName;
 
 /*
+ 相册备注
+ */
+@property (nonatomic,copy) NSString *albumRemark;
+
+/*
+ 相册中媒体资料数量
+ */
+@property (nonatomic,assign) int videoCount;
+
+/*
+ 是否加密
+ */
+@property (nonatomic,assign) BOOL locked;
+
+/*
  创建相册时根据时间戳(精确到毫秒)生成的唯一id
  */
-@property (nonatomic,copy) NSString *albumID;
+@property (nonatomic,copy,readonly) NSString *albumID;
 
 /*
  相册创建时间
 */
-@property (nonatomic,copy) NSString *creationTimeString;
+@property (nonatomic,copy,readonly) NSString *creationTimeString;
 
 @end

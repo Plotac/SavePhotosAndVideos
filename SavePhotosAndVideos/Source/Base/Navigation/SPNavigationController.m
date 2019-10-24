@@ -2,8 +2,8 @@
 //  SPNavigationController.m
 //  SavePhotosAndVideos
 //
-//  Created by Ja on 2019/10/23.
-//  Copyright © 2019 Ja. All rights reserved.
+//  Created by JA on 2019/10/23.
+//  Copyright © 2019 JA. All rights reserved.
 //
 
 #import "SPNavigationController.h"
@@ -16,7 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
 }
 
 @end

@@ -2,8 +2,8 @@
 //  JAUtilities.h
 //  JACardViewDemo
 //
-//  Created by Ja on 2018/10/24.
-//  Copyright © 2018年 Ja. All rights reserved.
+//  Created by JA on 2018/10/24.
+//  Copyright © 2018年 JA. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -13,9 +13,14 @@
 #define kScreenW  ([[UIScreen mainScreen]bounds].size.width)
 
 #define kNavToolBarHeight           44
-
 #define kStatusBarHeight            (IS_IPHONE_X_OR_AFTER ? 44 : 20)
 
+#define kSystemFont(f)              [UIFont systemFontOfSize:f]
+#define kSystemNormalItemColor      UIColorFromRGBA(54, 120, 243, 1)
+#define kSystemDisabledItemColor    UIColorFromRGBA(150, 150, 150, 1)
+#define kSystemSeparatorLineColor   UIColorFromRGBA(208, 208, 208, 1)
+
+#define UIColorFromRGBA(r,g,b,a)    [JAUtilities colorWithR:r G:g B:b alpha:a]
 #define UIColorFromHexStr(str)      [JAUtilities colorWithHexString:(str)]
 
 #define BLOCK_WEAK_SELF             __weak __typeof(self) weakSelf = self;
@@ -33,6 +38,7 @@
 
 @interface JAUtilities : NSObject
 
++ (UIColor *)colorWithR:(CGFloat)r G:(CGFloat)g B:(CGFloat)b alpha:(CGFloat)alpha;
 + (UIColor *)colorWithHexString:(NSString *)color;
 
 + (BOOL)isIPhoneXOrAfter;

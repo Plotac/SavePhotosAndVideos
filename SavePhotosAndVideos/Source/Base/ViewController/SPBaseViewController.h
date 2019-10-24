@@ -2,15 +2,28 @@
 //  SPBaseViewController.h
 //  SavePhotosAndVideos
 //
-//  Created by Ja on 2019/10/23.
-//  Copyright © 2019 Ja. All rights reserved.
+//  Created by JA on 2019/10/23.
+//  Copyright © 2019 JA. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface SPBaseViewController : UIViewController
+@protocol SPBaseViewControllerNavUIDelegate <NSObject>
 
-- (void)addNewPhotoAlbumRightItem;
-- (void)addNewPhotoAlbum:(UIButton*)sender;
+@optional
+/*
+ 设置左右BarItem
+ */
+- (NSArray<UIView*>*)leftNavBarItemCustomViews;
+- (NSArray<UIView*>*)rightNavBarItemCustomViews;
+
+@end
+
+@interface SPBaseViewController : UIViewController<SPBaseViewControllerNavUIDelegate>
+
+@property (nonatomic,weak) id<SPBaseViewControllerNavUIDelegate> navUIDelegate;
+
+- (void)sp_viewDidLoad;
+- (void)sp_initExtendedData;
 
 @end
