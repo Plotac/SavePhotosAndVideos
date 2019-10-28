@@ -10,6 +10,8 @@
 
 @interface SPAlbumHomePageController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
+@property (nonatomic,retain) UILabel *noDataLab;
+
 @property (nonatomic,strong) UIImagePickerController *pickerCtrl;
 
 @property (nonatomic,strong) NSMutableArray *videos;
@@ -27,10 +29,8 @@
     [super sp_viewDidLoad];
     
     self.title = self.album.albumName;
-    self.pickerCtrl.delegate = self;
-    self.pickerCtrl.allowsEditing = YES;
     
-    [self initNoPhotoView];
+    [self initViews];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
@@ -57,6 +57,16 @@
     return @[btn];
 }
 
+//- (NSArray<UIView*>*)leftNavBarItemCustomViews {
+//    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [btn setTitle:@"-" forState:UIControlStateNormal];
+//    [btn setTitleColor:UIColorFromHexStr(@"#5893FB") forState:UIControlStateNormal];
+//    btn.titleLabel.font = [UIFont systemFontOfSize:30];
+//    btn.frame = CGRectMake(0, 0, 50, 40);
+//    [btn addTarget:self action:@selector(deleteNewPhoto:) forControlEvents:UIControlEventTouchUpInside];
+//    return @[btn];
+//}
+
 #pragma mark -
 - (void)addNewPhoto:(UIButton*)sender {
     
@@ -76,25 +86,17 @@
     [alert addAction:selectPhotoAction];
     [alert addAction:cancelAction];
     [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)deleteNewPhoto:(UIButton*)sender {
     
 }
 
-- (void)initNoPhotoView {
+- (void)initViews {
+    self.pickerCtrl.delegate = self;
+    self.pickerCtrl.allowsEditing = YES;
     
-    UILabel *noPhotoLab = [UILabel JA_labelWithText:@"" textColor:UIColorFromHexStr(@"#999999") font:kSystemFont(18) textAlignment:NSTextAlignmentCenter lines:2 cornerRadius:0 superView:self.view constraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.view);
-        make.centerY.equalTo(self.view).with.offset(-80);
-        make.height.mas_equalTo(60);
-    }];
-
-    NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc]initWithString:@"暂无照片\n点击右上角添加新照片"];
-    
-    NSRange range1 = [[attStr string]rangeOfString:@"暂无照片"];
-    [attStr addAttribute:NSFontAttributeName value:kSystemFont(17) range:range1];
-      
-    NSRange range2=[[attStr string]rangeOfString:@"点击右上角添加新照片"];
-    [attStr addAttribute:NSFontAttributeName value:kSystemFont(14) range:range2];
-    noPhotoLab.attributedText = attStr;
+    self.noDataLab = [self setNoDataViewWithAlertText:@"暂无照片" lineFeedText:@"点击右上角添加新照片"];
 }
 
 - (UIImagePickerController *)pickerCtrl {
@@ -102,6 +104,13 @@
         _pickerCtrl = [[UIImagePickerController alloc]init];
     }
     return _pickerCtrl;
+}
+
+- (NSMutableArray*)videos {
+    if (_videos) {
+        self.noDataLab.hidden = _videos.count == 0 ? NO : YES;
+    }
+    return _videos;
 }
 
 @end

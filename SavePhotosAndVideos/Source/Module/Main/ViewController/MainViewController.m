@@ -15,6 +15,8 @@ static NSString *const kMainCollCell = @"kMainCollCell";
 
 @interface MainViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
+@property (nonatomic,retain) UILabel *noDataLab;
+
 @property (nonatomic,strong) UICollectionView *collectionView;
 
 @property (nonatomic,strong) NSMutableArray *albums;
@@ -33,7 +35,7 @@ static NSString *const kMainCollCell = @"kMainCollCell";
     
     NSLog(@"%@",NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject);
     self.title = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
-
+    
     [self initViews];
 }
 
@@ -79,6 +81,16 @@ static NSString *const kMainCollCell = @"kMainCollCell";
     return @[btn];
 }
 
+- (NSArray<UIView*>*)leftNavBarItemCustomViews {
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setTitle:@"-" forState:UIControlStateNormal];
+    [btn setTitleColor:UIColorFromHexStr(@"#5893FB") forState:UIControlStateNormal];
+    btn.titleLabel.font = [UIFont systemFontOfSize:30];
+    btn.frame = CGRectMake(0, 0, 50, 40);
+    [btn addTarget:self action:@selector(deleteNewPhotoAlbum:) forControlEvents:UIControlEventTouchUpInside];
+    return @[btn];
+}
+
 #pragma mark - Actions
 - (void)addNewPhotoAlbum:(UIButton*)sender {
     SPNewAlbumOperationView *opView = [[SPNewAlbumOperationView alloc]initWithTitle:@"新建相簿" description:@"请完善相簿信息" confirmBlock:^(NSString *albumName, NSString *remark, BOOL locked) {
@@ -95,9 +107,16 @@ static NSString *const kMainCollCell = @"kMainCollCell";
     [opView show];
 }
 
+- (void)deleteNewPhotoAlbum:(UIButton*)sender {
+    [SPFileManager deleteAllAlbums];
+    [self.albums removeAllObjects];
+    [self.collectionView reloadData];
+}
+
 #pragma mark - Private
 - (void)initViews {
-
+    self.noDataLab = [self setNoDataViewWithAlertText:@"暂无相册" lineFeedText:@"点击右上角新建相册"];
+    
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
     layout.minimumInteritemSpacing = 0;
     layout.minimumLineSpacing = 10;
@@ -112,6 +131,13 @@ static NSString *const kMainCollCell = @"kMainCollCell";
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
+}
+
+- (NSMutableArray*)albums {
+    if (_albums) {
+        self.noDataLab.hidden = _albums.count == 0 ? NO : YES;
+    }
+    return _albums;
 }
 
 @end

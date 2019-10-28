@@ -47,6 +47,11 @@
     }
 }
 
+- (void)deleteAllAlbums {
+    [self.albums removeAllObjects];
+    [self saveAllAlbums];
+}
+
 - (void)synchronizeLocalAlbums {
     NSString *albumsPath = [NSString stringWithFormat:@"%@/Albums",NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject];
     NSArray *albums = nil;

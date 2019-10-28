@@ -30,6 +30,31 @@
     [self setNavBarItems];
 }
 
+#pragma mark - Public
+- (UILabel*)setNoDataViewWithAlertText:(NSString*)alertText lineFeedText:(NSString*)lineFeedText {
+    
+    UILabel *noPhotoLab = [UILabel JA_labelWithText:@"" textColor:UIColorFromHexStr(@"#999999") font:kSystemFont(18) textAlignment:NSTextAlignmentCenter lines:2 cornerRadius:0 superView:self.view constraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.centerY.equalTo(self.view).with.offset(-80);
+        make.height.mas_equalTo(60);
+    }];
+    
+    if (lineFeedText && lineFeedText.length > 0) {
+        NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@\n%@",alertText,lineFeedText]];
+        
+        NSRange range1 = [[attStr string]rangeOfString:alertText];
+        [attStr addAttribute:NSFontAttributeName value:kSystemFont(17) range:range1];
+          
+        NSRange range2 = [[attStr string]rangeOfString:lineFeedText];
+        [attStr addAttribute:NSFontAttributeName value:kSystemFont(14) range:range2];
+        noPhotoLab.attributedText = attStr;
+    }
+    else {
+        noPhotoLab.text = alertText;
+    }
+    return noPhotoLab;
+}
+
 #pragma mark - Override
 - (void)sp_viewDidLoad {}
 

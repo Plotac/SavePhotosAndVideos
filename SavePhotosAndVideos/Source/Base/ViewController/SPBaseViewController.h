@@ -26,4 +26,6 @@
 - (void)sp_viewDidLoad;
 - (void)sp_initExtendedData;
 
+- (UILabel*)setNoDataViewWithAlertText:(NSString*)alertText lineFeedText:(NSString*)lineFeedText;
+
 @end

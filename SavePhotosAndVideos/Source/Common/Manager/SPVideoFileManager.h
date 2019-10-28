@@ -26,6 +26,7 @@
  删除相册
  */
 - (void)deleteAlbumWithAlbumID:(NSString*)albumID;
+- (void)deleteAllAlbums;
 
 /*
  同步所有本地相册文件
