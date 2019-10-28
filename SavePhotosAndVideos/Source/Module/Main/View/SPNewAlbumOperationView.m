@@ -34,8 +34,6 @@
     if (self) {
         
         self.frame = [UIScreen mainScreen].bounds;
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(removeSelf)];
-        [self addGestureRecognizer:tap];
         
         self.title = title;
         self.descriptionSting = description;

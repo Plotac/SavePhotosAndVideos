@@ -26,6 +26,7 @@
     [super viewDidLoad];
     self.navUIDelegate = self;
     [self sp_viewDidLoad];
+    self.view.backgroundColor = UIColorFromHexStr(@"#F1F0F1");
     [self setNavBarItems];
 }
 

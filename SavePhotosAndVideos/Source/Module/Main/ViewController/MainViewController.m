@@ -9,6 +9,7 @@
 #import "MainViewController.h"
 #import "SPNewAlbumOperationView.h"
 #import "SPAlbumCell.h"
+#import "SPAlbumHomePageController.h"
 
 static NSString *const kMainCollCell = @"kMainCollCell";
 
@@ -57,6 +58,12 @@ static NSString *const kMainCollCell = @"kMainCollCell";
     return cell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    SPAlbumHomePageController * albumHpCtrl = [[SPAlbumHomePageController alloc]init];
+    albumHpCtrl.album = [self.albums objectAtIndex:indexPath.item];
+    [self.navigationController pushViewController:albumHpCtrl animated:YES];
+}
+
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     return UIEdgeInsetsMake(15, 15, 15, 15);
 }
@@ -90,7 +97,6 @@ static NSString *const kMainCollCell = @"kMainCollCell";
 
 #pragma mark - Private
 - (void)initViews {
-    self.view.backgroundColor = UIColorFromHexStr(@"#F1F0F1");
 
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
     layout.minimumInteritemSpacing = 0;

@@ -59,9 +59,9 @@
 @property (nonatomic,copy) NSString *albumRemark;
 
 /*
- 相册中媒体资料数量
+  相册中的媒体资料数据
  */
-@property (nonatomic,assign) int videoCount;
+@property (nonatomic,strong) NSArray *videos;
 
 /*
  是否加密

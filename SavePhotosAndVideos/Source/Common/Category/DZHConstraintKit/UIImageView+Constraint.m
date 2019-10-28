@@ -40,7 +40,8 @@
     if (image != nil) {
         if ([image isKindOfClass:[NSString class]]) {
             imgView.image = [UIImage imageNamed:image];
-        } else {
+        }
+        else if ([image isKindOfClass:[UIImage class]]) {
             imgView.image = image;
         }
     }

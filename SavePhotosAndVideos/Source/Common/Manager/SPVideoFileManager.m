@@ -98,7 +98,6 @@
     if (self) {
         self.albumName = albumName;
         self.albumID = [self getCurrentTimeStampStr];
-        self.videoCount = 0;
         self.creationTimeString = [self getCurrentTimeStr];
     }
     return self;
@@ -121,7 +120,7 @@
     if (self) {
         self.albumName = [coder decodeObjectForKey:@"albumName"];
         self.albumRemark = [coder decodeObjectForKey:@"albumRemark"];
-        self.videoCount = [coder decodeIntForKey:@"videoCount"];
+        self.videos = [[NSArray alloc]initWithCoder:coder];
         self.locked = [coder decodeBoolForKey:@"locked"];
         self.albumID = [coder decodeObjectForKey:@"albumID"];
         self.creationTimeString = [coder decodeObjectForKey:@"creationTimeString"];
@@ -132,7 +131,8 @@
 - (void)encodeWithCoder:(NSCoder *)coder {
     [coder encodeObject:self.albumName forKey:@"albumName"];
     [coder encodeObject:self.albumRemark forKey:@"albumRemark"];
-    [coder encodeInt:self.videoCount forKey:@"videoCount"];
+    [coder encodeObject:self.videos forKey:@"videos"];
+    [coder encodeObject:self.videos];
     [coder encodeBool:self.locked forKey:@"locked"];
     [coder encodeObject:self.albumID forKey:@"albumID"];
     [coder encodeObject:self.creationTimeString forKey:@"creationTimeString"];

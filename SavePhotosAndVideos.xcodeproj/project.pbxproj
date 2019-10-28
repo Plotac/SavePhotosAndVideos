@@ -37,6 +37,7 @@
 		09E222FF235FF3AD007EB242 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09E222F4235FF3AD007EB242 /* Info.plist */; };
 		09E22305235FF836007EB242 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09E22302235FF836007EB242 /* MainViewController.m */; };
 		09E2230A235FF96F007EB242 /* SPVideoFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 09E22309235FF96F007EB242 /* SPVideoFileManager.m */; };
+		09FB25FB2366C69A007FAB8D /* SPAlbumHomePageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09FB25FA2366C69A007FAB8D /* SPAlbumHomePageController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -105,6 +106,8 @@
 		09E22303235FF836007EB242 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		09E22308235FF96F007EB242 /* SPVideoFileManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPVideoFileManager.h; sourceTree = "<group>"; };
 		09E22309235FF96F007EB242 /* SPVideoFileManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPVideoFileManager.m; sourceTree = "<group>"; };
+		09FB25F92366C69A007FAB8D /* SPAlbumHomePageController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPAlbumHomePageController.h; sourceTree = "<group>"; };
+		09FB25FA2366C69A007FAB8D /* SPAlbumHomePageController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPAlbumHomePageController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -330,6 +333,7 @@
 			children = (
 				09E22303235FF836007EB242 /* MainViewController.h */,
 				09E22302235FF836007EB242 /* MainViewController.m */,
+				09FB25F82366C65A007FAB8D /* Album */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -355,6 +359,15 @@
 				09E22309235FF96F007EB242 /* SPVideoFileManager.m */,
 			);
 			path = Manager;
+			sourceTree = "<group>";
+		};
+		09FB25F82366C65A007FAB8D /* Album */ = {
+			isa = PBXGroup;
+			children = (
+				09FB25F92366C69A007FAB8D /* SPAlbumHomePageController.h */,
+				09FB25FA2366C69A007FAB8D /* SPAlbumHomePageController.m */,
+			);
+			path = Album;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -447,6 +460,7 @@
 				09E2230A235FF96F007EB242 /* SPVideoFileManager.m in Sources */,
 				098714902361408600F49BFA /* UIView+Constraint.m in Sources */,
 				0987149B2361761900F49BFA /* SPAlbumCell.m in Sources */,
+				09FB25FB2366C69A007FAB8D /* SPAlbumHomePageController.m in Sources */,
 				098714952361408600F49BFA /* UIButton+Constraint.m in Sources */,
 				09E222D4235FEC4B007EB242 /* SPNavigationController.m in Sources */,
 				098714922361408600F49BFA /* UITableView+Constraint.m in Sources */,
@@ -575,10 +589,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1.00;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 3RG4QMG6EY;
 				GCC_PREFIX_HEADER = /Users/ja/SavePhotosAndVideos/SavePhotosAndVideos/Source/Common/SPAV.pch;
 				INFOPLIST_FILE = /Users/ja/SavePhotosAndVideos/SavePhotosAndVideos/SPAVInfo.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -588,7 +602,7 @@
 				MARKETING_VERSION = 1.00;
 				PRODUCT_BUNDLE_IDENTIFIER = test.SavePhotosAndVideos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = Development20181227;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -598,10 +612,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1.00;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 3RG4QMG6EY;
 				GCC_PREFIX_HEADER = /Users/ja/SavePhotosAndVideos/SavePhotosAndVideos/Source/Common/SPAV.pch;
 				INFOPLIST_FILE = /Users/ja/SavePhotosAndVideos/SavePhotosAndVideos/SPAVInfo.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -611,7 +625,7 @@
 				MARKETING_VERSION = 1.00;
 				PRODUCT_BUNDLE_IDENTIFIER = test.SavePhotosAndVideos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = Development20181227;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
