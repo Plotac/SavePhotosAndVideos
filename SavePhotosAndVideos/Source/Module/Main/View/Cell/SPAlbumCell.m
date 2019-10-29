@@ -76,7 +76,7 @@
     _album = album;
     
     self.nameLab.text = _album.albumName;
-    self.countLab.text = [NSString stringWithFormat:@"%lu",(unsigned long)_album.videos.count];
+    self.countLab.text = [NSString stringWithFormat:@"%lu",(unsigned long)_album.media.count];
 }
 
 @end

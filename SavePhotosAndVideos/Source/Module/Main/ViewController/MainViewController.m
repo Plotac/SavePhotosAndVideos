@@ -45,6 +45,7 @@ static NSString *const kMainCollCell = @"kMainCollCell";
     [SPFileManager synchronizeLocalAlbums];
     [self.albums removeAllObjects];
     [self.albums addObjectsFromArray:SPFileManager.albums];
+    self.noDataLab.hidden = self.albums.count == 0 ? NO : YES;
 }
 
 #pragma mark - UICollectionViewDataSource & UICollectionViewDelegate

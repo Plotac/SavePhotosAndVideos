@@ -1,5 +1,5 @@
 //
-//  SPVideoFileManager.h
+//  SPMediaFileManager.h
 //  SavePhotosAndVideos
 //
 //  Created by JA on 2019/10/23.
@@ -9,13 +9,13 @@
 #import <Foundation/Foundation.h>
 @class SPAlbum;
 
-#define SPFileManager  [SPVideoFileManager defaultSPVideoFileManager]
+#define SPFileManager  [SPMediaFileManager defaultSPMediaFileManager]
 
-@interface SPVideoFileManager : NSObject
+@interface SPMediaFileManager : NSObject
 
 @property (nonatomic,strong) NSMutableArray *albums;
 
-+ (instancetype)defaultSPVideoFileManager;
++ (instancetype)defaultSPMediaFileManager;
 
 /*
  添加新相册
@@ -62,7 +62,7 @@
 /*
   相册中的媒体资料数据
  */
-@property (nonatomic,strong) NSArray *videos;
+@property (nonatomic,strong) NSArray *media;
 
 /*
  是否加密

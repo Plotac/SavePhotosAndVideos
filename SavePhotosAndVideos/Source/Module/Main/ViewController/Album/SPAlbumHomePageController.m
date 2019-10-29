@@ -8,11 +8,15 @@
 
 #import "SPAlbumHomePageController.h"
 
-@interface SPAlbumHomePageController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+static NSString *const kAlbumHomePageCell = @"kAlbumHomePageCell";
+
+@interface SPAlbumHomePageController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic,retain) UILabel *noDataLab;
 
 @property (nonatomic,strong) UIImagePickerController *pickerCtrl;
+
+@property (nonatomic,strong) UICollectionView *collectionView;
 
 @property (nonatomic,strong) NSMutableArray *videos;
 
@@ -35,15 +39,39 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
 
-    UIImage *image = info[UIImagePickerControllerOriginalImage];
+    UIImage *image = info[UIImagePickerControllerEditedImage];
     [self.videos addObject:image];
+    [picker dismissViewControllerAnimated:YES completion:^{
+        [self.collectionView reloadData];
+    }];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
-//按取消按钮时候的功能
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-//    返回
-    [picker dismissViewControllerAnimated:YES completion:nil];
+#pragma mark - UICollectionViewDataSource & UICollectionViewDelegate
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.videos.count;
+}
+
+- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    UICollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:kAlbumHomePageCell forIndexPath:indexPath];
+    
+    UIImageView *imgView = [[UIImageView alloc]initWithFrame:cell.contentView.bounds];
+    imgView.image = [self.videos objectAtIndex:indexPath.item];
+    [cell.contentView addSubview:imgView];
+    
+    
+    return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    return UIEdgeInsetsMake(2, 2, 20, 2);
 }
 
 #pragma mark - SPBaseViewControllerNavUIDelegate
@@ -56,16 +84,6 @@
     [btn addTarget:self action:@selector(addNewPhoto:) forControlEvents:UIControlEventTouchUpInside];
     return @[btn];
 }
-
-//- (NSArray<UIView*>*)leftNavBarItemCustomViews {
-//    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [btn setTitle:@"-" forState:UIControlStateNormal];
-//    [btn setTitleColor:UIColorFromHexStr(@"#5893FB") forState:UIControlStateNormal];
-//    btn.titleLabel.font = [UIFont systemFontOfSize:30];
-//    btn.frame = CGRectMake(0, 0, 50, 40);
-//    [btn addTarget:self action:@selector(deleteNewPhoto:) forControlEvents:UIControlEventTouchUpInside];
-//    return @[btn];
-//}
 
 #pragma mark -
 - (void)addNewPhoto:(UIButton*)sender {
@@ -97,6 +115,21 @@
     self.pickerCtrl.allowsEditing = YES;
     
     self.noDataLab = [self setNoDataViewWithAlertText:@"暂无照片" lineFeedText:@"点击右上角添加新照片"];
+    
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
+    layout.minimumInteritemSpacing = 0;
+    layout.minimumLineSpacing = 2;
+    layout.itemSize = CGSizeMake((kScreenW - 2*2 - 2*3)/4, (kScreenW - 2*2 - 2*3)/4);
+    
+    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
+    self.collectionView.backgroundColor = [UIColor clearColor];
+    self.collectionView.dataSource = self;
+    self.collectionView.delegate = self;
+    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kAlbumHomePageCell];
+    [self.view addSubview:self.collectionView];
+    [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
 }
 
 - (UIImagePickerController *)pickerCtrl {

@@ -1,20 +1,20 @@
 //
-//  SPVideoFileManager.m
+//  SPMediaFileManager.m
 //  SavePhotosAndVideos
 //
 //  Created by JA on 2019/10/23.
 //  Copyright © 2019 JA. All rights reserved.
 //
 
-#import "SPVideoFileManager.h"
+#import "SPMediaFileManager.h"
 
-@implementation SPVideoFileManager
+@implementation SPMediaFileManager
 
-+ (instancetype)defaultSPVideoFileManager {
-    static SPVideoFileManager *manager = nil;
++ (instancetype)defaultSPMediaFileManager {
+    static SPMediaFileManager *manager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-    manager = [[SPVideoFileManager alloc]init];
+    manager = [[SPMediaFileManager alloc]init];
     });
     return manager;
 }
@@ -125,7 +125,7 @@
     if (self) {
         self.albumName = [coder decodeObjectForKey:@"albumName"];
         self.albumRemark = [coder decodeObjectForKey:@"albumRemark"];
-        self.videos = [[NSArray alloc]initWithCoder:coder];
+        self.media = [[NSArray alloc]initWithCoder:coder];
         self.locked = [coder decodeBoolForKey:@"locked"];
         self.albumID = [coder decodeObjectForKey:@"albumID"];
         self.creationTimeString = [coder decodeObjectForKey:@"creationTimeString"];
@@ -136,8 +136,7 @@
 - (void)encodeWithCoder:(NSCoder *)coder {
     [coder encodeObject:self.albumName forKey:@"albumName"];
     [coder encodeObject:self.albumRemark forKey:@"albumRemark"];
-    [coder encodeObject:self.videos forKey:@"videos"];
-    [coder encodeObject:self.videos];
+    [coder encodeObject:self.media];
     [coder encodeBool:self.locked forKey:@"locked"];
     [coder encodeObject:self.albumID forKey:@"albumID"];
     [coder encodeObject:self.creationTimeString forKey:@"creationTimeString"];

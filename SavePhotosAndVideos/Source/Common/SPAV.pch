@@ -13,7 +13,7 @@
 #import "SPNavigationController.h"
 #import "SPBaseViewController.h"
 
-#import "SPVideoFileManager.h"
+#import "SPMediaFileManager.h"
 
 #import "Masonry.h"
 #import "JAConstraintKit.h"
