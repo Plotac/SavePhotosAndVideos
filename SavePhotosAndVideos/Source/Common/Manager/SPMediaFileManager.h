@@ -29,6 +29,11 @@
 - (void)deleteAllAlbums;
 
 /*
+ 修改相册内容
+ */
+- (void)modifyAlbumWithAlbum:(SPAlbum*)album;
+
+/*
  同步所有本地相册文件
  读取
  */
@@ -44,7 +49,9 @@
 
 
 
-
+/*
+ 相册模型
+ */
 @interface SPAlbum : NSObject<NSSecureCoding>
 
 - (instancetype)initWithAlbumName:(NSString*)albumName;
@@ -78,5 +85,26 @@
  相册创建时间
 */
 @property (nonatomic,copy,readonly) NSString *creationTimeString;
+
+@end
+
+
+
+/*
+  媒体模型
+ */
+@interface SPMedia : NSObject<NSSecureCoding>
+//
+@property (nonatomic,strong) UIImage *editedImage;
+
+@property (nonatomic,strong) UIImage *originalImage;
+
+@property (nonatomic,strong) NSURL *videoURL;
+
+/*
+ 是否是照片
+ YES:照片 NO:视频
+ */
+@property (nonatomic,assign) BOOL isPhoto;
 
 @end

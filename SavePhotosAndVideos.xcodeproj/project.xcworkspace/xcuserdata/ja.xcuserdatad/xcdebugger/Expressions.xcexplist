@@ -3,18 +3,45 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "-[MainViewController viewWillAppear:]:MainViewController.m">
+         contextName = "-[SPMediaFileManager synchronizeLocalAlbums]:SPMediaFileManager.m">
          <PersistentStrings>
             <PersistentString
-               value = "[SPVideoFileManager defaultSPVideoFileManager].albums">
+               value = "error">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[SPBaseViewController setNavBarItems]:SPBaseViewController.m">
+         contextName = "-[SPAlbumHomePageController imagePickerController:didFinishPickingMediaWithInfo:]:SPAlbumHomePageController.m">
          <PersistentStrings>
             <PersistentString
-               value = "self.navUIDelegate.leftNavBarItemCustomViews">
+               value = "self.album">
+            </PersistentString>
+            <PersistentString
+               value = "[SPMediaFileManager defaultSPMediaFileManager].albums">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[MainViewController viewDidLoad]:MainViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[[NSBundle mainBundle] infoDictionary]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SPAlbumHomePageController sp_viewDidLoad]:SPAlbumHomePageController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.album">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SPMediaFileManager modifyAlbumWithAlbum:]:SPMediaFileManager.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.albums">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -33,12 +60,31 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[MainViewController viewDidLoad]:MainViewController.m">
+         contextName = "-[SPBaseViewController setNavBarItems]:SPBaseViewController.m">
          <PersistentStrings>
             <PersistentString
-               value = "[[NSBundle mainBundle] infoDictionary]">
+               value = "self.navUIDelegate.leftNavBarItemCustomViews">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SPAlbumHomePageController viewWillAppear:]:SPAlbumHomePageController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.media">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[MainViewController viewWillAppear:]:MainViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[SPMediaFileManager defaultSPMediaFileManager].albums">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SPVideoFileManager synchronizeLocalAlbums]:SPVideoFileManager.m">
       </ContextState>
       <ContextState
          contextName = "-[SPAlbum initWithAlbumName:]:SPVideoFileManager.m">
@@ -50,9 +96,6 @@
                value = "self.currentTimeStr">
             </PersistentString>
          </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "-[SPVideoFileManager synchronizeLocalAlbums]:SPVideoFileManager.m">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

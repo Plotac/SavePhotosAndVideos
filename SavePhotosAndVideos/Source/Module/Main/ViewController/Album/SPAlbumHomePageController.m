@@ -7,6 +7,7 @@
 //
 
 #import "SPAlbumHomePageController.h"
+#import <AVFoundation/AVFoundation.h>
 
 static NSString *const kAlbumHomePageCell = @"kAlbumHomePageCell";
 
@@ -18,7 +19,7 @@ static NSString *const kAlbumHomePageCell = @"kAlbumHomePageCell";
 
 @property (nonatomic,strong) UICollectionView *collectionView;
 
-@property (nonatomic,strong) NSMutableArray *videos;
+@property (nonatomic,strong) NSMutableArray *media;
 
 @end
 
@@ -26,7 +27,7 @@ static NSString *const kAlbumHomePageCell = @"kAlbumHomePageCell";
 
 - (void)sp_initExtendedData {
     [super sp_initExtendedData];
-    self.videos = [NSMutableArray array];
+    self.media = [NSMutableArray array];
 }
 
 - (void)sp_viewDidLoad {
@@ -37,10 +38,39 @@ static NSString *const kAlbumHomePageCell = @"kAlbumHomePageCell";
     [self initViews];
 }
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
 
-    UIImage *image = info[UIImagePickerControllerEditedImage];
-    [self.videos addObject:image];
+    [self.media removeAllObjects];
+    [self.media addObjectsFromArray:self.album.media];
+    self.noDataLab.hidden = self.media.count == 0 ? NO : YES;
+    
+    [self.collectionView reloadData];
+}
+
+#pragma mark - UIImagePickerControllerDelegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    
+    SPMedia *media = [[SPMedia alloc]init];
+    
+    NSURL *mediaURL = [info objectForKey:UIImagePickerControllerMediaURL];
+    AVAsset *asset = [AVURLAsset URLAssetWithURL:mediaURL options:info];
+    NSArray *tracks = [asset tracksWithMediaType:AVMediaTypeVideo];
+    //判断是否含有视频轨道
+    BOOL hasVideoTrack = [tracks count] > 0;
+    if (hasVideoTrack) {
+        media.videoURL = mediaURL;
+        media.isPhoto = NO;
+    }else {
+        UIImage *editedImage = info[UIImagePickerControllerEditedImage];
+        UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
+        media.editedImage = editedImage;
+        media.originalImage = originalImage;
+        media.isPhoto = YES;
+    }
+    [self.media addObject:media];
+    self.album.media = self.media;
+    [SPFileManager modifyAlbumWithAlbum:self.album];
     [picker dismissViewControllerAnimated:YES completion:^{
         [self.collectionView reloadData];
     }];
@@ -52,14 +82,16 @@ static NSString *const kAlbumHomePageCell = @"kAlbumHomePageCell";
 
 #pragma mark - UICollectionViewDataSource & UICollectionViewDelegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.videos.count;
+    return self.media.count;
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:kAlbumHomePageCell forIndexPath:indexPath];
     
     UIImageView *imgView = [[UIImageView alloc]initWithFrame:cell.contentView.bounds];
-    imgView.image = [self.videos objectAtIndex:indexPath.item];
+    imgView.backgroundColor = [UIColor yellowColor];
+    SPMedia *media = [self.media objectAtIndex:indexPath.item];
+    imgView.image = media.editedImage;
     [cell.contentView addSubview:imgView];
     
     
@@ -139,11 +171,11 @@ static NSString *const kAlbumHomePageCell = @"kAlbumHomePageCell";
     return _pickerCtrl;
 }
 
-- (NSMutableArray*)videos {
-    if (_videos) {
-        self.noDataLab.hidden = _videos.count == 0 ? NO : YES;
+- (NSMutableArray*)media {
+    if (_media) {
+        self.noDataLab.hidden = _media.count == 0 ? NO : YES;
     }
-    return _videos;
+    return _media;
 }
 
 @end

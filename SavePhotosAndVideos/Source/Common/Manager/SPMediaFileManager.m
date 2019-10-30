@@ -8,6 +8,8 @@
 
 #import "SPMediaFileManager.h"
 
+#define kAlbumsPath [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"/Albums"]
+
 @implementation SPMediaFileManager
 
 + (instancetype)defaultSPMediaFileManager {
@@ -47,23 +49,39 @@
     }
 }
 
+- (void)modifyAlbumWithAlbum:(SPAlbum*)album {
+    NSArray *filterArray = [NSArray arrayWithArray:self.albums];
+    for (NSInteger i=0; i<filterArray.count; i++) {
+        SPAlbum *filterAlbum = [filterArray objectAtIndex:i];
+        if ([album.albumID isEqualToString:filterAlbum.albumID]) {
+            @synchronized (self.albums) {
+                [self.albums replaceObjectAtIndex:i withObject:album];
+                [self saveAllAlbums];
+                return;
+            }
+        }
+    }
+
+}
+
 - (void)deleteAllAlbums {
     [self.albums removeAllObjects];
-    [self saveAllAlbums];
+    [[NSFileManager defaultManager] removeItemAtPath:kAlbumsPath error:nil];
 }
 
 - (void)synchronizeLocalAlbums {
-    NSString *albumsPath = [NSString stringWithFormat:@"%@/Albums",NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject];
+    
     NSArray *albums = nil;
     if (IOS12_OR_LATER) {
-        if ([[NSFileManager defaultManager] fileExistsAtPath:albumsPath]) {
-            NSData *albumsData = [[NSFileManager defaultManager] contentsAtPath:albumsPath];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:kAlbumsPath]) {
+            NSData *albumsData = [[NSFileManager defaultManager] contentsAtPath:kAlbumsPath];
             NSError *error;
-            NSSet *set = [NSSet setWithObjects:NSMutableArray.class,SPAlbum.class, nil];
+            NSSet *set = [NSSet setWithObjects:NSArray.class,SPAlbum.class,SPMedia.class,UIImage.class, nil];
             albums = [NSKeyedUnarchiver unarchivedObjectOfClasses:set fromData:albumsData error:&error];
+            NSLog(@"error : %@",error);
         }
     }else {
-        albums = [NSKeyedUnarchiver unarchiveObjectWithFile:albumsPath];
+        albums = [NSKeyedUnarchiver unarchiveObjectWithFile:kAlbumsPath];
     }
 
     if (albums) {
@@ -73,16 +91,14 @@
 }
 
 - (void)saveAllAlbums {
-
-    NSString *albumsPath = [NSString stringWithFormat:@"%@/Albums",NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject];
     if (IOS12_OR_LATER) {
         NSError *error;
         NSData *albumsData = [NSKeyedArchiver archivedDataWithRootObject:self.albums requiringSecureCoding:NO error:&error];
         if (!error) {
-            [[NSFileManager defaultManager] createFileAtPath:albumsPath contents:albumsData attributes:nil];
+            [[NSFileManager defaultManager] createFileAtPath:kAlbumsPath contents:albumsData attributes:nil];
         }
     }else {
-        [NSKeyedArchiver archiveRootObject:self.albums toFile:albumsPath];
+        [NSKeyedArchiver archiveRootObject:self.albums toFile:kAlbumsPath];
     }
 }
 
@@ -125,7 +141,7 @@
     if (self) {
         self.albumName = [coder decodeObjectForKey:@"albumName"];
         self.albumRemark = [coder decodeObjectForKey:@"albumRemark"];
-        self.media = [[NSArray alloc]initWithCoder:coder];
+        self.media = [coder decodeObjectForKey:@"media"];
         self.locked = [coder decodeBoolForKey:@"locked"];
         self.albumID = [coder decodeObjectForKey:@"albumID"];
         self.creationTimeString = [coder decodeObjectForKey:@"creationTimeString"];
@@ -136,7 +152,7 @@
 - (void)encodeWithCoder:(NSCoder *)coder {
     [coder encodeObject:self.albumName forKey:@"albumName"];
     [coder encodeObject:self.albumRemark forKey:@"albumRemark"];
-    [coder encodeObject:self.media];
+    [coder encodeObject:self.media forKey:@"media"];
     [coder encodeBool:self.locked forKey:@"locked"];
     [coder encodeObject:self.albumID forKey:@"albumID"];
     [coder encodeObject:self.creationTimeString forKey:@"creationTimeString"];
@@ -162,6 +178,39 @@
     [dateFormatter setDateFormat:@"YYYY年MM月dd日 HH:mm"];
     NSString *dateString = [dateFormatter stringFromDate:currentDate];
     return dateString;
+}
+
+@end
+
+
+
+
+
+@interface SPMedia ()
+@end
+
+@implementation SPMedia
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder {
+    self = [super init];
+    if (self) {
+        self.editedImage = [coder decodeObjectForKey:@"editedImage"];
+        self.originalImage = [coder decodeObjectForKey:@"originalImage"];
+        self.videoURL = [coder decodeObjectForKey:@"videoURL"];
+        self.isPhoto = [coder decodeBoolForKey:@"isPhoto"];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder {
+    [coder encodeObject:self.editedImage forKey:@"editedImage"];
+    [coder encodeObject:self.originalImage forKey:@"originalImage"];
+    [coder encodeObject:self.videoURL forKey:@"videoURL"];
+    [coder encodeBool:self.isPhoto forKey:@"isPhoto"];
 }
 
 @end
