@@ -10,6 +10,7 @@
 		0914DD06235DAE20009C555B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0914DD05235DAE20009C555B /* AppDelegate.m */; };
 		0914DD11235DAE23009C555B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0914DD10235DAE23009C555B /* Assets.xcassets */; };
 		0914DD17235DAE23009C555B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0914DD16235DAE23009C555B /* main.m */; };
+		095FF2DA2369749B0008347A /* SPAppContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 095FF2D92369749B0008347A /* SPAppContext.m */; };
 		0987147A23613C4E00F49BFA /* SPNewAlbumOperationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0987147923613C4E00F49BFA /* SPNewAlbumOperationView.m */; };
 		0987148F2361408600F49BFA /* UICollectionView+Constraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 0987147F2361408600F49BFA /* UICollectionView+Constraint.m */; };
 		098714902361408600F49BFA /* UIView+Constraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 098714832361408600F49BFA /* UIView+Constraint.m */; };
@@ -47,6 +48,8 @@
 		0914DD10235DAE23009C555B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0914DD15235DAE23009C555B /* SPAVInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = SPAVInfo.plist; sourceTree = "<group>"; };
 		0914DD16235DAE23009C555B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		095FF2D82369749B0008347A /* SPAppContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPAppContext.h; sourceTree = "<group>"; };
+		095FF2D92369749B0008347A /* SPAppContext.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPAppContext.m; sourceTree = "<group>"; };
 		0987147823613C4E00F49BFA /* SPNewAlbumOperationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPNewAlbumOperationView.h; sourceTree = "<group>"; };
 		0987147923613C4E00F49BFA /* SPNewAlbumOperationView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPNewAlbumOperationView.m; sourceTree = "<group>"; };
 		0987147E2361408600F49BFA /* UITableView+Constraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+Constraint.h"; sourceTree = "<group>"; };
@@ -151,6 +154,13 @@
 			path = SavePhotosAndVideos;
 			sourceTree = "<group>";
 		};
+		095FF2DB2369810F0008347A /* TabbarComponent */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = TabbarComponent;
+			sourceTree = "<group>";
+		};
 		0987147C23613D9900F49BFA /* Category */ = {
 			isa = PBXGroup;
 			children = (
@@ -234,6 +244,8 @@
 			isa = PBXGroup;
 			children = (
 				09E222CB235FEBDA007EB242 /* SPAV.pch */,
+				095FF2D82369749B0008347A /* SPAppContext.h */,
+				095FF2D92369749B0008347A /* SPAppContext.m */,
 				0987147C23613D9900F49BFA /* Category */,
 				09E22307235FF942007EB242 /* Manager */,
 				09E222C8235FEBDA007EB242 /* Tools */,
@@ -263,6 +275,7 @@
 			children = (
 				09E222D5235FED25007EB242 /* ViewController */,
 				09E222CF235FEBDA007EB242 /* Navigation */,
+				095FF2DB2369810F0008347A /* TabbarComponent */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -461,6 +474,7 @@
 				098714902361408600F49BFA /* UIView+Constraint.m in Sources */,
 				0987149B2361761900F49BFA /* SPAlbumCell.m in Sources */,
 				09FB25FB2366C69A007FAB8D /* SPAlbumHomePageController.m in Sources */,
+				095FF2DA2369749B0008347A /* SPAppContext.m in Sources */,
 				098714952361408600F49BFA /* UIButton+Constraint.m in Sources */,
 				09E222D4235FEC4B007EB242 /* SPNavigationController.m in Sources */,
 				098714922361408600F49BFA /* UITableView+Constraint.m in Sources */,

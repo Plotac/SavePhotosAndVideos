@@ -10,10 +10,11 @@
 #import <AVFoundation/AVFoundation.h>
 
 static NSString *const kAlbumHomePageCell = @"kAlbumHomePageCell";
+static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
 
 @interface SPAlbumHomePageController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
-@property (nonatomic,retain) UILabel *noDataLab;
+@property (nonatomic,strong) UILabel *noDataLab;
 
 @property (nonatomic,strong) UIImagePickerController *pickerCtrl;
 
@@ -89,13 +90,38 @@ static NSString *const kAlbumHomePageCell = @"kAlbumHomePageCell";
     UICollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:kAlbumHomePageCell forIndexPath:indexPath];
     
     UIImageView *imgView = [[UIImageView alloc]initWithFrame:cell.contentView.bounds];
-    imgView.backgroundColor = [UIColor yellowColor];
     SPMedia *media = [self.media objectAtIndex:indexPath.item];
     imgView.image = media.editedImage;
     [cell.contentView addSubview:imgView];
     
-    
     return cell;
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    if(kind == UICollectionElementKindSectionFooter){
+        UICollectionReusableView *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kAlbumHPCellFooter forIndexPath:indexPath];
+        int photoCount = 0;
+        int videoCount = 0;
+        for (SPMedia *media in self.media) {
+            if (media.isPhoto) {
+                photoCount ++;
+            }
+            else {
+                videoCount ++;
+            }
+        }
+        NSString *tx = [NSString stringWithFormat:@"%d张照片，%d个视频",photoCount,videoCount];
+        [UILabel JA_labelWithText:tx textColor:UIColorFromHexStr(@"#333333") font:kSystemFont(16) textAlignment:NSTextAlignmentCenter superView:footerView constraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(footerView);
+        }];
+        
+        return footerView;
+    }
+    return nil;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
+    return CGSizeMake(kScreenW, 60);
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -158,6 +184,7 @@ static NSString *const kAlbumHomePageCell = @"kAlbumHomePageCell";
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kAlbumHomePageCell];
+    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kAlbumHPCellFooter];
     [self.view addSubview:self.collectionView];
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);

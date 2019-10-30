@@ -32,6 +32,9 @@
     statusBarStyle = UIStatusBarStyleBlackTranslucent;
 #endif
     
+    
+    
+    
     return YES;
 }
 

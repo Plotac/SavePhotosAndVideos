@@ -90,3 +90,55 @@
 }
 
 @end
+
+
+
+
+
+@implementation UIAlertController (Category)
+
++ (instancetype)showAlertWithTitle:(NSString*)title message:(NSString*)msg cancelBtnTitle:(NSString*)cancelBtnTitle otherBtnTitles:(NSArray<NSString*>*)otherBtnTitles action:(SPAlertActionBlock)actionBlock {
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:msg preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:cancelBtnTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        if (actionBlock) {
+            actionBlock(0);
+        }
+    }];
+    [alert addAction:cancelAction];
+
+    for (NSInteger i=0; i<otherBtnTitles.count; i++) {
+        NSString *btnTitle = [otherBtnTitles objectAtIndex:i];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:btnTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            if (actionBlock) {
+                actionBlock(i+1);
+            }
+        }];
+        [alert addAction:action];
+    }
+    return alert;
+}
+
++ (instancetype)showActionSheetWithTitle:(NSString*)title message:(NSString*)msg cancelBtnTitle:(NSString*)cancelBtnTitle otherBtnTitles:(NSArray<NSString*>*)otherBtnTitles action:(SPActionSheetActionBlock)actionBlock {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:msg preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:cancelBtnTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        if (actionBlock) {
+            actionBlock(otherBtnTitles.count);
+        }
+    }];
+    [alert addAction:cancelAction];
+
+    for (NSInteger i=0; i<otherBtnTitles.count; i++) {
+        NSString *btnTitle = [otherBtnTitles objectAtIndex:i];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:btnTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            if (actionBlock) {
+                actionBlock(i);
+            }
+        }];
+        [alert addAction:action];
+    }
+    return alert;
+}
+
+@end
+
