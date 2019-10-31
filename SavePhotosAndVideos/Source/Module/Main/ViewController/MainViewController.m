@@ -37,11 +37,6 @@ static NSString *const kMainCollCell = @"kMainCollCell";
     self.title = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
     
     [self initViews];
-    
-    UIAlertController *alert = [UIAlertController showAlertWithTitle:@"123" message:@"456" cancelBtnTitle:@"取消" otherBtnTitles:@[@"确定"] action:^(NSInteger index) {
-        NSLog(@"index : %d",index);
-    }];
-    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

@@ -27,6 +27,11 @@
 
 #define IS_IPHONE_X_OR_AFTER        [JAUtilities isIPhoneXOrAfter]
 
+#define IS_IPHONE_5 AppContext.predictDeviceType == Device_Type_5
+#define IS_IPHONE_6 AppContext.predictDeviceType == Device_Type_6
+#define IS_IPHONE_6P AppContext.predictDeviceType == Device_Type_6P
+#define IS_IPHONE_X AppContext.predictDeviceType == Device_Type_X
+
 #define IOS8_OR_LATER ([UIDevice currentDevice].systemVersion.floatValue >= 8.0f)
 #define IOS9_OR_LATER ([UIDevice currentDevice].systemVersion.floatValue >= 9.0f)
 #define IOS10_OR_LATER ([UIDevice currentDevice].systemVersion.floatValue >= 10.0f)
