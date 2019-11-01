@@ -41,7 +41,7 @@
 		09E222FD235FF3AD007EB242 /* MASViewConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 09E222F2235FF3AD007EB242 /* MASViewConstraint.m */; };
 		09E222FE235FF3AD007EB242 /* MASViewAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 09E222F3235FF3AD007EB242 /* MASViewAttribute.m */; };
 		09E222FF235FF3AD007EB242 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09E222F4235FF3AD007EB242 /* Info.plist */; };
-		09E22305235FF836007EB242 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09E22302235FF836007EB242 /* MainViewController.m */; };
+		09E22305235FF836007EB242 /* SPHomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09E22302235FF836007EB242 /* SPHomePageViewController.m */; };
 		09E2230A235FF96F007EB242 /* SPMediaFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 09E22309235FF96F007EB242 /* SPMediaFileManager.m */; };
 		09FB25FB2366C69A007FAB8D /* SPAlbumHomePageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09FB25FA2366C69A007FAB8D /* SPAlbumHomePageController.m */; };
 /* End PBXBuildFile section */
@@ -120,8 +120,8 @@
 		09E222F2235FF3AD007EB242 /* MASViewConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASViewConstraint.m; sourceTree = "<group>"; };
 		09E222F3235FF3AD007EB242 /* MASViewAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASViewAttribute.m; sourceTree = "<group>"; };
 		09E222F4235FF3AD007EB242 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		09E22302235FF836007EB242 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
-		09E22303235FF836007EB242 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		09E22302235FF836007EB242 /* SPHomePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPHomePageViewController.m; sourceTree = "<group>"; };
+		09E22303235FF836007EB242 /* SPHomePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPHomePageViewController.h; sourceTree = "<group>"; };
 		09E22308235FF96F007EB242 /* SPMediaFileManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPMediaFileManager.h; sourceTree = "<group>"; };
 		09E22309235FF96F007EB242 /* SPMediaFileManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPMediaFileManager.m; sourceTree = "<group>"; };
 		09FB25F92366C69A007FAB8D /* SPAlbumHomePageController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPAlbumHomePageController.h; sourceTree = "<group>"; };
@@ -255,7 +255,7 @@
 		09E222C3235FEBDA007EB242 /* Module */ = {
 			isa = PBXGroup;
 			children = (
-				09E222C4235FEBDA007EB242 /* Main */,
+				09E222C4235FEBDA007EB242 /* HomePage */,
 				09A74036236AD31D007D7C62 /* Mine */,
 				095FECD8236BC26200C02105 /* SPRootViewController.h */,
 				095FECD9236BC26200C02105 /* SPRootViewController.m */,
@@ -263,14 +263,14 @@
 			path = Module;
 			sourceTree = "<group>";
 		};
-		09E222C4235FEBDA007EB242 /* Main */ = {
+		09E222C4235FEBDA007EB242 /* HomePage */ = {
 			isa = PBXGroup;
 			children = (
 				09E22304235FF836007EB242 /* Model */,
 				09E22300235FF836007EB242 /* View */,
 				09E22301235FF836007EB242 /* ViewController */,
 			);
-			path = Main;
+			path = HomePage;
 			sourceTree = "<group>";
 		};
 		09E222C7235FEBDA007EB242 /* Common */ = {
@@ -377,8 +377,8 @@
 		09E22301235FF836007EB242 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				09E22303235FF836007EB242 /* MainViewController.h */,
-				09E22302235FF836007EB242 /* MainViewController.m */,
+				09E22303235FF836007EB242 /* SPHomePageViewController.h */,
+				09E22302235FF836007EB242 /* SPHomePageViewController.m */,
 				09FB25F82366C65A007FAB8D /* Album */,
 			);
 			path = ViewController;
@@ -490,7 +490,7 @@
 				09A74039236AD337007D7C62 /* SPMineViewController.m in Sources */,
 				09E222D9235FF1F5007EB242 /* SPBaseViewController.m in Sources */,
 				09E222F8235FF3AD007EB242 /* MASConstraintMaker.m in Sources */,
-				09E22305235FF836007EB242 /* MainViewController.m in Sources */,
+				09E22305235FF836007EB242 /* SPHomePageViewController.m in Sources */,
 				095FECDA236BC26200C02105 /* SPRootViewController.m in Sources */,
 				09A74040236AD619007D7C62 /* SPTabBar.m in Sources */,
 				0914DD06235DAE20009C555B /* AppDelegate.m in Sources */,

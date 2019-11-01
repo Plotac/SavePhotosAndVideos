@@ -7,7 +7,7 @@
 //
 
 #import "SPRootViewController.h"
-#import "MainViewController.h"
+#import "SPHomePageViewController.h"
 #import "SPMineViewController.h"
 
 @interface SPRootViewController ()
@@ -18,39 +18,55 @@
 
 - (void)sp_initExtendedData {
     [super sp_initExtendedData];
+    [self setupTabBar];
+}
+
+- (void)sp_viewDidLoad {
+    [super sp_viewDidLoad];
     
-    MainViewController *mainVC = [[MainViewController alloc]init];
+
+    
+}
+
+- (void)setupTabBar {
+    SPHomePageViewController *homePageVC = [[SPHomePageViewController alloc]init];
     SPMineViewController *mineVC = [[SPMineViewController alloc]init];
     
     self.tabBarCtrls = @[
-        mainVC,
-        mineVC
+        [self makeUpNavigationControllerFrom:homePageVC],
+        [self makeUpNavigationControllerFrom:mineVC],
     ].mutableCopy;
     self.tabBarTitles = @[
         @"首页",
         @"我的"
     ].mutableCopy;
     self.tabBarIcons = @[
-        [UIImage imageNamed:@"TabBar_icon_Home"],
-        [UIImage imageNamed:@"TabBar_icon_Mine"],
+        kImageName(@"TabBar_icon_Home"),
+        kImageName(@"TabBar_icon_Mine"),
     ].mutableCopy;
     self.tabBarSelectedIcons = @[
-        [UIImage imageNamed:@"TabBar_icon_Home_sel"],
-        [UIImage imageNamed:@"TabBar_icon_Mine_sel"],
+        kImageName(@"TabBar_icon_Home_sel"),
+        kImageName(@"TabBar_icon_Mine_sel"),
     ].mutableCopy;
     
-}
-
-- (void)sp_viewDidLoad {
-    [super sp_viewDidLoad];
+    NSArray *funcTypes = @[
+        @(SPTabBarItemFuncType_Main),
+        @(SPTabBarItemFuncType_Mine)
+    ];
     
+    self.tabBarItems = @[].mutableCopy;
     for (NSInteger i=0; i<self.tabBarCtrls.count; i++) {
         SPTabBarItem *item = [SPTabBarItem new];
         item.title = [self.tabBarTitles objectAtIndex:i];
         item.icon = [self.tabBarIcons objectAtIndex:i];
         item.selectedIcon = [self.tabBarSelectedIcons objectAtIndex:i];
+        item.funcType = [[funcTypes objectAtIndex:i] integerValue];
+        [self.tabBarItems addObject:item];
     }
-    
+}
+
+- (SPNavigationController*)makeUpNavigationControllerFrom:(UIViewController*)vc {
+    return [[SPNavigationController alloc]initWithRootViewController:vc];
 }
 
 

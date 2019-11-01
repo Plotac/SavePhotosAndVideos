@@ -30,6 +30,8 @@
 #define kSystemDisabledItemColor    UIColorFromRGBA(150, 150, 150, 1)
 #define kSystemSeparatorLineColor   UIColorFromRGBA(208, 208, 208, 1)
 
+#define kImageName(name)            [UIImage imageNamed:name]
+
 #define UIColorFromRGBA(r,g,b,a)    [JAUtilities colorWithR:r G:g B:b alpha:a]
 #define UIColorFromHexStr(str)      [JAUtilities colorWithHexString:(str)]
 

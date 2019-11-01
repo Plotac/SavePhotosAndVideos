@@ -1,19 +1,19 @@
 //
-//  MainViewController.m
+//  SPHomePageViewController.m
 //  SavePhotosAndVideos
 //
 //  Created by JA on 2019/10/21.
 //  Copyright © 2019 JA. All rights reserved.
 //
 
-#import "MainViewController.h"
+#import "SPHomePageViewController.h"
 #import "SPNewAlbumOperationView.h"
 #import "SPAlbumCell.h"
 #import "SPAlbumHomePageController.h"
 
-static NSString *const kMainCollCell = @"kMainCollCell";
+static NSString *const kHPCollCell = @"kHPCollCell";
 
-@interface MainViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
+@interface SPHomePageViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic,strong) UILabel *noDataLab;
 
@@ -23,7 +23,7 @@ static NSString *const kMainCollCell = @"kMainCollCell";
 
 @end
 
-@implementation MainViewController
+@implementation SPHomePageViewController
 
 - (void)sp_initExtendedData {
     [super sp_initExtendedData];
@@ -56,7 +56,7 @@ static NSString *const kMainCollCell = @"kMainCollCell";
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    SPAlbumCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:kMainCollCell forIndexPath:indexPath];
+    SPAlbumCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:kHPCollCell forIndexPath:indexPath];
     SPAlbum *album = [self.albums objectAtIndex:indexPath.item];
     cell.album = album;
     
@@ -129,7 +129,7 @@ static NSString *const kMainCollCell = @"kMainCollCell";
     self.collectionView.backgroundColor = [UIColor clearColor];
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
-    [self.collectionView registerClass:[SPAlbumCell class] forCellWithReuseIdentifier:kMainCollCell];
+    [self.collectionView registerClass:[SPAlbumCell class] forCellWithReuseIdentifier:kHPCollCell];
     [self.view addSubview:self.collectionView];
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);

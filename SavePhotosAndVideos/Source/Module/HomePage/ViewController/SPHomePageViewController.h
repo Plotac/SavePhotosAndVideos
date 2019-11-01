@@ -1,5 +1,5 @@
 //
-//  MainViewController.h
+//  SPHomePageViewController.h
 //  SavePhotosAndVideos
 //
 //  Created by JA on 2019/10/21.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MainViewController : SPBaseViewController
+@interface SPHomePageViewController : SPBaseViewController
 
 @end

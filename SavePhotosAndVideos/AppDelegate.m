@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "MainViewController.h"
+#import "SPRootViewController.h"
 
 @interface AppDelegate ()
 
@@ -20,9 +20,8 @@
     
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
-    MainViewController *mainVC = [[MainViewController alloc]init];
-    SPNavigationController *nav = [[SPNavigationController alloc]initWithRootViewController:mainVC];
-    self.window.rootViewController = nav;
+    SPRootViewController *rootVC = [[SPRootViewController alloc]init];
+    self.window.rootViewController = rootVC;
     [self.window makeKeyAndVisible];
 
     return YES;

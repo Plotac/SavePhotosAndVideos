@@ -14,11 +14,14 @@
 
 @property (nonatomic,strong) SPTabBar *spTabBar;
 
+@property (nonatomic,strong) NSMutableArray<SPTabBarItem*> *tabBarItems;
+
 @property (nonatomic,strong) NSMutableArray<UIViewController*> *tabBarCtrls;
 @property (nonatomic,strong) NSMutableArray<NSString*> *tabBarTitles;
 @property (nonatomic,strong) NSMutableArray<UIImage*> *tabBarIcons;
 @property (nonatomic,strong) NSMutableArray<UIImage*> *tabBarSelectedIcons;
 
-- (void)setupTabBar;
+@property (nonatomic,assign) NSInteger selectedTabBarIndex;
+@property (nonatomic,strong) UIViewController *currentTabBarViewCtrl;
 
 @end

@@ -6,6 +6,11 @@
 //  Copyright © 2019 Ja. All rights reserved.
 //
 
+typedef NS_ENUM(NSUInteger, SPTabBarItemFuncType) {
+    SPTabBarItemFuncType_Main,
+    SPTabBarItemFuncType_Mine,
+};
+
 #import <UIKit/UIKit.h>
 
 @interface SPTabBarItem : UIControl
@@ -19,7 +24,7 @@
 @property (nonatomic,strong) UIImage *icon;
 @property (nonatomic,strong) UIImage *selectedIcon;
 
-@property(nonatomic,assign)BOOL isSelected;
+@property (nonatomic,assign) SPTabBarItemFuncType funcType;
 
 - (void)setupTabBarItemView;
 

@@ -94,10 +94,10 @@
             make.top.equalTo(self.coverImgView.mas_bottom).with.offset(10);
         }];
         if (_album.locked) {//加密
-            self.coverImgView.image = [UIImage imageNamed:@"Album_Locked"];
+            self.coverImgView.image = kImageName(@"Album_Locked");
         }
         else {//非加密
-            self.coverImgView.image = [UIImage imageNamed:@"Album_Blank"];
+            self.coverImgView.image = kImageName(@"Album_Blank");
         }
     }
     else {//有媒体资料
@@ -116,7 +116,7 @@
                 make.centerY.mas_equalTo(-20);
                 make.size.mas_equalTo(CGSizeMake(50, 50));
             }];
-            self.coverImgView.image = [UIImage imageNamed:@"Album_Locked"];
+            self.coverImgView.image = kImageName(@"Album_Locked");
             self.placeholderLab.hidden = NO;
             self.placeholderLab.text = @"验证密码后查看";
             [self.placeholderLab mas_updateConstraints:^(MASConstraintMaker *make) {
