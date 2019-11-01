@@ -111,9 +111,11 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
             }
         }
         NSString *tx = [NSString stringWithFormat:@"%d张照片，%d个视频",photoCount,videoCount];
-        [UILabel JA_labelWithText:tx textColor:UIColorFromHexStr(@"#333333") font:kSystemFont(16) textAlignment:NSTextAlignmentCenter superView:footerView constraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(footerView);
-        }];
+        if (self.noDataLab.hidden) {
+            [UILabel JA_labelWithText:tx textColor:UIColorFromHexStr(@"#333333") font:kSystemFont(16) textAlignment:NSTextAlignmentCenter superView:footerView constraints:^(MASConstraintMaker *make) {
+                make.edges.equalTo(footerView);
+            }];
+        }
         
         return footerView;
     }

@@ -8,7 +8,7 @@
 
 #import "SPRootViewController.h"
 #import "SPHomePageViewController.h"
-#import "SPMineViewController.h"
+#import "SPSettingViewController.h"
 
 @interface SPRootViewController ()
 
@@ -30,15 +30,15 @@
 
 - (void)setupTabBar {
     SPHomePageViewController *homePageVC = [[SPHomePageViewController alloc]init];
-    SPMineViewController *mineVC = [[SPMineViewController alloc]init];
+    SPSettingViewController *settingVC = [[SPSettingViewController alloc]init];
     
     self.tabBarCtrls = @[
         [self makeUpNavigationControllerFrom:homePageVC],
-        [self makeUpNavigationControllerFrom:mineVC],
+        [self makeUpNavigationControllerFrom:settingVC],
     ].mutableCopy;
     self.tabBarTitles = @[
         @"首页",
-        @"我的"
+        @"设置"
     ].mutableCopy;
     self.tabBarIcons = @[
         kImageName(@"TabBar_icon_Home"),

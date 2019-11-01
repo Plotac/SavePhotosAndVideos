@@ -23,7 +23,7 @@
 		098714952361408600F49BFA /* UIButton+Constraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 0987148B2361408600F49BFA /* UIButton+Constraint.m */; };
 		098714962361408600F49BFA /* UIScrollView+Contraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 0987148D2361408600F49BFA /* UIScrollView+Contraint.m */; };
 		0987149B2361761900F49BFA /* SPAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0987149A2361761900F49BFA /* SPAlbumCell.m */; };
-		09A74039236AD337007D7C62 /* SPMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A74038236AD337007D7C62 /* SPMineViewController.m */; };
+		09A74039236AD337007D7C62 /* SPSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A74038236AD337007D7C62 /* SPSettingViewController.m */; };
 		09A74040236AD619007D7C62 /* SPTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A7403A236AD619007D7C62 /* SPTabBar.m */; };
 		09A74041236AD619007D7C62 /* SPTabBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A7403B236AD619007D7C62 /* SPTabBarItem.m */; };
 		09A74042236AD619007D7C62 /* SPTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A7403E236AD619007D7C62 /* SPTabBarViewController.m */; };
@@ -81,8 +81,8 @@
 		09871497236142F200F49BFA /* JAConstraintKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAConstraintKit.h; sourceTree = "<group>"; };
 		098714992361761900F49BFA /* SPAlbumCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPAlbumCell.h; sourceTree = "<group>"; };
 		0987149A2361761900F49BFA /* SPAlbumCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPAlbumCell.m; sourceTree = "<group>"; };
-		09A74037236AD337007D7C62 /* SPMineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPMineViewController.h; sourceTree = "<group>"; };
-		09A74038236AD337007D7C62 /* SPMineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPMineViewController.m; sourceTree = "<group>"; };
+		09A74037236AD337007D7C62 /* SPSettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPSettingViewController.h; sourceTree = "<group>"; };
+		09A74038236AD337007D7C62 /* SPSettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPSettingViewController.m; sourceTree = "<group>"; };
 		09A7403A236AD619007D7C62 /* SPTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTabBar.m; sourceTree = "<group>"; };
 		09A7403B236AD619007D7C62 /* SPTabBarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTabBarItem.m; sourceTree = "<group>"; };
 		09A7403C236AD619007D7C62 /* SPTabBarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTabBarItem.h; sourceTree = "<group>"; };
@@ -226,13 +226,13 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
-		09A74036236AD31D007D7C62 /* Mine */ = {
+		09A74036236AD31D007D7C62 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
-				09A74037236AD337007D7C62 /* SPMineViewController.h */,
-				09A74038236AD337007D7C62 /* SPMineViewController.m */,
+				09A74037236AD337007D7C62 /* SPSettingViewController.h */,
+				09A74038236AD337007D7C62 /* SPSettingViewController.m */,
 			);
-			path = Mine;
+			path = Setting;
 			sourceTree = "<group>";
 		};
 		09E222B3235FEB35007EB242 /* Resource */ = {
@@ -258,10 +258,10 @@
 		09E222C3235FEBDA007EB242 /* Module */ = {
 			isa = PBXGroup;
 			children = (
-				09E222C4235FEBDA007EB242 /* HomePage */,
-				09A74036236AD31D007D7C62 /* Mine */,
 				095FECD8236BC26200C02105 /* SPRootViewController.h */,
 				095FECD9236BC26200C02105 /* SPRootViewController.m */,
+				09E222C4235FEBDA007EB242 /* HomePage */,
+				09A74036236AD31D007D7C62 /* Setting */,
 			);
 			path = Module;
 			sourceTree = "<group>";
@@ -492,7 +492,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				09E222FD235FF3AD007EB242 /* MASViewConstraint.m in Sources */,
-				09A74039236AD337007D7C62 /* SPMineViewController.m in Sources */,
+				09A74039236AD337007D7C62 /* SPSettingViewController.m in Sources */,
 				09E222D9235FF1F5007EB242 /* SPBaseViewController.m in Sources */,
 				095FECDD236C1B0400C02105 /* SPProjectContext.m in Sources */,
 				09E222F8235FF3AD007EB242 /* MASConstraintMaker.m in Sources */,
