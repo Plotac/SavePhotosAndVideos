@@ -12,8 +12,18 @@
 #define kScreenH  ([[UIScreen mainScreen]bounds].size.height)
 #define kScreenW  ([[UIScreen mainScreen]bounds].size.width)
 
-#define kNavToolBarHeight           44
-#define kStatusBarHeight            (IS_IPHONE_X_OR_AFTER ? 44 : 20)
+#define IS_IPHONE_X_OR_AFTER        [JAUtilities isIPhoneXOrAfter]
+
+
+#define IPHONEX_MARGIN_TOP              44
+#define IPHONEX_MARGIN_TOP_TOTAL        88  //44 + 44
+#define IPHONEX_MARGIN_BOTTOM           (IS_IPHONE_X ? 34 : 0)
+#define IPHONEX_MARGIN_BOTTOM_TOTAL     83  //34 + 49
+
+#define kNavToolBarHeight               44
+#define kStatusBarHeight                (IS_IPHONE_X_OR_AFTER ? 44 : 20)
+#define kToolBarHeight                  49        // 底部工具栏
+#define kTabBarHeight                   (IS_IPHONE_X ? IPHONEX_MARGIN_BOTTOM_TOTAL:kToolBarHeight)  // TabBar高度
 
 #define kSystemFont(f)              [UIFont systemFontOfSize:f]
 #define kSystemNormalItemColor      UIColorFromRGBA(54, 120, 243, 1)
@@ -25,15 +35,20 @@
 
 #define BLOCK_WEAK_SELF             __weak __typeof(self) weakSelf = self;
 
-#define IS_IPHONE_X_OR_AFTER        [JAUtilities isIPhoneXOrAfter]
+#define IS_IPAD ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
+#define IS_IPHONE_4 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) && !IS_IPAD : NO)
+#define IS_IPHONE_5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) && !IS_IPAD : NO)
+#define IS_IPHONE_6 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(750, 1334), [[UIScreen mainScreen] currentMode].size) && !IS_IPAD : NO)
+#define IS_IPHONE_6Plus ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2208), [[UIScreen mainScreen] currentMode].size) && !IS_IPAD : NO)
+#define IS_IPHONE_X ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) && !IS_IPAD : NO)
+#define IS_IPHONE_Xr ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(828, 1792), [[UIScreen mainScreen] currentMode].size) && !IS_IPAD : NO)
+#define IS_IPHONE_Xs_Max ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2688), [[UIScreen mainScreen] currentMode].size)&& !IS_IPAD : NO)
+//判断iPhoneX所有系列
+#define IS_PhoneXAll (IS_IPHONE_X || IS_IPHONE_Xr || IS_IPHONE_Xs_Max)
 
-#define IS_IPHONE_5 AppContext.predictDeviceType == Device_Type_5
-#define IS_IPHONE_6 AppContext.predictDeviceType == Device_Type_6
-#define IS_IPHONE_6P AppContext.predictDeviceType == Device_Type_6P
-#define IS_IPHONE_X AppContext.predictDeviceType == Device_Type_X
 
-#define IOS8_OR_LATER ([UIDevice currentDevice].systemVersion.floatValue >= 8.0f)
-#define IOS9_OR_LATER ([UIDevice currentDevice].systemVersion.floatValue >= 9.0f)
+#define IOS8_OR_LATER  ([UIDevice currentDevice].systemVersion.floatValue >= 8.0f)
+#define IOS9_OR_LATER  ([UIDevice currentDevice].systemVersion.floatValue >= 9.0f)
 #define IOS10_OR_LATER ([UIDevice currentDevice].systemVersion.floatValue >= 10.0f)
 #define IOS11_OR_LATER ([UIDevice currentDevice].systemVersion.floatValue >= 11.0f)
 #define IOS12_OR_LATER ([UIDevice currentDevice].systemVersion.floatValue >= 12.0f)

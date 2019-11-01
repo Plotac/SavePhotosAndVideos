@@ -24,17 +24,7 @@
     SPNavigationController *nav = [[SPNavigationController alloc]initWithRootViewController:mainVC];
     self.window.rootViewController = nav;
     [self.window makeKeyAndVisible];
-    
-    UIStatusBarStyle statusBarStyle = UIStatusBarStyleDefault;
-#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_6_1
-    statusBarStyle = UIStatusBarStyleLightContent;
-#else
-    statusBarStyle = UIStatusBarStyleBlackTranslucent;
-#endif
-    
-    
-    
-    
+
     return YES;
 }
 

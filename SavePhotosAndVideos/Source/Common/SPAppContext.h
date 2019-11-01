@@ -21,3 +21,7 @@
 @property (nonatomic,assign) BOOL needStartUpVerify;
 
 @end
+
+
+
+
