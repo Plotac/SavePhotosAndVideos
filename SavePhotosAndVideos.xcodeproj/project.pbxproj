@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0914DD06235DAE20009C555B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0914DD05235DAE20009C555B /* AppDelegate.m */; };
+		0914DD06235DAE20009C555B /* SPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0914DD05235DAE20009C555B /* SPAppDelegate.m */; };
 		0914DD11235DAE23009C555B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0914DD10235DAE23009C555B /* Assets.xcassets */; };
 		0914DD17235DAE23009C555B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0914DD16235DAE23009C555B /* main.m */; };
 		095FECDA236BC26200C02105 /* SPRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 095FECD9236BC26200C02105 /* SPRootViewController.m */; };
+		095FECDD236C1B0400C02105 /* SPProjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 095FECDC236C1B0400C02105 /* SPProjectContext.m */; };
 		095FF2DA2369749B0008347A /* SPAppContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 095FF2D92369749B0008347A /* SPAppContext.m */; };
 		0987147A23613C4E00F49BFA /* SPNewAlbumOperationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0987147923613C4E00F49BFA /* SPNewAlbumOperationView.m */; };
 		0987148F2361408600F49BFA /* UICollectionView+Constraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 0987147F2361408600F49BFA /* UICollectionView+Constraint.m */; };
@@ -48,13 +49,15 @@
 
 /* Begin PBXFileReference section */
 		0914DD01235DAE20009C555B /* SavePhotosAndVideos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SavePhotosAndVideos.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		0914DD04235DAE20009C555B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		0914DD05235DAE20009C555B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		0914DD04235DAE20009C555B /* SPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPAppDelegate.h; sourceTree = "<group>"; };
+		0914DD05235DAE20009C555B /* SPAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPAppDelegate.m; sourceTree = "<group>"; };
 		0914DD10235DAE23009C555B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0914DD15235DAE23009C555B /* SPAVInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = SPAVInfo.plist; sourceTree = "<group>"; };
 		0914DD16235DAE23009C555B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		095FECD8236BC26200C02105 /* SPRootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPRootViewController.h; sourceTree = "<group>"; };
 		095FECD9236BC26200C02105 /* SPRootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPRootViewController.m; sourceTree = "<group>"; };
+		095FECDB236C1B0400C02105 /* SPProjectContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPProjectContext.h; sourceTree = "<group>"; };
+		095FECDC236C1B0400C02105 /* SPProjectContext.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPProjectContext.m; sourceTree = "<group>"; };
 		095FF2D82369749B0008347A /* SPAppContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPAppContext.h; sourceTree = "<group>"; };
 		095FF2D92369749B0008347A /* SPAppContext.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPAppContext.m; sourceTree = "<group>"; };
 		0987147823613C4E00F49BFA /* SPNewAlbumOperationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPNewAlbumOperationView.h; sourceTree = "<group>"; };
@@ -158,8 +161,8 @@
 		0914DD03235DAE20009C555B /* SavePhotosAndVideos */ = {
 			isa = PBXGroup;
 			children = (
-				0914DD04235DAE20009C555B /* AppDelegate.h */,
-				0914DD05235DAE20009C555B /* AppDelegate.m */,
+				0914DD04235DAE20009C555B /* SPAppDelegate.h */,
+				0914DD05235DAE20009C555B /* SPAppDelegate.m */,
 				09E222C2235FEBDA007EB242 /* Source */,
 				09E222B3235FEB35007EB242 /* Resource */,
 				0914DD10235DAE23009C555B /* Assets.xcassets */,
@@ -279,6 +282,8 @@
 				09E222CB235FEBDA007EB242 /* SPAV.pch */,
 				095FF2D82369749B0008347A /* SPAppContext.h */,
 				095FF2D92369749B0008347A /* SPAppContext.m */,
+				095FECDB236C1B0400C02105 /* SPProjectContext.h */,
+				095FECDC236C1B0400C02105 /* SPProjectContext.m */,
 				0987147C23613D9900F49BFA /* Category */,
 				09E22307235FF942007EB242 /* Manager */,
 				09E222C8235FEBDA007EB242 /* Tools */,
@@ -489,11 +494,12 @@
 				09E222FD235FF3AD007EB242 /* MASViewConstraint.m in Sources */,
 				09A74039236AD337007D7C62 /* SPMineViewController.m in Sources */,
 				09E222D9235FF1F5007EB242 /* SPBaseViewController.m in Sources */,
+				095FECDD236C1B0400C02105 /* SPProjectContext.m in Sources */,
 				09E222F8235FF3AD007EB242 /* MASConstraintMaker.m in Sources */,
 				09E22305235FF836007EB242 /* SPHomePageViewController.m in Sources */,
 				095FECDA236BC26200C02105 /* SPRootViewController.m in Sources */,
 				09A74040236AD619007D7C62 /* SPTabBar.m in Sources */,
-				0914DD06235DAE20009C555B /* AppDelegate.m in Sources */,
+				0914DD06235DAE20009C555B /* SPAppDelegate.m in Sources */,
 				09A74041236AD619007D7C62 /* SPTabBarItem.m in Sources */,
 				09E222F6235FF3AD007EB242 /* ViewController+MASAdditions.m in Sources */,
 				09E222F5235FF3AD007EB242 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,

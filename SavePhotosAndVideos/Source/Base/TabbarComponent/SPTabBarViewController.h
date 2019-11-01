@@ -24,4 +24,8 @@
 @property (nonatomic,assign) NSInteger selectedTabBarIndex;
 @property (nonatomic,strong) UIViewController *currentTabBarViewCtrl;
 
+
+- (UIViewController *)currentVisibleViewControler;
+- (UINavigationController *)currentNavigationViewControler;
+
 @end

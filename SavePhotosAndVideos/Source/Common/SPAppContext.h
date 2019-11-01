@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#define AppContext  [SPAppContext SPAppContext]
+#define AppContext  [SPAppContext sharedInstance]
 
 @interface SPAppContext : NSObject
 

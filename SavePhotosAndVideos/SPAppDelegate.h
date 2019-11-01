@@ -1,5 +1,5 @@
 //
-//  AppDelegate.h
+//  SPAppDelegate.h
 //  SavePhotosAndVideos
 //
 //  Created by JA on 2019/10/21.
@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SPRootViewController.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface SPAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic,strong) UIWindow *window;
+
+@property (nonatomic,strong) SPRootViewController *rootViewController;
 
 @end
 

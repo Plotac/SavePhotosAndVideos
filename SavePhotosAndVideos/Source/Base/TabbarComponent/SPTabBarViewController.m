@@ -54,6 +54,30 @@
     [newVC didMoveToParentViewController:self];
 }
 
+- (UIViewController *)currentVisibleViewControler {
+    UIViewController *vc = self.currentTabBarViewCtrl;
+    if ([vc isKindOfClass:[UINavigationController class]]) {
+        UINavigationController *nav = (UINavigationController*)vc;
+        return nav.visibleViewController;
+    }else{
+        return vc;
+    }
+}
+
+- (UINavigationController *)currentNavigationViewControler {
+    UIViewController *vc = self.currentTabBarViewCtrl;
+    if ([vc isKindOfClass:[UINavigationController class]]) {
+        UINavigationController *nav = (UINavigationController*)vc;
+        if ([nav.visibleViewController isKindOfClass:[UINavigationController class]]) {
+            return (UINavigationController *)nav.visibleViewController;
+        }else{
+            return nav;
+        }
+    }else{
+        return nil;
+    }
+}
+
 #pragma mark - Private
 - (void)initTabBar {
     
