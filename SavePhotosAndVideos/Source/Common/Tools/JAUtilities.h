@@ -48,6 +48,7 @@
 //判断iPhoneX所有系列
 #define IS_PhoneXAll (IS_IPHONE_X || IS_IPHONE_Xr || IS_IPHONE_Xs_Max)
 
+#define UserDefaults   [NSUserDefaults standardUserDefaults]
 
 #define IOS8_OR_LATER  ([UIDevice currentDevice].systemVersion.floatValue >= 8.0f)
 #define IOS9_OR_LATER  ([UIDevice currentDevice].systemVersion.floatValue >= 9.0f)
