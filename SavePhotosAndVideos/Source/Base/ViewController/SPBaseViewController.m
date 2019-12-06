@@ -18,6 +18,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         [self sp_initExtendedData];
+        self.showTabBar = YES;
     }
     return self;
 }
@@ -28,6 +29,20 @@
     [self sp_viewDidLoad];
     self.view.backgroundColor = UIColorFromHexStr(@"#F1F0F1");
     [self setNavBarItems];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    ProjectContext.currentTabBarController.spTabBar.hidden = !self.showTabBar;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    if (!self.showTabBar) {
+        ProjectContext.currentTabBarController.spTabBar.hidden = NO;
+    }
 }
 
 #pragma mark - Public

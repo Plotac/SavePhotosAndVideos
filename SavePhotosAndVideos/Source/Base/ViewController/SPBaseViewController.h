@@ -23,6 +23,9 @@
 
 @property (nonatomic,weak) id<SPBaseViewControllerNavUIDelegate> navUIDelegate;
 
+@property (nonatomic,assign) BOOL showNavigationBar;
+@property (nonatomic,assign) BOOL showTabBar;
+
 - (void)sp_viewDidLoad;
 - (void)sp_initExtendedData;
 

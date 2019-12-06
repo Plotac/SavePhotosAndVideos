@@ -35,6 +35,7 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
     [super sp_viewDidLoad];
     
     self.title = self.album.albumName;
+    self.showTabBar = NO;
     
     [self initViews];
 }
@@ -156,6 +157,7 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
     }];
     UIAlertAction *selectPhotoAction = [UIAlertAction actionWithTitle:@"从相册选取" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         self.pickerCtrl.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        self.pickerCtrl.modalPresentationStyle = UIModalPresentationFullScreen;
         [self presentViewController:self.pickerCtrl animated:YES completion:nil];
     }];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle: UIAlertControllerStyleActionSheet];

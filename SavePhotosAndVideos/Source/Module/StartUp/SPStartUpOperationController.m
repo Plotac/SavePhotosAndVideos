@@ -265,6 +265,7 @@
         self.albumTF.secureTextEntry = YES;
         self.albumTF.leftView = [[UIView alloc]initWithFrame:CGRectMake(10, 1, 7, 26)];
         self.albumTF.leftViewMode = UITextFieldViewModeAlways;
+        self.albumTF.clearButtonMode = UITextFieldViewModeWhileEditing;
         [self.albumTF becomeFirstResponder];
     }
     else {
