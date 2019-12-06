@@ -14,7 +14,11 @@
 @property (nonatomic,strong) UITextField *albumTF;
 @property (nonatomic,strong) UITextField *remarkTF;
 @property (nonatomic,strong) UISwitch *lockSwitch;
-@property (nonatomic,strong) UIButton *confirmBtn;
+@property (nonatomic,strong) UILabel *passwordLab;
+@property (nonatomic,strong) UITextField *passwordTF;
+@property (nonatomic,strong) UILabel *confirmLab;
+@property (nonatomic,strong) UITextField *confirmTF;
+@property (nonatomic,strong) UIButton *saveBtn;
 
 @property (nonatomic,copy) NSString *title;
 @property (nonatomic,copy) NSString *descriptionSting;
@@ -148,6 +152,55 @@
         make.centerY.equalTo(albumLockLab).with.offset(-5);
         make.size.mas_equalTo(CGSizeMake(40, 20));
     }];
+    [self.lockSwitch addTarget:self action:@selector(lockSwitchAction:) forControlEvents:UIControlEventValueChanged];
+    
+    self.passwordLab = [UILabel JA_labelWithText:@"密码" textColor:UIColorFromHexStr(@"#333333") font:kSystemFont(14) textAlignment:NSTextAlignmentLeft superView:self.whiteBgView constraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(albumTitleLab);
+        make.top.equalTo(albumLockLab.mas_bottom).with.offset(30);
+        make.size.mas_equalTo(CGSizeMake(40, 20));
+    }];
+    
+    self.passwordTF = [UITextField JA_textFieldWithText:@"" keyboardType:UIKeyboardTypeASCIICapable clearButtonMode:UITextFieldViewModeWhileEditing borderStyle:UITextBorderStyleNone delegate:nil superView:self.whiteBgView constraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(albumRemarkLab.mas_right);
+        make.right.equalTo(self.whiteBgView).with.offset(-30);
+        make.centerY.equalTo(self.passwordLab);
+        make.height.mas_equalTo(30);
+    }];
+    self.passwordTF.placeholder = @" 请输入相册密码";
+    self.passwordTF.font = [UIFont systemFontOfSize:14];
+    self.passwordTF.backgroundColor = [UIColor whiteColor];
+    self.passwordTF.layer.cornerRadius = 5;
+    self.passwordTF.layer.borderWidth = 0.5;
+    self.passwordTF.layer.borderColor = kSystemSeparatorLineColor.CGColor;
+    self.passwordTF.clipsToBounds = YES;
+    self.passwordTF.leftView = [[UIView alloc]initWithFrame:CGRectMake(10, 1, 7, 26)];
+    self.passwordTF.leftViewMode = UITextFieldViewModeAlways;
+    self.passwordTF.secureTextEntry = YES;
+    
+    self.confirmLab = [UILabel JA_labelWithText:@"确认" textColor:UIColorFromHexStr(@"#333333") font:kSystemFont(14) textAlignment:NSTextAlignmentLeft superView:self.whiteBgView constraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(albumTitleLab);
+        make.top.equalTo(self.passwordLab.mas_bottom).with.offset(30);
+        make.size.mas_equalTo(CGSizeMake(40, 20));
+    }];
+    
+    self.confirmTF = [UITextField JA_textFieldWithText:@"" keyboardType:UIKeyboardTypeASCIICapable clearButtonMode:UITextFieldViewModeWhileEditing borderStyle:UITextBorderStyleNone delegate:nil superView:self.whiteBgView constraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(albumRemarkLab.mas_right);
+        make.right.equalTo(self.whiteBgView).with.offset(-30);
+        make.centerY.equalTo(self.confirmLab);
+        make.height.mas_equalTo(30);
+    }];
+    self.confirmTF.placeholder = @" 请确认相册密码";
+    self.confirmTF.font = [UIFont systemFontOfSize:14];
+    self.confirmTF.backgroundColor = [UIColor whiteColor];
+    self.confirmTF.layer.cornerRadius = 5;
+    self.confirmTF.layer.borderWidth = 0.5;
+    self.confirmTF.layer.borderColor = kSystemSeparatorLineColor.CGColor;
+    self.confirmTF.clipsToBounds = YES;
+    self.confirmTF.leftView = [[UIView alloc]initWithFrame:CGRectMake(10, 1, 7, 26)];
+    self.confirmTF.leftViewMode = UITextFieldViewModeAlways;
+    self.confirmTF.secureTextEntry = YES;
+    
+    self.passwordLab.hidden = self.passwordTF.hidden = self.confirmLab.hidden = self.confirmTF.hidden = YES;
     
     UIView *horizontalLine = [UIView JA_viewWithBackgroundColor:kSystemSeparatorLineColor superViewView:self.whiteBgView constraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.whiteBgView.mas_bottom).with.offset(-45);
@@ -170,13 +223,13 @@
     [cancelBtn addTarget:self action:@selector(removeSelf) forControlEvents:UIControlEventTouchUpInside];
     
     
-    self.confirmBtn = [UIButton JA_buttonWithTitle:@"存储" titleColor:kSystemDisabledItemColor font:kSystemFont(16) cornerRadius:0 superViewView:self.whiteBgView constraints:^(MASConstraintMaker *make) {
+    self.saveBtn = [UIButton JA_buttonWithTitle:@"存储" titleColor:kSystemDisabledItemColor font:kSystemFont(16) cornerRadius:0 superViewView:self.whiteBgView constraints:^(MASConstraintMaker *make) {
         make.right.bottom.equalTo(self.whiteBgView);
         make.top.equalTo(horizontalLine.mas_bottom);
         make.left.equalTo(verticalLine.mas_right);
     }];
-    [self.confirmBtn addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
-    self.confirmBtn.enabled = NO;
+    [self.saveBtn addTarget:self action:@selector(saveAction:) forControlEvents:UIControlEventTouchUpInside];
+    self.saveBtn.enabled = NO;
     
 }
 
@@ -184,21 +237,40 @@
     [self removeFromSuperview];
 }
 
-- (void)confirmAction:(UIButton*)sender {
+- (void)lockSwitchAction:(UISwitch*)sw {
+    [self.whiteBgView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(kScreenW - 60, sw.on ? 380 : 280));
+    }];
+    self.passwordLab.hidden = self.passwordTF.hidden = self.confirmLab.hidden = self.confirmTF.hidden = !sw.on;
+}
+
+- (void)saveAction:(UIButton*)sender {
     if (self.confirmBlock) {
         NSString *albumName = self.albumTF.text;
         NSString *remark = self.remarkTF.text;
         BOOL lock = self.lockSwitch.on;
+
+        if (lock) {
+            NSString *password = [self.passwordTF.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+            if ([password isEqualToString:[self.confirmTF.text stringByReplacingOccurrencesOfString:@" " withString:@""]]) {
+                self.confirmBlock(albumName, remark,lock,password);
+                [self removeFromSuperview];
+            }else {
+                
+            }
+        }else {
+            self.confirmBlock(albumName, remark,lock,@"");
+            [self removeFromSuperview];
+        }
         
-        self.confirmBlock(albumName, remark,lock);
-        [self removeFromSuperview];
+
     }
 }
 
 - (void)textFieldTextDidChange:(NSNotification*)notification {
     if ([notification.object isEqual:self.albumTF]) {
-        self.confirmBtn.enabled = self.albumTF.text.length == 0 ? NO : YES;
-        [self.confirmBtn setTitleColor:self.albumTF.text.length == 0 ? kSystemDisabledItemColor : kSystemNormalItemColor forState:UIControlStateNormal];
+        self.saveBtn.enabled = self.albumTF.text.length == 0 ? NO : YES;
+        [self.saveBtn setTitleColor:self.albumTF.text.length == 0 ? kSystemDisabledItemColor : kSystemNormalItemColor forState:UIControlStateNormal];
     }
 }
 

@@ -68,7 +68,23 @@ static NSString *const kHPCollCell = @"kHPCollCell";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     SPAlbumHomePageController * albumHpCtrl = [[SPAlbumHomePageController alloc]init];
-    albumHpCtrl.album = [self.albums objectAtIndex:indexPath.item];
+    SPAlbum *album = [self.albums objectAtIndex:indexPath.item];
+    albumHpCtrl.album = album;
+    if (album.locked) {
+        BLOCK_WEAK_SELF
+        SPStartUpOperationController *suVC = [SPStartUpOperationController new];
+        suVC.operationType = SPStartUpOperationVerifyAlbumPW;
+        suVC.album = album;
+        [suVC setDissmissBlock:^(BOOL verifySuccess) {
+            if (verifySuccess) {
+                [weakSelf.navigationController pushViewController:albumHpCtrl animated:YES];
+            }
+        }];
+        SPNavigationController *nav = [[SPNavigationController alloc]initWithRootViewController:suVC];
+        nav.modalPresentationStyle = UIModalPresentationFullScreen;
+        [self presentViewController:nav animated:YES completion:nil];
+        return;
+    }
     [self.navigationController pushViewController:albumHpCtrl animated:YES];
 }
 
@@ -99,11 +115,14 @@ static NSString *const kHPCollCell = @"kHPCollCell";
 
 #pragma mark - Actions
 - (void)addNewPhotoAlbum:(UIButton*)sender {
-    SPNewAlbumOperationView *opView = [[SPNewAlbumOperationView alloc]initWithTitle:@"新建相簿" description:@"请完善相簿信息" confirmBlock:^(NSString *albumName, NSString *remark, BOOL locked) {
+    SPNewAlbumOperationView *opView = [[SPNewAlbumOperationView alloc]initWithTitle:@"新建相簿" description:@"请完善相簿信息" confirmBlock:^(NSString *albumName, NSString *remark, BOOL locked, NSString *password) {
         
         SPAlbum *album = [[SPAlbum alloc]initWithAlbumName:albumName];
         album.albumRemark = remark;
         album.locked = locked;
+        if (password.length > 0 && ![password isEqualToString:@" "]) {
+            album.password = password;
+        }
         [self.albums addObject:album];
         
         [SPFileManager addNewAlbum:album];
@@ -145,7 +164,7 @@ static NSString *const kHPCollCell = @"kHPCollCell";
     if (!AppContext.needStartUpVerify) return;
     
     SPStartUpOperationController *suVC = [SPStartUpOperationController new];
-    suVC.operationType = AppContext.isFirstLaunchApp ? SPStartUpOperationSetLoginPW : SPStartUpOperationVerify;
+    suVC.operationType = AppContext.isFirstLaunchApp ? SPStartUpOperationSetLoginPW : SPStartUpOperationVerifyLoginPW;
     SPNavigationController *nav = [[SPNavigationController alloc]initWithRootViewController:suVC];
     nav.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:nav animated:YES completion:nil];

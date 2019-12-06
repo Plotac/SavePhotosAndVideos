@@ -16,6 +16,8 @@
 
 @property (nonatomic,strong) NSMutableString *passwordStr;
 
+@property (nonatomic,strong) UITextField *albumTF;
+
 @end
 
 @implementation SPStartUpOperationController
@@ -35,8 +37,24 @@
 
 - (void)sp_viewDidLoad {
     [super sp_viewDidLoad];
-    
-    self.title = self.operationType == SPStartUpOperationSetLoginPW ? @"设置登录密码" : @"验证登录密码";
+
+    switch (self.operationType) {
+        case SPStartUpOperationSetLoginPW:{
+            self.title = @"设置登录密码";
+        }
+            break;
+        case SPStartUpOperationVerifyLoginPW:{
+            self.title = @"验证登录密码";
+        }
+            break;
+        case SPStartUpOperationVerifyAlbumPW:{
+            self.title = @"验证相册密码";
+        }
+            break;
+            
+        default:
+            break;
+    }
     
     
     if (FingerprintRecognition.systemVersionSupport && FingerprintRecognition.deviceSupport && AppContext.needFingerprintRecognition) {
@@ -68,111 +86,210 @@
 }
 
 - (void)textFieldTextDidChange:(NSNotification*)notifi {
-    if ([notifi.object isKindOfClass:[UITextField class]]) {
+    
+    if ([notifi.object isKindOfClass:[UITextField class]] && ![notifi.object isEqual:self.albumTF]) {//打开应用时的逻辑处理
         UITextField *tf = (UITextField*)notifi.object;
         if (tf.text.length == 1) {
             [self.passwordStr appendString:tf.text];
-            NSLog(@"password : %@",self.passwordStr);
             [tf resignFirstResponder];
             tf = (UITextField*)[self.view viewWithTag:tf.tag + 1];
             if (tf) {
                 [tf becomeFirstResponder];
             }else {
-                if (self.operationType == SPStartUpOperationSetLoginPW) {
-                    AppContext.loginPassword = self.passwordStr;
-                    [self dismissViewControllerAnimated:YES completion:nil];
-                }else {
-                    if ([self.passwordStr isEqualToString:AppContext.loginPassword]) {
-                        [self dismissViewControllerAnimated:YES completion:nil];
-                    }else {
-
-                        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"登录密码不正确！" message:nil preferredStyle: UIAlertControllerStyleAlert];
-                        UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                            for (NSInteger i=0; i<kDefaultPasswordNumberCount; i++) {
-                                UITextField *textField = (UITextField*)[self.view viewWithTag:100 + i];
-                                textField.text = @"";
-                                if (i == 0) {
-                                    [textField becomeFirstResponder];
-                                }
-                            }
-                            [self.passwordStr setString:@""];
-                        }];
-                        [alert addAction:action];
-                        [self presentViewController:alert animated:YES completion:nil];
+                
+                switch (self.operationType) {
+                    case SPStartUpOperationSetLoginPW:{
+                        AppContext.loginPassword = self.passwordStr;
                     }
+                        break;
+                    case SPStartUpOperationVerifyLoginPW:{
+                        if ([self.passwordStr isEqualToString:AppContext.loginPassword]) {
+                            [self dismissViewControllerAnimated:YES completion:^{
+                                if (self.dissmissBlock) {
+                                    self.dissmissBlock(YES);
+                                }
+                            }];
+                        }else {
+                            
+                            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"登录密码不正确！" message:nil preferredStyle: UIAlertControllerStyleAlert];
+                            UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                                for (NSInteger i=0; i<kDefaultPasswordNumberCount; i++) {
+                                    UITextField *textField = (UITextField*)[self.view viewWithTag:100 + i];
+                                    textField.text = @"";
+                                    if (i == 0) {
+                                        [textField becomeFirstResponder];
+                                    }
+                                }
+                                [self.passwordStr setString:@""];
+                            }];
+                            [alert addAction:action];
+                            [self presentViewController:alert animated:YES completion:nil];
+                        }
+                    }
+                        break;
+                    default:
+                        break;
+                        
                 }
             }
         }
+    }else {//相册验证
+        
     }
+}
+
+#pragma mark - Actions
+- (void)cancelAction:(UIButton*)sender {
+    [self dismissViewControllerAnimated:YES completion:^{
+        if (self.dissmissBlock) {
+            self.dissmissBlock(NO);
+        }
+    }];
+}
+
+- (void)verifyAction:(UIButton*)sender {
+    BOOL success = NO;
+    if ([[self.albumTF.text stringByReplacingOccurrencesOfString:@" " withString:@""] isEqualToString:self.album.password]) {
+        success = YES;
+    }
+    if (success) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            if (self.dissmissBlock) {
+                self.dissmissBlock(YES);
+            }
+        }];
+    }else {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"密码不正确！请重新输入" message:nil preferredStyle: UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            self.albumTF.text = @"";
+            [self.albumTF becomeFirstResponder];
+        }];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+}
+
+#pragma mark - SPBaseViewControllerNavUIDelegate
+- (NSArray<UIView*>*)leftNavBarItemCustomViews {
+    if (self.operationType != SPStartUpOperationVerifyAlbumPW) {
+        return nil;
+    }
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setTitle:@"取消" forState:UIControlStateNormal];
+    [btn setTitleColor:UIColorFromHexStr(@"#5893FB") forState:UIControlStateNormal];
+    btn.titleLabel.font = [UIFont systemFontOfSize:16];
+    btn.frame = CGRectMake(0, 0, 50, 40);
+    [btn addTarget:self action:@selector(cancelAction:) forControlEvents:UIControlEventTouchUpInside];
+    return @[btn];
+}
+
+- (NSArray<UIView*>*)rightNavBarItemCustomViews {
+    if (self.operationType != SPStartUpOperationVerifyAlbumPW) {
+        return nil;
+    }
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setTitle:@"验证" forState:UIControlStateNormal];
+    [btn setTitleColor:UIColorFromHexStr(@"#5893FB") forState:UIControlStateNormal];
+    btn.titleLabel.font = [UIFont systemFontOfSize:16];
+    btn.frame = CGRectMake(0, 0, 50, 40);
+    [btn addTarget:self action:@selector(verifyAction:) forControlEvents:UIControlEventTouchUpInside];
+    return @[btn];
 }
 
 #pragma mark - Private
 - (void)fingerprintRecognition {
     [FingerprintRecognition executeFingerprintRecognitionWithReason:@"请将手指轻放在Home键上验证指纹" state:^(BOOL success, NSInteger errorCode) {
         if (success) {//验证成功
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self dismissViewControllerAnimated:YES completion:^{
+                if (self.dissmissBlock) {
+                    self.dissmissBlock(YES);
+                }
+            }];
         }else {
-            switch (errorCode) {
-                case LAErrorAuthenticationFailed:{//验证失败
-                    [self initViews];
-                }
-                    break;
-                case LAErrorUserCancel:{//被用户手动取消
-                    [self initViews];
-                }
-                    break;
-                case LAErrorUserFallback:{//用户不使用TouchID,选择手动输入密码
-                    [self initViews];
-                }
-                    break;
-                case LAErrorSystemCancel:{//被系统取消 (如遇到来电,锁屏,按了Home键等)
-                }
-                    break;
-                case LAErrorPasscodeNotSet:{//无法启动,因为用户没有设置密码
-                }
-                    break;
-                case LAErrorTouchIDNotEnrolled:{//无法启动,因为用户没有设置TouchID
-                }
-                    break;
-                case LAErrorTouchIDNotAvailable:{//TouchID 无效
-                    [self initViews];
-                }
-                    break;
-                case LAErrorTouchIDLockout:{//TouchID 被锁定(连续多次验证TouchID失败,系统需要用户手动输入密码)
-                }
-                    break;
-                case LAErrorAppCancel:{//当前软件被挂起并取消了授权 (如App进入了后台等)
-                }
-                    break;
-                case LAErrorInvalidContext:{//当前软件被挂起并取消了授权 (LAContext对象无效)
-                }
-                    break;
-                default:
-                    break;
-            }
+            [self initViews];
+//            switch (errorCode) {
+//                case LAErrorAuthenticationFailed:{//验证失败
+//                    [self initViews];
+//                }
+//                    break;
+//                case LAErrorUserCancel:{//被用户手动取消
+//                    [self initViews];
+//                }
+//                    break;
+//                case LAErrorUserFallback:{//用户不使用TouchID,选择手动输入密码
+//                    [self initViews];
+//                }
+//                    break;
+//                case LAErrorSystemCancel:{//被系统取消 (如遇到来电,锁屏,按了Home键等)
+//                }
+//                    break;
+//                case LAErrorPasscodeNotSet:{//无法启动,因为用户没有设置密码
+//                }
+//                    break;
+//                case LAErrorTouchIDNotEnrolled:{//无法启动,因为用户没有设置TouchID
+//                }
+//                    break;
+//                case LAErrorTouchIDNotAvailable:{//TouchID 无效
+//                    [self initViews];
+//                }
+//                    break;
+//                case LAErrorTouchIDLockout:{//TouchID 被锁定(连续多次验证TouchID失败,系统需要用户手动输入密码)
+//                }
+//                    break;
+//                case LAErrorAppCancel:{//当前软件被挂起并取消了授权 (如App进入了后台等)
+//                }
+//                    break;
+//                case LAErrorInvalidContext:{//当前软件被挂起并取消了授权 (LAContext对象无效)
+//                }
+//                    break;
+//                default:
+//                    break;
+//            }
         }
     }];
 }
 
 - (void)initViews {
 
-    for (NSInteger i=0; i<kDefaultPasswordNumberCount; i++) {
-        
-        UITextField *tf = [UITextField JA_textFieldWithKeyboardType:UIKeyboardTypeNumberPad superView:self.view constraints:^(MASConstraintMaker *make) {
+    if (self.operationType == SPStartUpOperationVerifyAlbumPW) {
+        self.albumTF = [UITextField JA_textFieldWithKeyboardType:UIKeyboardTypeASCIICapable superView:self.view constraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(kStatusBarHeight + kNavToolBarHeight + 80);
-            make.left.equalTo(self.view).with.offset(kBorderMargin + i *( 55 + (kScreenW - kBorderMargin*2 - 55*kDefaultPasswordNumberCount)/(kDefaultPasswordNumberCount-1) ));
-            make.size.mas_equalTo(CGSizeMake(55, 55));
+            make.left.equalTo(self.view).with.offset(kBorderMargin);
+            make.right.equalTo(self.view).with.offset(-kBorderMargin);
+            make.height.mas_equalTo(55);
         }];
-        tf.tag = 100 + i;
-        tf.layer.cornerRadius = 5;
-        tf.clipsToBounds = YES;
-        tf.backgroundColor = UIColor.whiteColor;
-        tf.textAlignment = NSTextAlignmentCenter;
-        tf.delegate = self;
-        if (i == 0) {
-            [tf becomeFirstResponder];
+        self.albumTF.font = kSystemFont(20);
+        self.albumTF.layer.cornerRadius = 5;
+        self.albumTF.clipsToBounds = YES;
+        self.albumTF.backgroundColor = UIColor.whiteColor;
+        self.albumTF.secureTextEntry = YES;
+        self.albumTF.leftView = [[UIView alloc]initWithFrame:CGRectMake(10, 1, 7, 26)];
+        self.albumTF.leftViewMode = UITextFieldViewModeAlways;
+        [self.albumTF becomeFirstResponder];
+    }
+    else {
+        UITextField *tf = nil;
+        for (NSInteger i=0; i<kDefaultPasswordNumberCount; i++) {
+            
+            tf = [UITextField JA_textFieldWithKeyboardType:UIKeyboardTypeNumberPad superView:self.view constraints:^(MASConstraintMaker *make) {
+                make.top.mas_equalTo(kStatusBarHeight + kNavToolBarHeight + 80);
+                make.left.equalTo(self.view).with.offset(kBorderMargin + i *( 55 + (kScreenW - kBorderMargin*2 - 55*kDefaultPasswordNumberCount)/(kDefaultPasswordNumberCount-1) ));
+                make.size.mas_equalTo(CGSizeMake(55, 55));
+            }];
+            tf.tag = 100 + i;
+            tf.font = kSystemFont(20);
+            tf.layer.cornerRadius = 5;
+            tf.clipsToBounds = YES;
+            tf.backgroundColor = UIColor.whiteColor;
+            tf.textAlignment = NSTextAlignmentCenter;
+            tf.delegate = self;
+            tf.secureTextEntry = YES;
+            if (i == 0) {
+                [tf becomeFirstResponder];
+            }
         }
     }
+
 }
 
 @end

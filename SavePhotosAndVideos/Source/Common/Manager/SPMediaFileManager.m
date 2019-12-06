@@ -143,6 +143,7 @@
         self.albumRemark = [coder decodeObjectForKey:@"albumRemark"];
         self.media = [coder decodeObjectForKey:@"media"];
         self.locked = [coder decodeBoolForKey:@"locked"];
+        self.password = [coder decodeObjectForKey:@"password"];
         self.albumID = [coder decodeObjectForKey:@"albumID"];
         self.creationTimeString = [coder decodeObjectForKey:@"creationTimeString"];
     }
@@ -154,6 +155,7 @@
     [coder encodeObject:self.albumRemark forKey:@"albumRemark"];
     [coder encodeObject:self.media forKey:@"media"];
     [coder encodeBool:self.locked forKey:@"locked"];
+    [coder encodeObject:self.password forKey:@"password"];
     [coder encodeObject:self.albumID forKey:@"albumID"];
     [coder encodeObject:self.creationTimeString forKey:@"creationTimeString"];
 }

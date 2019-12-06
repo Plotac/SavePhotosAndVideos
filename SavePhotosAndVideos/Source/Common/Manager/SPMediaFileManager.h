@@ -77,6 +77,11 @@
 @property (nonatomic,assign) BOOL locked;
 
 /*
+ 相册密码(相册不加密时默认为@"")
+ */
+@property (nonatomic,copy) NSString *password;
+
+/*
  创建相册时根据时间戳(精确到毫秒)生成的唯一id
  */
 @property (nonatomic,copy,readonly) NSString *albumID;

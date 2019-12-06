@@ -28,7 +28,6 @@ static NSString *const kSettingTabCell = @"kSettingTabCell";
     
     [self setupItems];
     [self initViews];
-    
 }
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate
@@ -50,21 +49,20 @@ static NSString *const kSettingTabCell = @"kSettingTabCell";
 - (void)setupItems {
     
     SPSettingItem *stVerifyItem = [SPSettingItem new];
-    stVerifyItem.title = @"开机身份验证";
+    stVerifyItem.title = @"打开应用时进行身份验证";
     stVerifyItem.module = SPSettingModule_StartingUpVerify;
     stVerifyItem.cellType = SPSettingTabCellType_Switch;
     
-    SPSettingItem *fingerprintRecognitionItem = [SPSettingItem new];
-    fingerprintRecognitionItem.title = @"指纹识别";
-    fingerprintRecognitionItem.module = SPSettingModule_FingerprintRecognitionItem;
-    fingerprintRecognitionItem.cellType = SPSettingTabCellType_Switch;
+    SPSettingItem *fingerprintRecognitionItem = nil;
+    if (FingerprintRecognition.systemVersionSupport && FingerprintRecognition.deviceSupport) {
+        fingerprintRecognitionItem = [SPSettingItem new];
+        fingerprintRecognitionItem.title = @"指纹识别";
+        fingerprintRecognitionItem.module = SPSettingModule_FingerprintRecognitionItem;
+        fingerprintRecognitionItem.cellType = SPSettingTabCellType_Switch;
+    }
 
-    
     self.settingItems = @[
-        @[
-            stVerifyItem,
-            fingerprintRecognitionItem
-        ],
+        [NSArray arrayWithObjects:stVerifyItem, fingerprintRecognitionItem ? fingerprintRecognitionItem : nil,nil],
     ].mutableCopy;
 }
 

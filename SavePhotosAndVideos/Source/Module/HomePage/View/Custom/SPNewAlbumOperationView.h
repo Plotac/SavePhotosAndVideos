@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^SPNAOperationConfirmBlock)(NSString *albumName,NSString *remark,BOOL locked);
+typedef void(^SPNAOperationConfirmBlock)(NSString *albumName,NSString *remark,BOOL locked,NSString *password);
 
 @interface SPNewAlbumOperationView : UIView
 

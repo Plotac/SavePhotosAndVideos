@@ -7,6 +7,7 @@
 //
 
 #import "SPAppDelegate.h"
+#import "IQKeyboardManager.h"
 
 @interface SPAppDelegate ()
 
@@ -22,8 +23,16 @@
     self.rootViewController = [[SPRootViewController alloc]init];
     self.window.rootViewController = self.rootViewController;
     [self.window makeKeyAndVisible];
+    
+    [self configThirdLibrary];
 
     return YES;
+}
+
+- (void)configThirdLibrary {
+    [IQKeyboardManager sharedManager].enable = YES;
+    [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
+    [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
 }
 
 @end
