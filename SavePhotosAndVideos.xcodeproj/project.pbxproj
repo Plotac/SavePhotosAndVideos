@@ -13,6 +13,7 @@
 		095FECDA236BC26200C02105 /* SPRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 095FECD9236BC26200C02105 /* SPRootViewController.m */; };
 		095FECDD236C1B0400C02105 /* SPProjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 095FECDC236C1B0400C02105 /* SPProjectContext.m */; };
 		095FF2DA2369749B0008347A /* SPAppContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 095FF2D92369749B0008347A /* SPAppContext.m */; };
+		0971CE5F2399F10300A9FA2E /* UITextField+DeleteBackward.m in Sources */ = {isa = PBXBuildFile; fileRef = 0971CE5E2399F10300A9FA2E /* UITextField+DeleteBackward.m */; };
 		0987148F2361408600F49BFA /* UICollectionView+Constraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 0987147F2361408600F49BFA /* UICollectionView+Constraint.m */; };
 		098714902361408600F49BFA /* UIView+Constraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 098714832361408600F49BFA /* UIView+Constraint.m */; };
 		098714912361408600F49BFA /* UILabel+Constraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 098714842361408600F49BFA /* UILabel+Constraint.m */; };
@@ -25,6 +26,7 @@
 		09A74040236AD619007D7C62 /* SPTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A7403A236AD619007D7C62 /* SPTabBar.m */; };
 		09A74041236AD619007D7C62 /* SPTabBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A7403B236AD619007D7C62 /* SPTabBarItem.m */; };
 		09A74042236AD619007D7C62 /* SPTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A7403E236AD619007D7C62 /* SPTabBarViewController.m */; };
+		09D45B622398E1390010277C /* SPStartUpOperationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09D45B612398E1390010277C /* SPStartUpOperationController.m */; };
 		09E222BF235FEB35007EB242 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09E222B4235FEB35007EB242 /* Images.xcassets */; };
 		09E222D1235FEBDA007EB242 /* JAUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 09E222C9235FEBDA007EB242 /* JAUtilities.m */; };
 		09E222D4235FEC4B007EB242 /* SPNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09E222D3235FEC4B007EB242 /* SPNavigationController.m */; };
@@ -64,6 +66,8 @@
 		095FECDC236C1B0400C02105 /* SPProjectContext.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPProjectContext.m; sourceTree = "<group>"; };
 		095FF2D82369749B0008347A /* SPAppContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPAppContext.h; sourceTree = "<group>"; };
 		095FF2D92369749B0008347A /* SPAppContext.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPAppContext.m; sourceTree = "<group>"; };
+		0971CE5D2399F10300A9FA2E /* UITextField+DeleteBackward.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITextField+DeleteBackward.h"; sourceTree = "<group>"; };
+		0971CE5E2399F10300A9FA2E /* UITextField+DeleteBackward.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITextField+DeleteBackward.m"; sourceTree = "<group>"; };
 		0987147E2361408600F49BFA /* UITableView+Constraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+Constraint.h"; sourceTree = "<group>"; };
 		0987147F2361408600F49BFA /* UICollectionView+Constraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+Constraint.m"; sourceTree = "<group>"; };
 		098714802361408600F49BFA /* UITextField+Constraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+Constraint.h"; sourceTree = "<group>"; };
@@ -89,6 +93,8 @@
 		09A7403D236AD619007D7C62 /* SPTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTabBarViewController.h; sourceTree = "<group>"; };
 		09A7403E236AD619007D7C62 /* SPTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTabBarViewController.m; sourceTree = "<group>"; };
 		09A7403F236AD619007D7C62 /* SPTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTabBar.h; sourceTree = "<group>"; };
+		09D45B602398E1390010277C /* SPStartUpOperationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPStartUpOperationController.h; sourceTree = "<group>"; };
+		09D45B612398E1390010277C /* SPStartUpOperationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPStartUpOperationController.m; sourceTree = "<group>"; };
 		09E222B4235FEB35007EB242 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		09E222C9235FEBDA007EB242 /* JAUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAUtilities.m; sourceTree = "<group>"; };
 		09E222CA235FEBDA007EB242 /* JAUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAUtilities.h; sourceTree = "<group>"; };
@@ -201,6 +207,8 @@
 			isa = PBXGroup;
 			children = (
 				0987147D2361408600F49BFA /* DZHConstraintKit */,
+				0971CE5D2399F10300A9FA2E /* UITextField+DeleteBackward.h */,
+				0971CE5E2399F10300A9FA2E /* UITextField+DeleteBackward.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -248,6 +256,15 @@
 			path = Setting;
 			sourceTree = "<group>";
 		};
+		09D45B5F2398E0E20010277C /* StartUp */ = {
+			isa = PBXGroup;
+			children = (
+				09D45B602398E1390010277C /* SPStartUpOperationController.h */,
+				09D45B612398E1390010277C /* SPStartUpOperationController.m */,
+			);
+			path = StartUp;
+			sourceTree = "<group>";
+		};
 		09E222B3235FEB35007EB242 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
@@ -273,6 +290,7 @@
 			children = (
 				095FECD8236BC26200C02105 /* SPRootViewController.h */,
 				095FECD9236BC26200C02105 /* SPRootViewController.m */,
+				09D45B5F2398E0E20010277C /* StartUp */,
 				09E222C4235FEBDA007EB242 /* HomePage */,
 				09A74036236AD31D007D7C62 /* Setting */,
 			);
@@ -569,6 +587,7 @@
 				095FECDA236BC26200C02105 /* SPRootViewController.m in Sources */,
 				09A74040236AD619007D7C62 /* SPTabBar.m in Sources */,
 				09E908B32371188B00524882 /* SPSettingTabCell.m in Sources */,
+				0971CE5F2399F10300A9FA2E /* UITextField+DeleteBackward.m in Sources */,
 				0914DD06235DAE20009C555B /* SPAppDelegate.m in Sources */,
 				09A74041236AD619007D7C62 /* SPTabBarItem.m in Sources */,
 				0987148F2361408600F49BFA /* UICollectionView+Constraint.m in Sources */,
@@ -595,6 +614,7 @@
 				09E908AB2371180300524882 /* SPNewAlbumOperationView.m in Sources */,
 				09E222D4235FEC4B007EB242 /* SPNavigationController.m in Sources */,
 				098714922361408600F49BFA /* UITableView+Constraint.m in Sources */,
+				09D45B622398E1390010277C /* SPStartUpOperationController.m in Sources */,
 				09E908932371125800524882 /* MASViewAttribute.m in Sources */,
 				098714932361408600F49BFA /* UIImageView+Constraint.m in Sources */,
 				09E222D1235FEBDA007EB242 /* JAUtilities.m in Sources */,

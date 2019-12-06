@@ -10,6 +10,7 @@
 #import "SPNewAlbumOperationView.h"
 #import "SPAlbumCell.h"
 #import "SPAlbumHomePageController.h"
+#import "SPStartUpOperationController.h"
 
 static NSString *const kHPCollCell = @"kHPCollCell";
 
@@ -25,6 +26,7 @@ static NSString *const kHPCollCell = @"kHPCollCell";
 
 @implementation SPHomePageViewController
 
+#pragma mark - Life Cycle
 - (void)sp_initExtendedData {
     [super sp_initExtendedData];
     self.albums = [NSMutableArray array];
@@ -37,6 +39,7 @@ static NSString *const kHPCollCell = @"kHPCollCell";
     self.title = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
     
     [self initViews];
+    [self loginHandled];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -134,6 +137,18 @@ static NSString *const kHPCollCell = @"kHPCollCell";
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
+}
+
+
+- (void)loginHandled {
+    
+    if (!AppContext.needStartUpVerify) return;
+    
+    SPStartUpOperationController *suVC = [SPStartUpOperationController new];
+    suVC.operationType = AppContext.isFirstLaunchApp ? SPStartUpOperationSetLoginPW : SPStartUpOperationVerify;
+    SPNavigationController *nav = [[SPNavigationController alloc]initWithRootViewController:suVC];
+    nav.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 - (NSMutableArray*)albums {

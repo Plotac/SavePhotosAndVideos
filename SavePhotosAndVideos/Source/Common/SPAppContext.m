@@ -8,8 +8,10 @@
 
 #import "SPAppContext.h"
 
+static NSString *const kLoginPasswordKey = @"kLoginPasswordKey";
 static NSString *const kNeedStartUpVerifyKey = @"kNeedStartUpVerifyKey";
 static NSString *const kNeedFingerprintRecognitionkey = @"kNeedFingerprintRecognitionkey";
+static NSString *const kAppFirstLaunch = @"kAppFirstLaunch";
 
 @implementation SPAppContext
 
@@ -25,28 +27,54 @@ static NSString *const kNeedFingerprintRecognitionkey = @"kNeedFingerprintRecogn
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.needStartUpVerify = [[UserDefaults objectForKey:kNeedStartUpVerifyKey] integerValue] == 0 ? 0 : [[UserDefaults objectForKey:kNeedStartUpVerifyKey] integerValue];
-        self.needFingerprintRecognition = [[UserDefaults objectForKey:kNeedFingerprintRecognitionkey] integerValue] == 0 ? 0 : [[UserDefaults objectForKey:kNeedFingerprintRecognitionkey] integerValue];
     }
     return self;
 }
 
-- (void)setNeedStartUpVerify:(NSInteger)needStartUpVerify {
-    [UserDefaults setInteger:needStartUpVerify forKey:kNeedStartUpVerifyKey];
+- (void)setLoginPassword:(NSString *)loginPassword {
+    [UserDefaults setObject:loginPassword forKey:kLoginPasswordKey];
     [UserDefaults synchronize];
 }
 
-- (NSInteger)needStartUpVerify {
-    return [[UserDefaults objectForKey:kNeedStartUpVerifyKey] integerValue];
+- (NSString*)loginPassword {
+    return [UserDefaults objectForKey:kLoginPasswordKey];
 }
 
-- (void)setNeedFingerprintRecognition:(NSInteger)needFingerprintRecognition {
-    [UserDefaults setInteger:needFingerprintRecognition forKey:kNeedFingerprintRecognitionkey];
+- (void)setNeedStartUpVerify:(BOOL)needStartUpVerify {
+    [UserDefaults setObject:@(needStartUpVerify) forKey:kNeedStartUpVerifyKey];
     [UserDefaults synchronize];
 }
 
-- (NSInteger)needFingerprintRecognition {
-    return [[UserDefaults objectForKey:kNeedFingerprintRecognitionkey] integerValue];
+- (BOOL)needStartUpVerify {
+    id val = [UserDefaults objectForKey:kNeedStartUpVerifyKey];
+    if (!val) {
+        [self setNeedStartUpVerify:YES];
+        return YES;
+    }
+    return [val boolValue];
+}
+
+- (void)setNeedFingerprintRecognition:(BOOL)needFingerprintRecognition {
+    [UserDefaults setObject:@(needFingerprintRecognition) forKey:kNeedFingerprintRecognitionkey];
+    [UserDefaults synchronize];
+}
+
+- (BOOL)needFingerprintRecognition {
+    id val = [UserDefaults objectForKey:kNeedFingerprintRecognitionkey];
+    if (!val) {
+        [self setNeedFingerprintRecognition:NO];
+        return NO;
+    }
+    return [val boolValue];
+}
+
+- (BOOL)isFirstLaunchApp {
+    BOOL firstLaunch = [[UserDefaults objectForKey:kAppFirstLaunch] boolValue];
+    if (!firstLaunch) {
+        [UserDefaults setObject:@(YES) forKey:kAppFirstLaunch];
+        [UserDefaults synchronize];
+    }
+    return !firstLaunch;
 }
 
 @end

@@ -170,6 +170,7 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
     
 }
 
+#pragma mark - Private
 - (void)initViews {
     self.pickerCtrl.delegate = self;
     self.pickerCtrl.allowsEditing = YES;

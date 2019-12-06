@@ -90,11 +90,26 @@
 }
 
 - (void)switchViewAction:(SPSwitchView*)swView {
+//    if (self.item.module == SPSettingModule_StartingUpVerify) {
+//        AppContext.needStartUpVerify = swView.selectedIndex == 0 ? 100 : 200;
+//    }
+//    else if (self.item.module == SPSettingModule_FingerprintRecognitionItem) {
+//        AppContext.needFingerprintRecognition = swView.selectedIndex == 0 ? 100 : 200;
+//    }
     if (self.item.module == SPSettingModule_StartingUpVerify) {
-        AppContext.needStartUpVerify = swView.selectedIndex == 0 ? 100 : 200;
+        AppContext.needStartUpVerify = swView.selectedIndex == 0 ? YES : NO;
     }
     else if (self.item.module == SPSettingModule_FingerprintRecognitionItem) {
-        AppContext.needFingerprintRecognition = swView.selectedIndex == 0 ? 100 : 200;
+        AppContext.needFingerprintRecognition = swView.selectedIndex == 0 ? YES : NO;
+    }
+}
+
+- (void)testac:(UISwitch*)sw {
+    if (self.item.module == SPSettingModule_StartingUpVerify) {
+        AppContext.needStartUpVerify = sw.on ? YES : NO;
+    }
+    else if (self.item.module == SPSettingModule_FingerprintRecognitionItem) {
+        AppContext.needFingerprintRecognition = sw.on ? YES : NO;
     }
 }
 
@@ -110,18 +125,18 @@
             NSArray *titles = @[@"开启",@"关闭"];
             NSInteger defaultSelectedIndex = 0;
             if (self.item.module == SPSettingModule_StartingUpVerify) {
-                defaultSelectedIndex = (AppContext.needStartUpVerify == 100 || AppContext.needStartUpVerify == 0) ? 0 : 1;
+                defaultSelectedIndex = AppContext.needStartUpVerify ? 0 : 1;
             }
             else if (self.item.module == SPSettingModule_FingerprintRecognitionItem) {
-                defaultSelectedIndex = (AppContext.needFingerprintRecognition == 100 || AppContext.needFingerprintRecognition == 0) ? 0 : 1;
+                defaultSelectedIndex = AppContext.needFingerprintRecognition ? 0 : 1;
             }
             
             if (!self.switchView) {
                 self.switchView = [[SPSwitchView alloc]initWithFrame:CGRectMake(kScreenW - 100 - 15, 25/2, 100, 25) titles:titles];
-                self.switchView.selectedIndex = defaultSelectedIndex;
                 [self.switchView addTarget:self action:@selector(switchViewAction:) forControlEvents:UIControlEventValueChanged];
                 [self.contentView addSubview:self.switchView];
             }
+            self.switchView.selectedIndex = defaultSelectedIndex;
 
         }
             break;
@@ -137,14 +152,6 @@
             break;
         default:{
             self.accessoryType = UITableViewCellAccessoryNone;
-            if (self.switchView) {
-                [self.switchView removeFromSuperview];
-                self.switchView = nil;
-            }
-            if (self.rightTextLab) {
-                [self.rightTextLab removeFromSuperview];
-                self.rightTextLab = nil;
-            }
         }
             break;
     }

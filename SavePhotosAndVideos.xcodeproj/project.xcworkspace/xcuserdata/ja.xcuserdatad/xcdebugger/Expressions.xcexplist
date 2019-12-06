@@ -19,24 +19,21 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[SPTabBar setupTabBarView]:SPTabBar.m">
+         contextName = "-[SPAppContext init]:SPAppContext.m">
          <PersistentStrings>
             <PersistentString
-               value = "self.tabBarItems">
+               value = "self.needFingerprintRecognition">
+            </PersistentString>
+            <PersistentString
+               value = "self.needStartUpVerify">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[SPSettingTabCell switchViewAction:]:SPSettingTabCell.m">
+         contextName = "-[SPTabBar setupTabBarView]:SPTabBar.m">
          <PersistentStrings>
             <PersistentString
-               value = "swView.selectedIndex">
-            </PersistentString>
-            <PersistentString
-               value = "[SPAppContext sharedInstance].needFingerprintRecognition">
-            </PersistentString>
-            <PersistentString
-               value = "[SPAppContext sharedInstance].needStartUpVerify">
+               value = "self.tabBarItems">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -49,27 +46,18 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[SPSettingTabCell initIndependentViews]:SPSettingTabCell.m">
+         contextName = "-[SPAlbumHomePageController sp_viewDidLoad]:SPAlbumHomePageController.m">
          <PersistentStrings>
             <PersistentString
-               value = "self.item">
-            </PersistentString>
-            <PersistentString
-               value = "[SPAppContext sharedInstance].needFingerprintRecognition">
-            </PersistentString>
-            <PersistentString
-               value = "[SPAppContext sharedInstance].needStartUpVerify">
+               value = "self.album">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[SPAppContext init]:SPAppContext.m">
+         contextName = "-[MainViewController viewWillAppear:]:MainViewController.m">
          <PersistentStrings>
             <PersistentString
-               value = "self.needFingerprintRecognition">
-            </PersistentString>
-            <PersistentString
-               value = "self.needStartUpVerify">
+               value = "[SPMediaFileManager defaultSPMediaFileManager].albums">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -97,6 +85,14 @@
          <PersistentStrings>
             <PersistentString
                value = "self.btns">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SPStartUpOperationController textFieldTextDidChange:]:SPStartUpOperationController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[SPAppContext sharedInstance].loginPassword">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -137,6 +133,34 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "-[SPSettingTabCell initIndependentViews]:SPSettingTabCell.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[SPAppContext sharedInstance].needStartUpVerify">
+            </PersistentString>
+            <PersistentString
+               value = "self.item">
+            </PersistentString>
+            <PersistentString
+               value = "[SPAppContext sharedInstance].needFingerprintRecognition">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SPSettingTabCell switchViewAction:]:SPSettingTabCell.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "swView.selectedIndex">
+            </PersistentString>
+            <PersistentString
+               value = "[SPAppContext sharedInstance].needFingerprintRecognition">
+            </PersistentString>
+            <PersistentString
+               value = "[SPAppContext sharedInstance].needStartUpVerify">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[SPVideoFileManager synchronizeLocalAlbums]:SPVideoFileManager.m">
       </ContextState>
       <ContextState
@@ -144,22 +168,6 @@
          <PersistentStrings>
             <PersistentString
                value = "[[NSBundle mainBundle] infoDictionary]">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "-[SPAlbumHomePageController sp_viewDidLoad]:SPAlbumHomePageController.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.album">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "-[MainViewController viewWillAppear:]:MainViewController.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "[SPMediaFileManager defaultSPMediaFileManager].albums">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
