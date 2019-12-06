@@ -252,6 +252,14 @@
 
         if (lock) {
             NSString *password = [self.passwordTF.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+            if (password.length == 0) {
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"密码不能为空！请重新输入" message:nil preferredStyle: UIAlertControllerStyleAlert];
+                UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                }];
+                [alert addAction:action];
+                [ProjectContext.currentVisibleViewControler presentViewController:alert animated:YES completion:nil];
+                return;
+            }
             if ([password isEqualToString:[self.confirmTF.text stringByReplacingOccurrencesOfString:@" " withString:@""]]) {
                 self.confirmBlock(albumName, remark,lock,password);
                 [self removeFromSuperview];
