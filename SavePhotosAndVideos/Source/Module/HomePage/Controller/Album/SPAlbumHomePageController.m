@@ -142,7 +142,7 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
 - (NSArray<UIView*>*)rightNavBarItemCustomViews {
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setTitle:@"+" forState:UIControlStateNormal];
-    [btn setTitleColor:UIColorFromHexStr(@"#5893FB") forState:UIControlStateNormal];
+    [btn setTitleColor:kNavBarTitleColor forState:UIControlStateNormal];
     btn.titleLabel.font = [UIFont systemFontOfSize:30];
     btn.frame = CGRectMake(0, 0, 50, 40);
     [btn addTarget:self action:@selector(addNewPhoto:) forControlEvents:UIControlEventTouchUpInside];

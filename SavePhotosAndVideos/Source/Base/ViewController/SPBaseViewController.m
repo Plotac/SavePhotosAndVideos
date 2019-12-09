@@ -25,10 +25,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.navUIDelegate = self;
-    [self sp_viewDidLoad];
+    
     self.view.backgroundColor = UIColorFromHexStr(@"#F1F0F1");
+    [self setBackBarItem];
     [self setNavBarItems];
+    
+    [self sp_viewDidLoad];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -98,6 +102,22 @@
         }
         self.navigationItem.rightBarButtonItems = barItems;
     }
+}
+
+- (void)setBackBarItem {
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *img = kImageName(@"NavBar_backIcon");
+    img = [img fillImageWithColor:UIColor.whiteColor];
+    [btn setBackgroundImage:img forState:UIControlStateNormal];
+    btn.frame = CGRectMake(0, 0, 30, 28);
+    btn.imageEdgeInsets = UIEdgeInsetsMake(0, -30, 0, 0);
+    btn.contentMode = UIViewContentModeCenter;
+    [btn addTarget:self action:@selector(backAction:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
+}
+
+- (void)backAction:(UIButton*)sender {
+    [ProjectContext.currentNavigationViewControler popViewControllerAnimated:YES];
 }
 
 @end

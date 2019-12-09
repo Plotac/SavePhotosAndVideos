@@ -17,6 +17,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationBar.translucent = NO;
+    self.navigationBar.backgroundColor = kNavBarColor;
+    [self.navigationBar setBackgroundImage:[UIImage imageWithColor:kNavBarColor size:CGSizeMake(1, 1) alpha:1] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
 }
 
 @end

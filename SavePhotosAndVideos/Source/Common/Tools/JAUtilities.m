@@ -92,6 +92,35 @@
 @end
 
 
+@implementation UIImage (Util)
+
++ (UIImage*)imageWithColor:(UIColor *)color size:(CGSize)size alpha:(CGFloat)alpha {
+    UIGraphicsBeginImageContextWithOptions(size, NO, 1);
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    CGContextSetAlpha(ctx, alpha);
+    CGContextSetFillColorWithColor(ctx, [color CGColor]);
+    CGContextAddRect(ctx, CGRectMake(0, 0, size.width, size.height));
+    CGContextDrawPath(ctx, kCGPathFill);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
+
+- (UIImage*)fillImageWithColor:(UIColor*)color {
+    CGRect rect = CGRectMake(0, 0, self.size.width, self.size.height);
+    UIGraphicsBeginImageContextWithOptions(rect.size, NO,[UIScreen mainScreen].scale);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextTranslateCTM(context, 0, self.size.height);
+    CGContextScaleCTM(context, 1.0, -1.0);
+    CGContextClipToMask(context, rect, self.CGImage);
+    CGContextFillRect(context, rect);
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return img;
+}
+
+@end
 
 
 

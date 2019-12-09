@@ -47,7 +47,7 @@
     self.titleLab.text = _item.title;
     self.subTitleLab.text = _item.subTitle;
     if (_item.showHeaderImg) {
-        self.headerImg.image = [UIImage imageNamed:_item.imgStr];
+        self.headerImg.image = kImageName(_item.imgStr);
     }else {
         [self.titleLab mas_updateConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.contentView).with.offset(15);

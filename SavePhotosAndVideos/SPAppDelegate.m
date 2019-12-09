@@ -25,6 +25,8 @@
     [self.window makeKeyAndVisible];
     
     [self configThirdLibrary];
+    
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 
     return YES;
 }

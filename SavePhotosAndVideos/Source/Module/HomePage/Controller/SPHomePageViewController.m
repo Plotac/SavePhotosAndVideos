@@ -96,7 +96,7 @@ static NSString *const kHPCollCell = @"kHPCollCell";
 - (NSArray<UIView*>*)rightNavBarItemCustomViews {
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setTitle:@"+" forState:UIControlStateNormal];
-    [btn setTitleColor:UIColorFromHexStr(@"#5893FB") forState:UIControlStateNormal];
+    [btn setTitleColor:kNavBarTitleColor forState:UIControlStateNormal];
     btn.titleLabel.font = [UIFont systemFontOfSize:30];
     btn.frame = CGRectMake(0, 0, 50, 40);
     [btn addTarget:self action:@selector(addNewPhotoAlbum:) forControlEvents:UIControlEventTouchUpInside];
@@ -106,7 +106,7 @@ static NSString *const kHPCollCell = @"kHPCollCell";
 - (NSArray<UIView*>*)leftNavBarItemCustomViews {
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setTitle:@"-" forState:UIControlStateNormal];
-    [btn setTitleColor:UIColorFromHexStr(@"#5893FB") forState:UIControlStateNormal];
+    [btn setTitleColor:kNavBarTitleColor forState:UIControlStateNormal];
     btn.titleLabel.font = [UIFont systemFontOfSize:30];
     btn.frame = CGRectMake(0, 0, 50, 40);
     [btn addTarget:self action:@selector(deleteNewPhotoAlbum:) forControlEvents:UIControlEventTouchUpInside];

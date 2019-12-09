@@ -25,6 +25,9 @@
 #define kToolBarHeight                  49        // 底部工具栏
 #define kTabBarHeight                   (IS_IPHONE_X ? IPHONEX_MARGIN_BOTTOM_TOTAL:kToolBarHeight)  // TabBar高度
 
+#define kNavBarColor                UIColorFromRGBA(64, 135, 228, 1)
+#define kNavBarTitleColor           [UIColor whiteColor]
+
 #define kSystemFont(f)              [UIFont systemFontOfSize:f]
 #define kSystemNormalItemColor      UIColorFromRGBA(54, 120, 243, 1)
 #define kSystemDisabledItemColor    UIColorFromRGBA(150, 150, 150, 1)
@@ -63,6 +66,15 @@
 + (UIColor *)colorWithHexString:(NSString *)color;
 
 + (BOOL)isIPhoneXOrAfter;
+
+@end
+
+
+
+@interface UIImage (Util)
+
++ (UIImage *)imageWithColor:(UIColor *)color size:(CGSize)size alpha:(CGFloat)alpha;
+- (UIImage*)fillImageWithColor:(UIColor*)color;
 
 @end
 
