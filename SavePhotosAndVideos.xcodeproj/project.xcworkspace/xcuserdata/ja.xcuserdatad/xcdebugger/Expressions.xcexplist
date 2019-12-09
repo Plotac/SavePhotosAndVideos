@@ -9,7 +9,10 @@
          contextName = "-[SPAlbumHomePageController viewWillAppear:]:SPAlbumHomePageController.m">
          <PersistentStrings>
             <PersistentString
-               value = "self.media">
+               value = "self.mediaArray">
+            </PersistentString>
+            <PersistentString
+               value = "self.album">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -101,13 +104,13 @@
          contextName = "-[SPSettingTabCell initIndependentViews]:SPSettingTabCell.m">
          <PersistentStrings>
             <PersistentString
+               value = "[SPAppContext sharedInstance].needStartUpVerify">
+            </PersistentString>
+            <PersistentString
                value = "[SPAppContext sharedInstance].needFingerprintRecognition">
             </PersistentString>
             <PersistentString
                value = "self.item">
-            </PersistentString>
-            <PersistentString
-               value = "[SPAppContext sharedInstance].needStartUpVerify">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -161,8 +164,19 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "-[SPAlbumHomePageController collectionView:numberOfItemsInSection:]:SPAlbumHomePageController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.media">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[SPAlbumHomePageController imagePickerController:didFinishPickingMediaWithInfo:]:SPAlbumHomePageController.m">
          <PersistentStrings>
+            <PersistentString
+               value = "self.mediaArray">
+            </PersistentString>
             <PersistentString
                value = "self.album">
             </PersistentString>

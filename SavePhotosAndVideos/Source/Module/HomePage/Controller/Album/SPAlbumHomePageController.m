@@ -20,7 +20,7 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
 
 @property (nonatomic,strong) UICollectionView *collectionView;
 
-@property (nonatomic,strong) NSMutableArray *media;
+@property (nonatomic,strong) NSMutableArray *mediaArray;
 
 @end
 
@@ -28,7 +28,7 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
 
 - (void)sp_initExtendedData {
     [super sp_initExtendedData];
-    self.media = [NSMutableArray array];
+    self.mediaArray = [NSMutableArray array];
 }
 
 - (void)sp_viewDidLoad {
@@ -43,9 +43,9 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    [self.media removeAllObjects];
-    [self.media addObjectsFromArray:self.album.media];
-    self.noDataLab.hidden = self.media.count == 0 ? NO : YES;
+    [self.mediaArray removeAllObjects];
+    [self.mediaArray addObjectsFromArray:self.album.media];
+    self.noDataLab.hidden = self.mediaArray.count == 0 ? NO : YES;
     
     [self.collectionView reloadData];
 }
@@ -70,8 +70,8 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
         media.originalImage = originalImage;
         media.isPhoto = YES;
     }
-    [self.media addObject:media];
-    self.album.media = self.media;
+    [self.mediaArray addObject:media];
+    self.album.media = self.mediaArray.mutableCopy;
     [SPFileManager modifyAlbumWithAlbum:self.album];
     [picker dismissViewControllerAnimated:YES completion:^{
         [self.collectionView reloadData];
@@ -84,14 +84,14 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
 
 #pragma mark - UICollectionViewDataSource & UICollectionViewDelegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.media.count;
+    return self.mediaArray.count;
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:kAlbumHomePageCell forIndexPath:indexPath];
     
     UIImageView *imgView = [[UIImageView alloc]initWithFrame:cell.contentView.bounds];
-    SPMedia *media = [self.media objectAtIndex:indexPath.item];
+    SPMedia *media = [self.mediaArray objectAtIndex:indexPath.item];
     imgView.image = media.editedImage;
     [cell.contentView addSubview:imgView];
     
@@ -103,7 +103,7 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
         UICollectionReusableView *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kAlbumHPCellFooter forIndexPath:indexPath];
         int photoCount = 0;
         int videoCount = 0;
-        for (SPMedia *media in self.media) {
+        for (SPMedia *media in self.mediaArray) {
             if (media.isPhoto) {
                 photoCount ++;
             }
@@ -113,6 +113,9 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
         }
         NSString *tx = [NSString stringWithFormat:@"%d张照片，%d个视频",photoCount,videoCount];
         if (self.noDataLab.hidden) {
+            for (UIView *subView in footerView.subviews) {
+                [subView removeFromSuperview];
+            }
             [UILabel JA_labelWithText:tx textColor:UIColorFromHexStr(@"#333333") font:kSystemFont(16) textAlignment:NSTextAlignmentCenter superView:footerView constraints:^(MASConstraintMaker *make) {
                 make.edges.equalTo(footerView);
             }];
@@ -203,11 +206,11 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
     return _pickerCtrl;
 }
 
-- (NSMutableArray*)media {
-    if (_media) {
-        self.noDataLab.hidden = _media.count == 0 ? NO : YES;
+- (NSMutableArray*)mediaArray {
+    if (_mediaArray) {
+        self.noDataLab.hidden = _mediaArray.count == 0 ? NO : YES;
     }
-    return _media;
+    return _mediaArray;
 }
 
 @end
