@@ -176,7 +176,7 @@
     }
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setTitle:@"取消" forState:UIControlStateNormal];
-    [btn setTitleColor:UIColorFromHexStr(@"#5893FB") forState:UIControlStateNormal];
+    [btn setTitleColor:kNavBarTitleColor forState:UIControlStateNormal];
     btn.titleLabel.font = [UIFont systemFontOfSize:16];
     btn.frame = CGRectMake(0, 0, 50, 40);
     [btn addTarget:self action:@selector(cancelAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -189,7 +189,7 @@
     }
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setTitle:@"验证" forState:UIControlStateNormal];
-    [btn setTitleColor:UIColorFromHexStr(@"#5893FB") forState:UIControlStateNormal];
+    [btn setTitleColor:kNavBarTitleColor forState:UIControlStateNormal];
     btn.titleLabel.font = [UIFont systemFontOfSize:16];
     btn.frame = CGRectMake(0, 0, 50, 40);
     [btn addTarget:self action:@selector(verifyAction:) forControlEvents:UIControlEventTouchUpInside];

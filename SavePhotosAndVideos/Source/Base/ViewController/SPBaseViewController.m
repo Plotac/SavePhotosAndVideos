@@ -105,6 +105,11 @@
 }
 
 - (void)setBackBarItem {
+    
+    if (self.navigationController.viewControllers.count <= 1) {
+        return;
+    }
+    
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *img = kImageName(@"NavBar_backIcon");
     img = [img fillImageWithColor:UIColor.whiteColor];
