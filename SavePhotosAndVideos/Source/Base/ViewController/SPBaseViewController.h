@@ -29,6 +29,10 @@
 - (void)sp_viewDidLoad;
 - (void)sp_initExtendedData;
 
+- (void)setDefaultBackBarItem;
+- (void)setBackBarItemWithText:(NSString*)tx;
+- (void)backAction;
+
 - (UILabel*)setNoDataViewWithAlertText:(NSString*)alertText lineFeedText:(NSString*)lineFeedText;
 
 @end

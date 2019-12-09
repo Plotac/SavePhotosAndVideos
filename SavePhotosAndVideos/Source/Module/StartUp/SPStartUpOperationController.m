@@ -8,6 +8,7 @@
 
 #import "SPStartUpOperationController.h"
 #import "UITextField+DeleteBackward.h"
+#import "IQKeyboardManager.h"
 
 #define kDefaultPasswordNumberCount      4
 #define kBorderMargin                    40
@@ -23,10 +24,6 @@
 @implementation SPStartUpOperationController
 
 #pragma mark - Life Cycle
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
-}
-
 - (instancetype)init {
     self = [super init];
     if (self) {
@@ -41,6 +38,10 @@
     switch (self.operationType) {
         case SPStartUpOperationSetLoginPW:{
             self.title = @"设置登录密码";
+        }
+            break;
+        case SPStartUpOperationConfirmLoginPW:{
+            self.title = @"确认登录密码";
         }
             break;
         case SPStartUpOperationVerifyLoginPW:{
@@ -64,6 +65,28 @@
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldTextDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [IQKeyboardManager sharedManager].enable = NO;
+    if (self.operationType == SPStartUpOperationSetLoginPW && self.passwordStr.length > 0) {//第一次设置密码并且确认密码错误的情况
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldTextDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
+        [self.passwordStr setString:@""];
+        for (NSInteger i=0; i<kDefaultPasswordNumberCount; i++) {
+            UITextField *txf = (UITextField*)[self.view viewWithTag:100 + i];
+            txf.text = @"";
+            if (i == 0) {
+                [txf becomeFirstResponder];
+            }
+        }
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [IQKeyboardManager sharedManager].enable = YES;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
 }
 
 #pragma mark - Notification
@@ -99,7 +122,25 @@
                 
                 switch (self.operationType) {
                     case SPStartUpOperationSetLoginPW:{
-                        AppContext.loginPassword = self.passwordStr;
+                        SPStartUpOperationController *ctrl = [[SPStartUpOperationController alloc]init];
+                        ctrl.operationType = SPStartUpOperationConfirmLoginPW;
+                        ctrl.paraString = self.passwordStr;
+                        [self.navigationController pushViewController:ctrl animated:YES];
+                    }
+                        break;
+                    case SPStartUpOperationConfirmLoginPW:{
+                        NSString *pw = self.paraString;
+                        if ([pw isEqualToString:self.passwordStr]) {
+                            AppContext.loginPassword = self.passwordStr;
+                            [self.navigationController.topViewController dismissViewControllerAnimated:YES completion:nil];
+                        }else {
+                            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"两次输入的密码不匹配！请重新设置" preferredStyle: UIAlertControllerStyleAlert];
+                            UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                                [self.navigationController popViewControllerAnimated:YES];
+                            }];
+                            [alert addAction:action];
+                            [self presentViewController:alert animated:YES completion:nil];
+                        }
                     }
                         break;
                     case SPStartUpOperationVerifyLoginPW:{
@@ -111,7 +152,7 @@
                             }];
                         }else {
                             
-                            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"登录密码不正确！" message:nil preferredStyle: UIAlertControllerStyleAlert];
+                            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"登录密码不正确！" preferredStyle: UIAlertControllerStyleAlert];
                             UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                                 for (NSInteger i=0; i<kDefaultPasswordNumberCount; i++) {
                                     UITextField *textField = (UITextField*)[self.view viewWithTag:100 + i];

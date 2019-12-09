@@ -29,7 +29,9 @@
     self.navUIDelegate = self;
     
     self.view.backgroundColor = UIColorFromHexStr(@"#F1F0F1");
-    [self setBackBarItem];
+    if (self.navigationController.viewControllers.count > 1) {
+        [self setDefaultBackBarItem];
+    }
     [self setNavBarItems];
     
     [self sp_viewDidLoad];
@@ -104,24 +106,31 @@
     }
 }
 
-- (void)setBackBarItem {
-    
-    if (self.navigationController.viewControllers.count <= 1) {
-        return;
-    }
-    
+- (void)setDefaultBackBarItem {
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *img = kImageName(@"NavBar_backIcon");
-    img = [img fillImageWithColor:UIColor.whiteColor];
+    img = [img fillImageWithColor:kNavBarTitleColor];
     [btn setBackgroundImage:img forState:UIControlStateNormal];
     btn.frame = CGRectMake(0, 0, 30, 28);
     btn.imageEdgeInsets = UIEdgeInsetsMake(0, -30, 0, 0);
     btn.contentMode = UIViewContentModeCenter;
-    [btn addTarget:self action:@selector(backAction:) forControlEvents:UIControlEventTouchUpInside];
+    [btn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
 }
 
-- (void)backAction:(UIButton*)sender {
+- (void)setBackBarItemWithText:(NSString*)tx {
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setTitle:tx forState:UIControlStateNormal];
+    [btn setTitleColor:kNavBarTitleColor forState:UIControlStateNormal];
+    btn.titleLabel.font = kSystemFont(16);
+    btn.frame = CGRectMake(0, 0, 30, 28);
+    btn.imageEdgeInsets = UIEdgeInsetsMake(0, -30, 0, 0);
+    btn.contentMode = UIViewContentModeCenter;
+    [btn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
+}
+
+- (void)backAction {
     [ProjectContext.currentNavigationViewControler popViewControllerAnimated:YES];
 }
 

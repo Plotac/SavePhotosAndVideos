@@ -12,6 +12,7 @@ typedef void(^SPStartUpCtrlDissmissBlock)(BOOL verifySuccess);
 
 typedef NS_ENUM(NSUInteger, SPStartUpOperationType) {
     SPStartUpOperationSetLoginPW,       //设置登录密码
+    SPStartUpOperationConfirmLoginPW,   //确认登录密码
     SPStartUpOperationVerifyLoginPW,    //验证登录密码
     
     SPStartUpOperationVerifyAlbumPW,    //验证相册密码
@@ -24,5 +25,7 @@ typedef NS_ENUM(NSUInteger, SPStartUpOperationType) {
 @property (nonatomic,strong) SPAlbum *album;// SPStartUpOperationVerifyAlbumPW情况下使用
 
 @property (nonatomic,copy) SPStartUpCtrlDissmissBlock dissmissBlock;
+
+@property (nonatomic,copy) NSString *paraString;
 
 @end

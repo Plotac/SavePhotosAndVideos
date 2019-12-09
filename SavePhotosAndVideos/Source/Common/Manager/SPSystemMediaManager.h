@@ -1,0 +1,63 @@
+//
+//  SPSystemMediaManager.h
+//  SavePhotosAndVideos
+//
+//  Created by Ja on 2019/12/9.
+//  Copyright © 2019 Ja. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import <Photos/Photos.h>
+
+#define SystemMediaManager  [SPSystemMediaManager defaultSPSystemMediaManager]
+
+typedef void(^AuthorizationSuccessBlock)(void);
+
+@interface SPSystemMediaManager : NSObject
+
++ (instancetype)defaultSPSystemMediaManager;
+
+- (NSMutableArray*)fetchAssetCollections;
+
+- (void)requestAuthorizationSuccess:(AuthorizationSuccessBlock)success;
+
+@end
+
+
+
+@interface SPSystemAlbum : NSObject
+
+/*
+ 相册
+ */
+@property (nonatomic, strong) PHAssetCollection *collection;
+
+/*
+ 第一个相片
+ */
+@property (nonatomic, strong) PHAsset *firstAsset;
+
+/*
+ 当前相册中所有相片
+ */
+@property (nonatomic, strong) PHFetchResult<PHAsset *> *assets;
+
+/*
+ 相册名
+ */
+@property (nonatomic, copy) NSString *collectionTitle;
+
+/*
+ 相册总数
+ */
+@property (nonatomic, copy) NSString *collectionNumber;
+
+/*
+ 选中的图片
+ */
+@property (nonatomic, strong) NSMutableArray<NSNumber *> *selectRows;
+
+- (instancetype)initWithPHAssetCollection:(PHAssetCollection*)collection;
++ (instancetype)albumWithPHAssetCollection:(PHAssetCollection*)collection;
+
+@end

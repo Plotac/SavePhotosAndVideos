@@ -16,6 +16,7 @@
 #import "SPBaseViewController.h"
 
 #import "SPMediaFileManager.h"
+#import "SPSystemMediaManager.h"
 
 #import "Masonry.h"
 #import "JAConstraintKit.h"

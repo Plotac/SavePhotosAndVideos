@@ -10,6 +10,8 @@
 		0914DD06235DAE20009C555B /* SPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0914DD05235DAE20009C555B /* SPAppDelegate.m */; };
 		0914DD11235DAE23009C555B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0914DD10235DAE23009C555B /* Assets.xcassets */; };
 		0914DD17235DAE23009C555B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0914DD16235DAE23009C555B /* main.m */; };
+		09526E78239E201A00BA2E80 /* SPMediaPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09526E77239E201A00BA2E80 /* SPMediaPickerController.m */; };
+		09526E7B239E2D0600BA2E80 /* SPSystemMediaManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 09526E7A239E2D0600BA2E80 /* SPSystemMediaManager.m */; };
 		095FECDA236BC26200C02105 /* SPRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 095FECD9236BC26200C02105 /* SPRootViewController.m */; };
 		095FECDD236C1B0400C02105 /* SPProjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 095FECDC236C1B0400C02105 /* SPProjectContext.m */; };
 		095FF2DA2369749B0008347A /* SPAppContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 095FF2D92369749B0008347A /* SPAppContext.m */; };
@@ -74,6 +76,10 @@
 		0914DD10235DAE23009C555B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0914DD15235DAE23009C555B /* SPAVInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = SPAVInfo.plist; sourceTree = "<group>"; };
 		0914DD16235DAE23009C555B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		09526E76239E201A00BA2E80 /* SPMediaPickerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPMediaPickerController.h; sourceTree = "<group>"; };
+		09526E77239E201A00BA2E80 /* SPMediaPickerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPMediaPickerController.m; sourceTree = "<group>"; };
+		09526E79239E2D0600BA2E80 /* SPSystemMediaManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPSystemMediaManager.h; sourceTree = "<group>"; };
+		09526E7A239E2D0600BA2E80 /* SPSystemMediaManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPSystemMediaManager.m; sourceTree = "<group>"; };
 		095FECD8236BC26200C02105 /* SPRootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPRootViewController.h; sourceTree = "<group>"; };
 		095FECD9236BC26200C02105 /* SPRootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPRootViewController.m; sourceTree = "<group>"; };
 		095FECDB236C1B0400C02105 /* SPProjectContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPProjectContext.h; sourceTree = "<group>"; };
@@ -540,6 +546,8 @@
 			children = (
 				09E22308235FF96F007EB242 /* SPMediaFileManager.h */,
 				09E22309235FF96F007EB242 /* SPMediaFileManager.m */,
+				09526E79239E2D0600BA2E80 /* SPSystemMediaManager.h */,
+				09526E7A239E2D0600BA2E80 /* SPSystemMediaManager.m */,
 				09E908B5237141C300524882 /* SPFingerprintRecognition.h */,
 				09E908B6237141C300524882 /* SPFingerprintRecognition.m */,
 			);
@@ -588,6 +596,8 @@
 			children = (
 				09E908A0237113DA00524882 /* SPAlbumHomePageController.h */,
 				09E908A1237113DA00524882 /* SPAlbumHomePageController.m */,
+				09526E76239E201A00BA2E80 /* SPMediaPickerController.h */,
+				09526E77239E201A00BA2E80 /* SPMediaPickerController.m */,
 			);
 			path = Album;
 			sourceTree = "<group>";
@@ -716,6 +726,7 @@
 				09A74042236AD619007D7C62 /* SPTabBarViewController.m in Sources */,
 				098714942361408600F49BFA /* UITextField+Constraint.m in Sources */,
 				09E9088D2371125800524882 /* MASConstraint.m in Sources */,
+				09526E78239E201A00BA2E80 /* SPMediaPickerController.m in Sources */,
 				098714912361408600F49BFA /* UILabel+Constraint.m in Sources */,
 				0914DD17235DAE23009C555B /* main.m in Sources */,
 				09E9089C2371134800524882 /* SPSettingViewController.m in Sources */,
@@ -744,6 +755,7 @@
 				09E908932371125800524882 /* MASViewAttribute.m in Sources */,
 				098714932361408600F49BFA /* UIImageView+Constraint.m in Sources */,
 				09E222D1235FEBDA007EB242 /* JAUtilities.m in Sources */,
+				09526E7B239E2D0600BA2E80 /* SPSystemMediaManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,20 +7,21 @@
 //
 
 #import "SPAlbumHomePageController.h"
-#import <AVFoundation/AVFoundation.h>
+#import "SPMediaPickerController.h"
+#import <Photos/Photos.h>
 
 static NSString *const kAlbumHomePageCell = @"kAlbumHomePageCell";
 static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
 
-@interface SPAlbumHomePageController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
+@interface SPAlbumHomePageController ()<UINavigationControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic,strong) UILabel *noDataLab;
 
-@property (nonatomic,strong) UIImagePickerController *pickerCtrl;
+@property (nonatomic,strong) SPMediaPickerController *pickerCtrl;
 
 @property (nonatomic,strong) UICollectionView *collectionView;
 
-@property (nonatomic,strong) NSMutableArray *mediaArray;
+@property (nonatomic,strong) NSMutableArray *medias;
 
 @end
 
@@ -28,7 +29,7 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
 
 - (void)sp_initExtendedData {
     [super sp_initExtendedData];
-    self.mediaArray = [NSMutableArray array];
+    self.medias = [NSMutableArray array];
 }
 
 - (void)sp_viewDidLoad {
@@ -43,55 +44,23 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    [self.mediaArray removeAllObjects];
-    [self.mediaArray addObjectsFromArray:self.album.media];
-    self.noDataLab.hidden = self.mediaArray.count == 0 ? NO : YES;
+    [self.medias removeAllObjects];
+    [self.medias addObjectsFromArray:self.album.media];
+    self.noDataLab.hidden = self.medias.count == 0 ? NO : YES;
     
     [self.collectionView reloadData];
 }
 
-#pragma mark - UIImagePickerControllerDelegate
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
-    
-    SPMedia *media = [[SPMedia alloc]init];
-    
-    NSURL *mediaURL = [info objectForKey:UIImagePickerControllerMediaURL];
-    AVAsset *asset = [AVURLAsset URLAssetWithURL:mediaURL options:info];
-    NSArray *tracks = [asset tracksWithMediaType:AVMediaTypeVideo];
-    //判断是否含有视频轨道
-    BOOL hasVideoTrack = [tracks count] > 0;
-    if (hasVideoTrack) {
-        media.videoURL = mediaURL;
-        media.isPhoto = NO;
-    }else {
-        UIImage *editedImage = info[UIImagePickerControllerEditedImage];
-        UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
-        media.editedImage = editedImage;
-        media.originalImage = originalImage;
-        media.isPhoto = YES;
-    }
-    [self.mediaArray addObject:media];
-    self.album.media = self.mediaArray.mutableCopy;
-    [SPFileManager modifyAlbumWithAlbum:self.album];
-    [picker dismissViewControllerAnimated:YES completion:^{
-        [self.collectionView reloadData];
-    }];
-}
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [picker dismissViewControllerAnimated:YES completion:nil];
-}
-
 #pragma mark - UICollectionViewDataSource & UICollectionViewDelegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.mediaArray.count;
+    return self.medias.count;
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:kAlbumHomePageCell forIndexPath:indexPath];
     
     UIImageView *imgView = [[UIImageView alloc]initWithFrame:cell.contentView.bounds];
-    SPMedia *media = [self.mediaArray objectAtIndex:indexPath.item];
+    SPMedia *media = [self.medias objectAtIndex:indexPath.item];
     imgView.image = media.editedImage;
     [cell.contentView addSubview:imgView];
     
@@ -103,7 +72,7 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
         UICollectionReusableView *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kAlbumHPCellFooter forIndexPath:indexPath];
         int photoCount = 0;
         int videoCount = 0;
-        for (SPMedia *media in self.mediaArray) {
+        for (SPMedia *media in self.medias) {
             if (media.isPhoto) {
                 photoCount ++;
             }
@@ -149,19 +118,18 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
     return @[btn];
 }
 
-#pragma mark -
+#pragma mark - Actions
 - (void)addNewPhoto:(UIButton*)sender {
     
     UIAlertAction *takePhotoAction = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-            self.pickerCtrl.sourceType = UIImagePickerControllerSourceTypeCamera;
-            [self presentViewController:self.pickerCtrl animated:YES completion:nil];
-        }
+
     }];
     UIAlertAction *selectPhotoAction = [UIAlertAction actionWithTitle:@"从相册选取" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        self.pickerCtrl.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        self.pickerCtrl.modalPresentationStyle = UIModalPresentationFullScreen;
-        [self presentViewController:self.pickerCtrl animated:YES completion:nil];
+        [SystemMediaManager requestAuthorizationSuccess:^() {
+            SPNavigationController *nav = [[SPNavigationController alloc]initWithRootViewController:self.pickerCtrl];
+            nav.modalPresentationStyle = UIModalPresentationFullScreen;
+            [self presentViewController:nav animated:YES completion:nil];
+        }];
     }];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle: UIAlertControllerStyleActionSheet];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
@@ -177,8 +145,6 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
 
 #pragma mark - Private
 - (void)initViews {
-    self.pickerCtrl.delegate = self;
-    self.pickerCtrl.allowsEditing = YES;
     
     self.noDataLab = [self setNoDataViewWithAlertText:@"暂无照片" lineFeedText:@"点击右上角添加新照片"];
     
@@ -199,18 +165,18 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
     }];
 }
 
-- (UIImagePickerController *)pickerCtrl {
+- (SPMediaPickerController*)pickerCtrl {
     if (!_pickerCtrl) {
-        _pickerCtrl = [[UIImagePickerController alloc]init];
+        _pickerCtrl = [[SPMediaPickerController alloc]init];
     }
     return _pickerCtrl;
 }
 
-- (NSMutableArray*)mediaArray {
-    if (_mediaArray) {
-        self.noDataLab.hidden = _mediaArray.count == 0 ? NO : YES;
+- (NSMutableArray*)medias {
+    if (_medias) {
+        self.noDataLab.hidden = _medias.count == 0 ? NO : YES;
     }
-    return _mediaArray;
+    return _medias;
 }
 
 @end

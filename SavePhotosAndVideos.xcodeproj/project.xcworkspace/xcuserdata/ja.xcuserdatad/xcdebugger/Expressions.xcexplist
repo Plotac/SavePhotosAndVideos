@@ -6,6 +6,12 @@
          contextName = "-[SPVideoFileManager synchronizeLocalAlbums]:SPVideoFileManager.m">
       </ContextState>
       <ContextState
+         contextName = "__51-[SPMediaPickerController fetchAssetCollectionList]_block_invoke:SPMediaPickerController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[SPSystemMediaManager fetchAssetCollections]:SPSystemMediaManager.m">
+      </ContextState>
+      <ContextState
          contextName = "-[SPAlbumHomePageController viewWillAppear:]:SPAlbumHomePageController.m">
          <PersistentStrings>
             <PersistentString
@@ -13,6 +19,14 @@
             </PersistentString>
             <PersistentString
                value = "self.album">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SPMediaPickerController fetchAssetCollectionList]:SPMediaPickerController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.assetAlbums">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -59,6 +73,15 @@
          <PersistentStrings>
             <PersistentString
                value = "[SPAppContext sharedInstance].loginPassword">
+            </PersistentString>
+            <PersistentString
+               value = "self.passwordStr">
+            </PersistentString>
+            <PersistentString
+               value = "self.paraString">
+            </PersistentString>
+            <PersistentString
+               value = "self.operationType">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -168,6 +191,17 @@
          <PersistentStrings>
             <PersistentString
                value = "self.media">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SPSystemAlbum initWithPHAssetCollection:]:SPSystemMediaManager.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[SPStartUpOperationController sp_viewDidLoad]:SPStartUpOperationController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.operationType">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
