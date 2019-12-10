@@ -27,7 +27,7 @@ NSString * const SPTextFieldDidDeleteBackwardNotification = @"textfield_did_noti
         [delegate textFieldDidDeleteBackward:self];
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:SPTextFieldDidDeleteBackwardNotification object:self];
+    SendNotify(SPTextFieldDidDeleteBackwardNotification, self)
 }
 
 @end

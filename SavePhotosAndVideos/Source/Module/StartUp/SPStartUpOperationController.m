@@ -63,15 +63,14 @@
     }else {
         [self initViews];
     }
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldTextDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
+    RegisterNotify(UITextFieldTextDidChangeNotification, @selector(textFieldTextDidChange:))
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [IQKeyboardManager sharedManager].enable = NO;
     if (self.operationType == SPStartUpOperationSetLoginPW && self.passwordStr.length > 0) {//第一次设置密码并且确认密码错误的情况
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldTextDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
+        RegisterNotify(UITextFieldTextDidChangeNotification, @selector(textFieldTextDidChange:))
         [self.passwordStr setString:@""];
         for (NSInteger i=0; i<kDefaultPasswordNumberCount; i++) {
             UITextField *txf = (UITextField*)[self.view viewWithTag:100 + i];
@@ -86,7 +85,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [IQKeyboardManager sharedManager].enable = YES;
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
+    RemoveNofifyWithName(UITextFieldTextDidChangeNotification)
 }
 
 #pragma mark - Notification

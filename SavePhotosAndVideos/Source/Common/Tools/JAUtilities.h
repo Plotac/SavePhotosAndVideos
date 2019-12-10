@@ -60,6 +60,26 @@
 #define IOS12_OR_LATER ([UIDevice currentDevice].systemVersion.floatValue >= 12.0f)
 #define IOS13_OR_LATER ([UIDevice currentDevice].systemVersion.floatValue >= 13.0f)
 
+#define RegisterNotify(_name, _selector)                    \
+[[NSNotificationCenter defaultCenter] addObserver:self  \
+selector:_selector name:_name object:nil];
+
+#define RegisterNotifyWithObj(_name, _selector, _obj)       \
+[[NSNotificationCenter defaultCenter] addObserver:self  \
+selector:_selector name:_name object:_obj];
+
+#define RemoveNofify            \
+[[NSNotificationCenter defaultCenter] removeObserver:self];
+
+#define RemoveNofifyWithName(_name) \
+[[NSNotificationCenter defaultCenter] removeObserver:self name:_name object:nil];
+
+#define RemoveNofifyWithNameAndObject(_name,_obj)            \
+[[NSNotificationCenter defaultCenter] removeObserver:self name:_name object:_obj];
+
+#define SendNotify(_name, _obj)  \
+[[NSNotificationCenter defaultCenter] postNotificationName:_name object:_obj];
+
 @interface JAUtilities : NSObject
 
 + (UIColor *)colorWithR:(CGFloat)r G:(CGFloat)g B:(CGFloat)b alpha:(CGFloat)alpha;

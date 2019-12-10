@@ -30,7 +30,7 @@
 @implementation SPNewAlbumOperationView
 
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
+    RemoveNofifyWithName(UITextFieldTextDidChangeNotification)
 }
 
 - (instancetype)initWithTitle:(NSString*)title description:(NSString*)description confirmBlock:(SPNAOperationConfirmBlock)confirmBlock {
@@ -42,9 +42,8 @@
         self.title = title;
         self.descriptionSting = description;
         self.confirmBlock = confirmBlock;
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldTextDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
-        
+    
+        RegisterNotify(UITextFieldTextDidChangeNotification, @selector(textFieldTextDidChange:))
         [self initViews];
     }
     return self;
