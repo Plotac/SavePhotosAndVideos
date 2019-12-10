@@ -17,8 +17,24 @@ typedef void(^AuthorizationSuccessBlock)(void);
 
 + (instancetype)defaultSPSystemMediaManager;
 
+/*
+ 最大可选数量
+ */
+@property (nonatomic,assign) NSInteger maxCount;
+
+/*
+ 已选数量
+ */
+@property (nonatomic,assign) NSInteger selectedCount;
+
+/*
+ 获取系统相簿
+ */
 - (NSMutableArray*)fetchAssetCollections;
 
+/*
+ 请求权限
+ */
 - (void)requestAuthorizationSuccess:(AuthorizationSuccessBlock)success;
 
 @end

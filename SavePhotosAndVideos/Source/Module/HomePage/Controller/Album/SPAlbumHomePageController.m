@@ -17,8 +17,6 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
 
 @property (nonatomic,strong) UILabel *noDataLab;
 
-@property (nonatomic,strong) SPMediaPickerController *pickerCtrl;
-
 @property (nonatomic,strong) UICollectionView *collectionView;
 
 @property (nonatomic,strong) NSMutableArray *medias;
@@ -126,7 +124,8 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
     }];
     UIAlertAction *selectPhotoAction = [UIAlertAction actionWithTitle:@"从相册选取" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [SystemMediaManager requestAuthorizationSuccess:^() {
-            SPNavigationController *nav = [[SPNavigationController alloc]initWithRootViewController:self.pickerCtrl];
+            SPMediaPickerController *pickerCtrl = [[SPMediaPickerController alloc]init];
+            SPNavigationController *nav = [[SPNavigationController alloc]initWithRootViewController:pickerCtrl];
             nav.modalPresentationStyle = UIModalPresentationFullScreen;
             [self presentViewController:nav animated:YES completion:nil];
         }];
@@ -163,13 +162,6 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
-}
-
-- (SPMediaPickerController*)pickerCtrl {
-    if (!_pickerCtrl) {
-        _pickerCtrl = [[SPMediaPickerController alloc]init];
-    }
-    return _pickerCtrl;
 }
 
 - (NSMutableArray*)medias {

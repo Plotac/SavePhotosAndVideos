@@ -3,10 +3,18 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "-[SPVideoFileManager synchronizeLocalAlbums]:SPVideoFileManager.m">
+         contextName = "-[SPMediaPickerController sp_viewDidLoad]:SPMediaPickerController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.assetAlbums">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "__51-[SPMediaPickerController fetchAssetCollectionList]_block_invoke:SPMediaPickerController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[SPVideoFileManager synchronizeLocalAlbums]:SPVideoFileManager.m">
       </ContextState>
       <ContextState
          contextName = "-[SPSystemMediaManager fetchAssetCollections]:SPSystemMediaManager.m">
@@ -75,13 +83,13 @@
                value = "[SPAppContext sharedInstance].loginPassword">
             </PersistentString>
             <PersistentString
-               value = "self.passwordStr">
+               value = "self.operationType">
             </PersistentString>
             <PersistentString
                value = "self.paraString">
             </PersistentString>
             <PersistentString
-               value = "self.operationType">
+               value = "self.passwordStr">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -127,13 +135,13 @@
          contextName = "-[SPSettingTabCell initIndependentViews]:SPSettingTabCell.m">
          <PersistentStrings>
             <PersistentString
-               value = "[SPAppContext sharedInstance].needStartUpVerify">
+               value = "self.item">
             </PersistentString>
             <PersistentString
                value = "[SPAppContext sharedInstance].needFingerprintRecognition">
             </PersistentString>
             <PersistentString
-               value = "self.item">
+               value = "[SPAppContext sharedInstance].needStartUpVerify">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -202,6 +210,14 @@
          <PersistentStrings>
             <PersistentString
                value = "self.operationType">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SPMediaPickerCell setAsset:]:SPMediaPickerCell.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.mediaImgView">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

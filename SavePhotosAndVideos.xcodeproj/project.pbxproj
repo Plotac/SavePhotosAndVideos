@@ -39,6 +39,7 @@
 		098714952361408600F49BFA /* UIButton+Constraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 0987148B2361408600F49BFA /* UIButton+Constraint.m */; };
 		098714962361408600F49BFA /* UIScrollView+Contraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 0987148D2361408600F49BFA /* UIScrollView+Contraint.m */; };
 		0987149B2361761900F49BFA /* SPAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0987149A2361761900F49BFA /* SPAlbumCell.m */; };
+		098B948B239F719D00D7BAB5 /* SPMediaPickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 098B948A239F719D00D7BAB5 /* SPMediaPickerCell.m */; };
 		09A74040236AD619007D7C62 /* SPTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A7403A236AD619007D7C62 /* SPTabBar.m */; };
 		09A74041236AD619007D7C62 /* SPTabBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A7403B236AD619007D7C62 /* SPTabBarItem.m */; };
 		09A74042236AD619007D7C62 /* SPTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A7403E236AD619007D7C62 /* SPTabBarViewController.m */; };
@@ -136,6 +137,8 @@
 		09871497236142F200F49BFA /* JAConstraintKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAConstraintKit.h; sourceTree = "<group>"; };
 		098714992361761900F49BFA /* SPAlbumCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPAlbumCell.h; sourceTree = "<group>"; };
 		0987149A2361761900F49BFA /* SPAlbumCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPAlbumCell.m; sourceTree = "<group>"; };
+		098B9489239F719D00D7BAB5 /* SPMediaPickerCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPMediaPickerCell.h; sourceTree = "<group>"; };
+		098B948A239F719D00D7BAB5 /* SPMediaPickerCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPMediaPickerCell.m; sourceTree = "<group>"; };
 		09A7403A236AD619007D7C62 /* SPTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTabBar.m; sourceTree = "<group>"; };
 		09A7403B236AD619007D7C62 /* SPTabBarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTabBarItem.m; sourceTree = "<group>"; };
 		09A7403C236AD619007D7C62 /* SPTabBarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTabBarItem.h; sourceTree = "<group>"; };
@@ -367,6 +370,8 @@
 			children = (
 				098714992361761900F49BFA /* SPAlbumCell.h */,
 				0987149A2361761900F49BFA /* SPAlbumCell.m */,
+				098B9489239F719D00D7BAB5 /* SPMediaPickerCell.h */,
+				098B948A239F719D00D7BAB5 /* SPMediaPickerCell.m */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -731,6 +736,7 @@
 				0914DD17235DAE23009C555B /* main.m in Sources */,
 				09E9089C2371134800524882 /* SPSettingViewController.m in Sources */,
 				09E2230A235FF96F007EB242 /* SPMediaFileManager.m in Sources */,
+				098B948B239F719D00D7BAB5 /* SPMediaPickerCell.m in Sources */,
 				09E908922371125800524882 /* MASConstraintMaker.m in Sources */,
 				0971CE86239A3B2D00A9FA2E /* IQBarButtonItem.m in Sources */,
 				098714902361408600F49BFA /* UIView+Constraint.m in Sources */,

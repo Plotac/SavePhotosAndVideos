@@ -7,23 +7,29 @@
 //
 
 #import "SPMediaPickerController.h"
-#import <Photos/Photos.h>
+#import "SPMediaPickerCell.h"
 
 static NSString *const kMediaPickerCell = @"kMediaPickerCell";
 
 @interface SPMediaPickerController ()<UINavigationControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
+@property (nonatomic,strong) UIButton *confirmBtn;
+
 @property (nonatomic,strong) UICollectionView *collectionView;
 
 @property (nonatomic,strong) NSMutableArray *assetAlbums;
 
-@property (nonatomic,strong) PHAsset *currentAsset;
+@property (nonatomic,strong) SPSystemAlbum *currentAlbum;
 
 @end
 
 @implementation SPMediaPickerController
 
 #pragma mark - Life Cycle
+- (void)dealloc {
+    
+}
+
 - (void)sp_initExtendedData {
     [super sp_initExtendedData];
 }
@@ -32,27 +38,29 @@ static NSString *const kMediaPickerCell = @"kMediaPickerCell";
     [super sp_viewDidLoad];
     
     self.assetAlbums = [[NSMutableArray alloc]initWithArray:[SystemMediaManager fetchAssetCollections]];
+    self.currentAlbum = self.assetAlbums.firstObject;
     [self initViews];
     [self fetchAssetCollectionList];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.collectionView scrollsToTop];
+}
+
 #pragma mark - UICollectionViewDataSource & UICollectionViewDelegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.assetAlbums.count;
+    return self.currentAlbum.assets.count;
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:kMediaPickerCell forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor yellowColor];
+    SPMediaPickerCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:kMediaPickerCell forIndexPath:indexPath];
+    cell.asset = [self.currentAlbum.assets objectAtIndex:indexPath.item];
     return cell;
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-}
-
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(2, 2, 20, 2);
+    return UIEdgeInsetsMake(5, 5, 5, 5);
 }
 
 #pragma mark - Actions
@@ -70,19 +78,29 @@ static NSString *const kMediaPickerCell = @"kMediaPickerCell";
     [self setBackBarItemWithText:@"取消"];
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
-    layout.minimumInteritemSpacing = 0;
-    layout.minimumLineSpacing = 2;
-    layout.itemSize = CGSizeMake((kScreenW - 2*2 - 2*2)/3, (kScreenW - 2*2 - 2*2)/3);
+    layout.minimumInteritemSpacing = 5;
+    layout.minimumLineSpacing = 5;
+    layout.itemSize = CGSizeMake((kScreenW - 5*2 - 5*2)/3, (kScreenW - 5*2 - 5*2)/3);
     
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     self.collectionView.backgroundColor = [UIColor clearColor];
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kMediaPickerCell];
+    [self.collectionView registerClass:[SPMediaPickerCell class] forCellWithReuseIdentifier:kMediaPickerCell];
     [self.view addSubview:self.collectionView];
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
+    
+    self.confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.confirmBtn setTitle:@"确定" forState:UIControlStateNormal];
+    [self.confirmBtn setTitleColor:kNavBarTitleColor forState:UIControlStateNormal];
+    self.confirmBtn.titleLabel.font = kSystemFont(16);
+    self.confirmBtn.frame = CGRectMake(0, 0, 30, 28);
+    self.confirmBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -30, 0, 0);
+    self.confirmBtn.contentMode = UIViewContentModeCenter;
+    [self.confirmBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:self.confirmBtn];
 }
 
 @end

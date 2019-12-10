@@ -14,22 +14,23 @@
     static SPSystemMediaManager *manager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-    manager = [[SPSystemMediaManager alloc]init];
+        manager = [[SPSystemMediaManager alloc]init];
+        manager.maxCount = 9;
     });
     return manager;
 }
 
 - (NSMutableArray*)fetchAssetCollections {
     NSMutableArray *assetCollections = @[].mutableCopy;
- 
-    // 获得个人收藏相册
-    PHFetchResult<PHAssetCollection *> *favorites = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeSmartAlbumFavorites options:nil];
-    // 获得相机胶卷
-    PHFetchResult<PHAssetCollection *> *userLibrary = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeSmartAlbumUserLibrary options:nil];
+    
     // 获得全部相片
     PHFetchResult<PHAssetCollection *> *cameraRolls = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeSmartAlbumUserLibrary options:nil];
-    
-    for (PHAssetCollection *collection in favorites) {
+    // 获得相机胶卷
+    PHFetchResult<PHAssetCollection *> *userLibrary = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeSmartAlbumUserLibrary options:nil];
+    // 获得个人收藏相册
+    PHFetchResult<PHAssetCollection *> *favorites = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeSmartAlbumFavorites options:nil];
+
+    for (PHAssetCollection *collection in cameraRolls) {
         SPSystemAlbum *album = [SPSystemAlbum albumWithPHAssetCollection:collection];
         if (![album.collectionNumber isEqualToString:@"0"]) {
             [assetCollections addObject:album];
@@ -43,7 +44,7 @@
         }
     }
     
-    for (PHAssetCollection *collection in cameraRolls) {
+    for (PHAssetCollection *collection in favorites) {
         SPSystemAlbum *album = [SPSystemAlbum albumWithPHAssetCollection:collection];
         if (![album.collectionNumber isEqualToString:@"0"]) {
             [assetCollections addObject:album];
@@ -90,11 +91,17 @@
         if ([collection.localizedTitle isEqualToString:@"All Photos"]) {
             self.collectionTitle = @"全部相册";
         }
+        else if ([collection.localizedTitle isEqualToString:@"Favorites"]) {
+            self.collectionTitle = @"个人收藏";
+        }
+        else if ([collection.localizedTitle isEqualToString:@"Recents"]) {
+            self.collectionTitle = @"最近项目";
+        }
         else {
             self.collectionTitle = collection.localizedTitle;
         }
         
-        self.collectionTitle = collection.localizedTitle;
+        NSLog(@"collection.localizedTitle : %@",collection.localizedTitle);
         
         // 获得某个相簿中的所有PHAsset对象
         self.assets = [PHAsset fetchAssetsInAssetCollection:collection options:nil];
