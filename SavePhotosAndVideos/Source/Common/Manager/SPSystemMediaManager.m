@@ -15,9 +15,12 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         manager = [[SPSystemMediaManager alloc]init];
-        manager.maxCount = 9;
     });
     return manager;
+}
+
+- (NSInteger)maxCount {
+    return 9;
 }
 
 - (NSMutableArray*)fetchAssetCollections {
@@ -118,12 +121,12 @@
     return [[self alloc]initWithPHAssetCollection:collection];
 }
 
-- (NSMutableArray<NSNumber *>*)selectRows {
-    if (!_selectRows) {
-        _selectRows = [NSMutableArray array];
+- (NSMutableArray<NSNumber *>*)selectIndexs{
+    if (!_selectIndexs) {
+        _selectIndexs = [NSMutableArray array];
     }
     
-    return _selectRows;
+    return _selectIndexs;
 }
 
 @end

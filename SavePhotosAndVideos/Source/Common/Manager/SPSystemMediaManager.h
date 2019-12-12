@@ -20,7 +20,7 @@ typedef void(^AuthorizationSuccessBlock)(void);
 /*
  最大可选数量
  */
-@property (nonatomic,assign) NSInteger maxCount;
+@property (nonatomic,assign,readonly) NSInteger maxCount;
 
 /*
  已选数量
@@ -46,32 +46,32 @@ typedef void(^AuthorizationSuccessBlock)(void);
 /*
  相册
  */
-@property (nonatomic, strong) PHAssetCollection *collection;
+@property (nonatomic,strong) PHAssetCollection *collection;
 
 /*
  第一个相片
  */
-@property (nonatomic, strong) PHAsset *firstAsset;
+@property (nonatomic,strong) PHAsset *firstAsset;
 
 /*
  当前相册中所有相片
  */
-@property (nonatomic, strong) PHFetchResult<PHAsset *> *assets;
+@property (nonatomic,strong) PHFetchResult<PHAsset *> *assets;
 
 /*
  相册名
  */
-@property (nonatomic, copy) NSString *collectionTitle;
+@property (nonatomic,copy) NSString *collectionTitle;
 
 /*
  相册总数
  */
-@property (nonatomic, copy) NSString *collectionNumber;
+@property (nonatomic,copy) NSString *collectionNumber;
 
 /*
- 选中的图片
+ 当前相册中选中的图片索引数组
  */
-@property (nonatomic, strong) NSMutableArray<NSNumber *> *selectRows;
+@property (nonatomic,strong) NSMutableArray<NSNumber *> *selectIndexs;
 
 - (instancetype)initWithPHAssetCollection:(PHAssetCollection*)collection;
 + (instancetype)albumWithPHAssetCollection:(PHAssetCollection*)collection;

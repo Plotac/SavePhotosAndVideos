@@ -38,22 +38,21 @@
 }
 
 #pragma mark - Setter
--(void)setIsSelect:(BOOL)isSelect {
+- (void)setIsSelect:(BOOL)isSelect {
     _isSelect = isSelect;
     
-    self.translucentView.hidden = !isSelect;
-    [self.selectBtn setBackgroundImage:isSelect ? [UIImage imageNamed: @"MediaPicker_sel"] : nil forState:UIControlStateNormal];
-    
-//    if ([LYFPhotoManger standardPhotoManger].maxCount == [LYFPhotoManger standardPhotoManger].choiceCount) {
+    self.translucentView.hidden = !_isSelect;
+    [self.selectBtn setBackgroundImage:_isSelect ? [UIImage imageNamed: @"MediaPicker_sel"] : nil forState:UIControlStateNormal];
+    if (SystemMediaManager.maxCount == SystemMediaManager.selectedCount) {
         self.translucentView.hidden = NO;
-        if (isSelect) {
+        if (_isSelect) {
             _translucentView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2];
         } else {
             _translucentView.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.4];
         }
-//    } else {
-//        _translucentView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2];
-//    }
+    } else {
+        _translucentView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2];
+    }
 }
 
 - (void)setAsset:(PHAsset *)asset {
@@ -62,7 +61,6 @@
     PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
     options.synchronous = NO;
     options.resizeMode = PHImageRequestOptionsResizeModeExact;
-    options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
     CGFloat imageWidth = (kScreenW - 20) / 5.5;
     CGSize size = CGSizeMake(imageWidth * [UIScreen mainScreen].scale, imageWidth * [UIScreen mainScreen].scale);
     [[PHCachingImageManager defaultManager] requestImageForAsset:_asset targetSize:size contentMode:PHImageContentModeDefault options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {

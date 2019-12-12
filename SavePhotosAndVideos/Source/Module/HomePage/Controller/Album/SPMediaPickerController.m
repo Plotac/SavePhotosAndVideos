@@ -48,6 +48,11 @@ static NSString *const kMediaPickerCell = @"kMediaPickerCell";
     [self.collectionView scrollsToTop];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    SystemMediaManager.selectedCount = 0;
+}
+
 #pragma mark - UICollectionViewDataSource & UICollectionViewDelegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.currentAlbum.assets.count;
@@ -56,6 +61,32 @@ static NSString *const kMediaPickerCell = @"kMediaPickerCell";
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     SPMediaPickerCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:kMediaPickerCell forIndexPath:indexPath];
     cell.asset = [self.currentAlbum.assets objectAtIndex:indexPath.item];
+    cell.isSelect = [self.currentAlbum.selectIndexs containsObject:@(indexPath.item)];
+    BLOCK_WEAK_SELF
+    __weak typeof(cell) weakCell = cell;
+    [cell setSelectBlock:^(PHAsset *asset) {
+        BOOL isReloadCollectionView = NO;
+        if ([weakSelf.currentAlbum.selectIndexs containsObject:@(indexPath.item)]) {
+            [weakSelf.currentAlbum.selectIndexs removeObject:@(indexPath.item)];
+            SystemMediaManager.selectedCount --;
+            
+            isReloadCollectionView = SystemMediaManager.selectedCount == SystemMediaManager.maxCount - 1;
+        } else {
+            if (SystemMediaManager.maxCount == SystemMediaManager.selectedCount) {
+                return;
+            }
+            
+            [weakSelf.currentAlbum.selectIndexs addObject:@(indexPath.item)];
+            SystemMediaManager.selectedCount ++;
+            isReloadCollectionView = SystemMediaManager.selectedCount == SystemMediaManager.maxCount;
+        }
+        if (isReloadCollectionView) {
+            [weakSelf.collectionView reloadData];
+        } else {
+            weakCell.isSelect = [weakSelf.currentAlbum.selectIndexs containsObject:@(indexPath.item)];
+        }
+    }];
+    
     return cell;
 }
 
