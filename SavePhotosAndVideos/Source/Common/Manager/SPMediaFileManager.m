@@ -189,6 +189,9 @@
 
 
 @interface SPMedia ()
+
+@property (nonatomic,strong) PHAsset *asset;
+
 @end
 
 @implementation SPMedia
@@ -202,8 +205,8 @@
     if (self) {
         self.editedImage = [coder decodeObjectForKey:@"editedImage"];
         self.originalImage = [coder decodeObjectForKey:@"originalImage"];
-        self.videoURL = [coder decodeObjectForKey:@"videoURL"];
-        self.isPhoto = [coder decodeBoolForKey:@"isPhoto"];
+        self.identifier = [coder decodeObjectForKey:@"identifier"];
+        self.mediaType = [coder decodeIntForKey:@"mediaType"];
     }
     return self;
 }
@@ -211,8 +214,74 @@
 - (void)encodeWithCoder:(NSCoder *)coder {
     [coder encodeObject:self.editedImage forKey:@"editedImage"];
     [coder encodeObject:self.originalImage forKey:@"originalImage"];
-    [coder encodeObject:self.videoURL forKey:@"videoURL"];
-    [coder encodeBool:self.isPhoto forKey:@"isPhoto"];
+    [coder encodeObject:self.identifier forKey:@"identifier"];
+    [coder encodeInt:(int)self.mediaType forKey:@"mediaType"];
+}
+
+- (instancetype)initWithAsset:(PHAsset *)asset {
+    self = [super init];
+    if (self) {
+        
+        self.asset = asset;
+        self.mediaType = asset.mediaType;
+        self.identifier = asset.localIdentifier;
+        
+        PHImageRequestOptions *originalOption = [[PHImageRequestOptions alloc]init];
+        originalOption.networkAccessAllowed = YES;
+        originalOption.resizeMode = PHImageRequestOptionsResizeModeFast;
+        [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFit options:originalOption resultHandler:^(UIImage *result, NSDictionary *info) {
+            self.originalImage = result;
+        }];
+        
+        PHImageRequestOptions *editedOption = [[PHImageRequestOptions alloc] init];
+        editedOption.resizeMode = PHImageRequestOptionsResizeModeFast;
+        CGSize size = CGSizeMake((kScreenW - 25)/4, (kScreenW - 25)/4);
+        [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:size contentMode:PHImageContentModeAspectFill options:editedOption resultHandler:^(UIImage *result, NSDictionary *info) {
+            self.editedImage = result;
+            
+            if ([info objectForKey:PHImageResultIsInCloudKey] && !result ) {
+                PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+                options.networkAccessAllowed = YES;
+                options.resizeMode = PHImageRequestOptionsResizeModeFast;
+                [[PHImageManager defaultManager] requestImageDataForAsset:asset options:options resultHandler:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
+                    UIImage *resultImage = [UIImage imageWithData:imageData];
+                    self.editedImage = [self scaleImage:resultImage toSize:size];;
+                }];
+            }
+        }];
+        
+    }
+    return self;
+}
+
++ (instancetype)mediaWithAsset:(PHAsset *)asset {
+    return [[self alloc]initWithAsset:asset];
+}
+
+/// 缩放图片至新尺寸
+- (UIImage *)scaleImage:(UIImage *)image toSize:(CGSize)size {
+    if (image.size.width > size.width) {
+        UIGraphicsBeginImageContext(size);
+        [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+        UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        return newImage;
+        
+        /* 好像不怎么管用：https://mp.weixin.qq.com/s/CiqMlEIp1Ir2EJSDGgMooQ
+        CGFloat maxPixelSize = MAX(size.width, size.height);
+        CGImageSourceRef sourceRef = CGImageSourceCreateWithData((__bridge CFDataRef)UIImageJPEGRepresentation(image, 0.9), nil);
+        NSDictionary *options = @{(__bridge id)kCGImageSourceCreateThumbnailFromImageAlways:(__bridge id)kCFBooleanTrue,
+                                  (__bridge id)kCGImageSourceThumbnailMaxPixelSize:[NSNumber numberWithFloat:maxPixelSize]
+                                  };
+        CGImageRef imageRef = CGImageSourceCreateImageAtIndex(sourceRef, 0, (__bridge CFDictionaryRef)options);
+        UIImage *newImage = [UIImage imageWithCGImage:imageRef scale:2 orientation:image.imageOrientation];
+        CGImageRelease(imageRef);
+        CFRelease(sourceRef);
+        return newImage;
+         */
+    } else {
+        return image;
+    }
 }
 
 @end

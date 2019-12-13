@@ -8,6 +8,12 @@
 
 #import "SPBaseViewController.h"
 
+typedef void(^SPMediaPickResultCallBack)(NSArray<SPMedia*>*medias);
+
 @interface SPMediaPickerController : SPBaseViewController
+
+@property (nonatomic,strong) NSMutableArray *selectedIdentifiers;
+
+@property (nonatomic,copy) SPMediaPickResultCallBack result;
 
 @end

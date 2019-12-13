@@ -12,6 +12,7 @@
 #define SystemMediaManager  [SPSystemMediaManager defaultSPSystemMediaManager]
 
 typedef void(^AuthorizationSuccessBlock)(void);
+typedef void(^SelectCountChangedBlock)(NSInteger count);
 
 @interface SPSystemMediaManager : NSObject
 
@@ -26,6 +27,16 @@ typedef void(^AuthorizationSuccessBlock)(void);
  已选数量
  */
 @property (nonatomic,assign) NSInteger selectedCount;
+
+/*
+ 已选相片数组
+*/
+@property (nonatomic, strong) NSMutableArray *mediaList;
+
+/*
+ 已选数量改变时触发的block
+ */
+@property (nonatomic,copy) SelectCountChangedBlock selectCountChangeBlock;
 
 /*
  获取系统相簿

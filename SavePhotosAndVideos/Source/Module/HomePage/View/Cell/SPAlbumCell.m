@@ -42,6 +42,8 @@
     self.coverImgView = [UIImageView JA_imageViewWithImage:@"" superView:imgBgView constraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(imgBgView);
     }];
+    self.coverImgView.contentMode = UIViewContentModeScaleAspectFill;
+    self.coverImgView.layer.masksToBounds = YES;
     self.coverImgView.backgroundColor = [UIColor clearColor];
     
     self.placeholderLab = [UILabel JA_labelWithText:@"暂无图片和视频" textColor:UIColorFromHexStr(@"#999999") font:kSystemFont(14) textAlignment:NSTextAlignmentCenter superView:imgBgView constraints:^(MASConstraintMaker *make) {
@@ -102,12 +104,8 @@
     }
     else {//有媒体资料
         UIImage *coverImg = nil;
-        for (SPMedia *media in _album.media) {
-            if (media.isPhoto) {
-                coverImg = media.editedImage;//封面取相册里的第一个照片
-                break;
-            }
-        }
+        SPMedia *media = _album.media.firstObject;
+        coverImg = media.editedImage;//封面取相册里的第一个照片
         if (!coverImg) return;
         
         if (_album.locked) {//加密

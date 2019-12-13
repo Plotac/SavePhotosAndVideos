@@ -19,10 +19,6 @@
     return manager;
 }
 
-- (NSInteger)maxCount {
-    return 9;
-}
-
 - (NSMutableArray*)fetchAssetCollections {
     NSMutableArray *assetCollections = @[].mutableCopy;
     
@@ -79,6 +75,17 @@
             }
         });
     }];
+}
+
+- (NSInteger)maxCount {
+    return 9;
+}
+
+- (void)setSelectedCount:(NSInteger)selectedCount {
+    _selectedCount = selectedCount;
+    if (self.selectCountChangeBlock) {
+        self.selectCountChangeBlock(_selectedCount);
+    }
 }
 
 @end

@@ -21,6 +21,8 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
 
 @property (nonatomic,strong) NSMutableArray *medias;
 
+@property (nonatomic,strong) NSMutableArray *selectedIdentifiers;
+
 @end
 
 @implementation SPAlbumHomePageController
@@ -28,6 +30,7 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
 - (void)sp_initExtendedData {
     [super sp_initExtendedData];
     self.medias = [NSMutableArray array];
+    self.selectedIdentifiers = [NSMutableArray array];
 }
 
 - (void)sp_viewDidLoad {
@@ -41,7 +44,7 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
+    
     [self.medias removeAllObjects];
     [self.medias addObjectsFromArray:self.album.media];
     self.noDataLab.hidden = self.medias.count == 0 ? NO : YES;
@@ -58,6 +61,8 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
     UICollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:kAlbumHomePageCell forIndexPath:indexPath];
     
     UIImageView *imgView = [[UIImageView alloc]initWithFrame:cell.contentView.bounds];
+    imgView.contentMode = UIViewContentModeScaleAspectFill;
+    imgView.layer.masksToBounds = YES;
     SPMedia *media = [self.medias objectAtIndex:indexPath.item];
     imgView.image = media.editedImage;
     [cell.contentView addSubview:imgView];
@@ -71,10 +76,10 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
         int photoCount = 0;
         int videoCount = 0;
         for (SPMedia *media in self.medias) {
-            if (media.isPhoto) {
+            if (media.mediaType == PHAssetMediaTypeImage) {
                 photoCount ++;
             }
-            else {
+            else if (media.mediaType == PHAssetMediaTypeVideo) {
                 videoCount ++;
             }
         }
@@ -102,7 +107,7 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(2, 2, 20, 2);
+    return UIEdgeInsetsMake(5, 5, 20, 5);
 }
 
 #pragma mark - SPBaseViewControllerNavUIDelegate
@@ -125,8 +130,27 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
     UIAlertAction *selectPhotoAction = [UIAlertAction actionWithTitle:@"从相册选取" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [SystemMediaManager requestAuthorizationSuccess:^() {
             SPMediaPickerController *pickerCtrl = [[SPMediaPickerController alloc]init];
+            [self.selectedIdentifiers removeAllObjects];
+            for (SPMedia *media in self.medias) {
+                [self.selectedIdentifiers addObject:media.identifier];
+            }
+            pickerCtrl.selectedIdentifiers = self.selectedIdentifiers.mutableCopy;
             SPNavigationController *nav = [[SPNavigationController alloc]initWithRootViewController:pickerCtrl];
             nav.modalPresentationStyle = UIModalPresentationFullScreen;
+            BLOCK_WEAK_SELF
+            [pickerCtrl setResult:^(NSArray<SPMedia *> *medias) {
+                [weakSelf.medias removeAllObjects];
+                [weakSelf.medias addObjectsFromArray:medias];
+                
+                [weakSelf.selectedIdentifiers removeAllObjects];
+                for (SPMedia *media in medias) {
+                    [weakSelf.selectedIdentifiers addObject:media.identifier];
+                }
+                weakSelf.noDataLab.hidden = weakSelf.medias.count == 0 ? NO : YES;
+                weakSelf.album.media = weakSelf.medias.mutableCopy;
+                [SPFileManager modifyAlbumWithAlbum:weakSelf.album];
+                [weakSelf.collectionView reloadData];
+            }];
             [self presentViewController:nav animated:YES completion:nil];
         }];
     }];
@@ -148,9 +172,9 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
     self.noDataLab = [self setNoDataViewWithAlertText:@"暂无照片" lineFeedText:@"点击右上角添加新照片"];
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
-    layout.minimumInteritemSpacing = 0;
-    layout.minimumLineSpacing = 2;
-    layout.itemSize = CGSizeMake((kScreenW - 2*2 - 2*3)/4, (kScreenW - 2*2 - 2*3)/4);
+    layout.minimumInteritemSpacing = 5;
+    layout.minimumLineSpacing = 5;
+    layout.itemSize = CGSizeMake((kScreenW - 5*2 - 5*3)/4, (kScreenW - 5*2 - 5*3)/4);
     
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     self.collectionView.backgroundColor = [UIColor clearColor];

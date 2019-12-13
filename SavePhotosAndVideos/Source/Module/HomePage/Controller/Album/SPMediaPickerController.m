@@ -5,6 +5,8 @@
 //  Created by Ja on 2019/12/9.
 //  Copyright © 2019 Ja. All rights reserved.
 //
+//
+// 关于相片选择器更好的封装：https://github.com/banchichen/TZImagePickerController
 
 #import "SPMediaPickerController.h"
 #import "SPMediaPickerCell.h"
@@ -12,8 +14,6 @@
 static NSString *const kMediaPickerCell = @"kMediaPickerCell";
 
 @interface SPMediaPickerController ()<UINavigationControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
-
-@property (nonatomic,strong) UIButton *confirmBtn;
 
 @property (nonatomic,strong) UICollectionView *collectionView;
 
@@ -32,13 +32,13 @@ static NSString *const kMediaPickerCell = @"kMediaPickerCell";
 
 - (void)sp_initExtendedData {
     [super sp_initExtendedData];
+    self.assetAlbums = [[NSMutableArray alloc]initWithArray:[SystemMediaManager fetchAssetCollections]];
+    self.currentAlbum = self.assetAlbums.firstObject;
 }
 
 - (void)sp_viewDidLoad {
     [super sp_viewDidLoad];
-    
-    self.assetAlbums = [[NSMutableArray alloc]initWithArray:[SystemMediaManager fetchAssetCollections]];
-    self.currentAlbum = self.assetAlbums.firstObject;
+
     [self initViews];
     [self fetchAssetCollectionList];
 }
@@ -62,6 +62,12 @@ static NSString *const kMediaPickerCell = @"kMediaPickerCell";
     SPMediaPickerCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:kMediaPickerCell forIndexPath:indexPath];
     cell.asset = [self.currentAlbum.assets objectAtIndex:indexPath.item];
     cell.isSelect = [self.currentAlbum.selectIndexs containsObject:@(indexPath.item)];
+    for (NSString *identifier in self.selectedIdentifiers) {
+        if ([cell.asset.localIdentifier isEqualToString:identifier]) {
+            cell.isSelect = YES;
+            break;
+        }
+    }
     BLOCK_WEAK_SELF
     __weak typeof(cell) weakCell = cell;
     [cell setSelectBlock:^(PHAsset *asset) {
@@ -95,6 +101,20 @@ static NSString *const kMediaPickerCell = @"kMediaPickerCell";
 }
 
 #pragma mark - Actions
+- (void)confirmAction {
+    NSMutableArray *medias = @[].mutableCopy;
+    for (NSInteger i=0; i<self.currentAlbum.selectIndexs.count; i++) {
+        NSInteger selectedIndex = [[self.currentAlbum.selectIndexs objectAtIndex:i] integerValue];
+        PHAsset *asset = [self.currentAlbum.assets objectAtIndex:selectedIndex];
+        SPMedia *media = [SPMedia mediaWithAsset:asset];
+        [medias addObject:media];
+    }
+    if (self.result) {
+        self.result(medias);
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)backAction {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -103,6 +123,21 @@ static NSString *const kMediaPickerCell = @"kMediaPickerCell";
 - (void)fetchAssetCollectionList {
 
     
+}
+
+- (void)setSelectedIdentifiers:(NSMutableArray *)selectedIdentifiers {
+    _selectedIdentifiers = selectedIdentifiers;
+    [self.currentAlbum.selectIndexs removeAllObjects];
+    for (NSInteger i=0; i<self.currentAlbum.assets.count; i++) {
+        PHAsset *asset = [self.currentAlbum.assets objectAtIndex:i];
+        for (NSString *identifier in _selectedIdentifiers) {
+            if ([asset.localIdentifier isEqualToString:identifier]) {
+                [self.currentAlbum.selectIndexs addObject:@(i)];
+                break;
+            }
+        }
+    }
+    SystemMediaManager.selectedCount = self.currentAlbum.selectIndexs.count;
 }
 
 - (void)initViews {
@@ -122,16 +157,33 @@ static NSString *const kMediaPickerCell = @"kMediaPickerCell";
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
-    
-    self.confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.confirmBtn setTitle:@"确定" forState:UIControlStateNormal];
-    [self.confirmBtn setTitleColor:kNavBarTitleColor forState:UIControlStateNormal];
-    self.confirmBtn.titleLabel.font = kSystemFont(16);
-    self.confirmBtn.frame = CGRectMake(0, 0, 30, 28);
-    self.confirmBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -30, 0, 0);
-    self.confirmBtn.contentMode = UIViewContentModeCenter;
-    [self.confirmBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:self.confirmBtn];
+
+    __block UIButton *confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    confirmBtn.titleLabel.font = kSystemFont(16);
+    confirmBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    confirmBtn.frame = CGRectMake(0, 0, 100, 28);
+    confirmBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -30, 0, 0);
+    confirmBtn.contentMode = UIViewContentModeCenter;
+    confirmBtn.enabled = NO;
+    [confirmBtn addTarget:self action:@selector(confirmAction) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:confirmBtn];
+    if (self.selectedIdentifiers.count == 0) {
+        [confirmBtn setTitle:@"确定" forState:UIControlStateNormal];
+        [confirmBtn setTitleColor:UIColorFromHexStr(@"#CCCCCC") forState:UIControlStateNormal];
+    } else {
+        [confirmBtn setTitle:[NSString stringWithFormat:@"确定%ld/%ld", self.selectedIdentifiers.count, SystemMediaManager.maxCount] forState:UIControlStateNormal];
+        [confirmBtn setTitleColor:kNavBarTitleColor forState:UIControlStateNormal];
+    }
+    [SystemMediaManager setSelectCountChangeBlock:^(NSInteger count) {
+        confirmBtn.enabled = count != 0;
+        if (count == 0) {
+            [confirmBtn setTitle:@"确定" forState:UIControlStateNormal];
+            [confirmBtn setTitleColor:UIColorFromHexStr(@"#CCCCCC") forState:UIControlStateNormal];
+        } else {
+            [confirmBtn setTitle:[NSString stringWithFormat:@"确定%ld/%ld", SystemMediaManager.selectedCount, SystemMediaManager.maxCount] forState:UIControlStateNormal];
+            [confirmBtn setTitleColor:kNavBarTitleColor forState:UIControlStateNormal];
+        }
+    }];
 }
 
 @end

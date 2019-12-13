@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Photos/Photos.h>
+
 @class SPAlbum;
 
 #define SPFileManager  [SPMediaFileManager defaultSPMediaFileManager]
@@ -99,17 +101,16 @@
   媒体模型
  */
 @interface SPMedia : NSObject<NSSecureCoding>
-//
+
 @property (nonatomic,strong) UIImage *editedImage;
 
 @property (nonatomic,strong) UIImage *originalImage;
 
-@property (nonatomic,strong) NSURL *videoURL;
+@property (nonatomic,copy) NSString *identifier;
 
-/*
- 是否是照片
- YES:照片 NO:视频
- */
-@property (nonatomic,assign) BOOL isPhoto;
+@property (nonatomic,assign) PHAssetMediaType mediaType;
+
+- (instancetype)initWithAsset:(PHAsset*)asset;
++ (instancetype)mediaWithAsset:(PHAsset*)asset;
 
 @end
