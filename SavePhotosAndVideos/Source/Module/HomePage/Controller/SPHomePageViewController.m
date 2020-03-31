@@ -57,6 +57,13 @@ static NSString *const kHPCollCell = @"kHPCollCell";
     [self.collectionView reloadData];
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    if (self.isShaking) {
+        self.isShaking = NO;
+    }
+}
+
 #pragma mark - UICollectionViewDataSource & UICollectionViewDelegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.albums.count;
@@ -79,7 +86,6 @@ static NSString *const kHPCollCell = @"kHPCollCell";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (self.isShaking) {
         self.isShaking = NO;
-        [self.collectionView addGestureRecognizer:self.longPress];
         return;
     }
     
@@ -156,14 +162,10 @@ static NSString *const kHPCollCell = @"kHPCollCell";
 
 - (void)longPress:(UILongPressGestureRecognizer*)longPress {
     self.isShaking = YES;
-    
-    [self.collectionView removeGestureRecognizer:self.longPress];
 }
 
 - (void)tap:(UITapGestureRecognizer*)tap {
     self.isShaking = NO;
-    
-    [self.collectionView addGestureRecognizer:self.longPress];
 }
 
 #pragma mark - UIGestureRecognizerDelegate
@@ -235,6 +237,11 @@ static NSString *const kHPCollCell = @"kHPCollCell";
 #pragma mark - Setter
 - (void)setIsShaking:(BOOL)isShaking {
     _isShaking = isShaking;
+    if (_isShaking) {
+        [_collectionView removeGestureRecognizer:_longPress];
+    }else {
+        [_collectionView addGestureRecognizer:_longPress];
+    }
     [_collectionView reloadData];
 }
 
