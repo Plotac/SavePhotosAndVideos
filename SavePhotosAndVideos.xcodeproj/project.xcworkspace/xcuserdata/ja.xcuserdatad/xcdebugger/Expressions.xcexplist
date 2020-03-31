@@ -17,13 +17,10 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[SPAlbum initWithAlbumName:]:SPVideoFileManager.m">
+         contextName = "-[MainViewController viewWillAppear:]:MainViewController.m">
          <PersistentStrings>
             <PersistentString
-               value = "self.currentTimeStampStr">
-            </PersistentString>
-            <PersistentString
-               value = "self.currentTimeStr">
+               value = "[SPMediaFileManager defaultSPMediaFileManager].albums">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -50,16 +47,10 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[SPAlbumHomePageController imagePickerController:didFinishPickingMediaWithInfo:]:SPAlbumHomePageController.m">
+         contextName = "-[SPSwitchView setSelectedIndex:]:SPSwitchView.m">
          <PersistentStrings>
             <PersistentString
-               value = "self.mediaArray">
-            </PersistentString>
-            <PersistentString
-               value = "self.album">
-            </PersistentString>
-            <PersistentString
-               value = "[SPMediaFileManager defaultSPMediaFileManager].albums">
+               value = "self.btns">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -72,16 +63,27 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "-[SPHomePageViewController collectionView:cellForItemAtIndexPath:]:SPHomePageViewController.m">
+      </ContextState>
+      <ContextState
          contextName = "-[SPMediaPickerController collectionView:cellForItemAtIndexPath:]:SPMediaPickerController.m">
          <PersistentStrings>
             <PersistentString
-               value = "self.currentAlbum.selectIndexs">
+               value = "cell.asset.localIdentifier">
             </PersistentString>
             <PersistentString
                value = "self.selectedIdentifiers">
             </PersistentString>
             <PersistentString
-               value = "cell.asset.localIdentifier">
+               value = "self.currentAlbum.selectIndexs">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "__45-[SPHomePageViewController addNewPhotoAlbum:]_block_invoke:SPHomePageViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.albums">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -124,6 +126,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "-[SPAlbumCell setAlbum:]:SPAlbumCell.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.placeholderLab.text">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[SPMediaFileManager synchronizeLocalAlbums]:SPMediaFileManager.m">
          <PersistentStrings>
             <PersistentString
@@ -141,13 +151,13 @@
                value = "[SPAppContext sharedInstance].loginPassword">
             </PersistentString>
             <PersistentString
-               value = "self.operationType">
+               value = "self.passwordStr">
             </PersistentString>
             <PersistentString
                value = "self.paraString">
             </PersistentString>
             <PersistentString
-               value = "self.passwordStr">
+               value = "self.operationType">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -174,13 +184,13 @@
          contextName = "-[SPSettingTabCell initIndependentViews]:SPSettingTabCell.m">
          <PersistentStrings>
             <PersistentString
+               value = "[SPAppContext sharedInstance].needStartUpVerify">
+            </PersistentString>
+            <PersistentString
                value = "[SPAppContext sharedInstance].needFingerprintRecognition">
             </PersistentString>
             <PersistentString
                value = "self.item">
-            </PersistentString>
-            <PersistentString
-               value = "[SPAppContext sharedInstance].needStartUpVerify">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -291,18 +301,27 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[MainViewController viewWillAppear:]:MainViewController.m">
+         contextName = "-[SPAlbum initWithAlbumName:]:SPVideoFileManager.m">
          <PersistentStrings>
             <PersistentString
-               value = "[SPMediaFileManager defaultSPMediaFileManager].albums">
+               value = "self.currentTimeStampStr">
+            </PersistentString>
+            <PersistentString
+               value = "self.currentTimeStr">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[SPSwitchView setSelectedIndex:]:SPSwitchView.m">
+         contextName = "-[SPAlbumHomePageController imagePickerController:didFinishPickingMediaWithInfo:]:SPAlbumHomePageController.m">
          <PersistentStrings>
             <PersistentString
-               value = "self.btns">
+               value = "self.mediaArray">
+            </PersistentString>
+            <PersistentString
+               value = "self.album">
+            </PersistentString>
+            <PersistentString
+               value = "[SPMediaFileManager defaultSPMediaFileManager].albums">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
