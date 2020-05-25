@@ -203,6 +203,7 @@
 - (instancetype)initWithCoder:(NSCoder *)coder {
     self = [super init];
     if (self) {
+
         self.editedImage = [coder decodeObjectForKey:@"editedImage"];
         self.originalImage = [coder decodeObjectForKey:@"originalImage"];
         self.identifier = [coder decodeObjectForKey:@"identifier"];
@@ -234,19 +235,15 @@
         }];
         
         PHImageRequestOptions *editedOption = [[PHImageRequestOptions alloc] init];
-        editedOption.resizeMode = PHImageRequestOptionsResizeModeFast;
-        CGSize size = CGSizeMake((kScreenW - 25)/4, (kScreenW - 25)/4);
-        [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:size contentMode:PHImageContentModeAspectFill options:editedOption resultHandler:^(UIImage *result, NSDictionary *info) {
-            self.editedImage = result;
-            
-            if ([info objectForKey:PHImageResultIsInCloudKey] && !result ) {
-                PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
-                options.networkAccessAllowed = YES;
-                options.resizeMode = PHImageRequestOptionsResizeModeFast;
-                [[PHImageManager defaultManager] requestImageDataForAsset:asset options:options resultHandler:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
-                    UIImage *resultImage = [UIImage imageWithData:imageData];
-                    self.editedImage = [self scaleImage:resultImage toSize:size];;
-                }];
+        editedOption.resizeMode = PHImageRequestOptionsResizeModeExact;
+        editedOption.networkAccessAllowed = YES;
+        CGSize size = CGSizeMake((kScreenW - 25)/4 *[UIScreen mainScreen].scale, (kScreenW - 25)/4 *[UIScreen mainScreen].scale);
+        [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:size contentMode:PHImageContentModeDefault options:editedOption resultHandler:^(UIImage *result, NSDictionary *info) {
+            if (![[info objectForKey:PHImageResultIsDegradedKey] boolValue]) {
+                self.editedImage = result;
+                if (self.completeBlock) {
+                    self.completeBlock();
+                }
             }
         }];
         

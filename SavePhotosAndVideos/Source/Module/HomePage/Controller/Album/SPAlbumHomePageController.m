@@ -129,15 +129,16 @@ static NSString *const kAlbumHPCellFooter = @"kAlbumHPCellFooter";
     }];
     UIAlertAction *selectPhotoAction = [UIAlertAction actionWithTitle:@"从相册选取" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [SystemMediaManager requestAuthorizationSuccess:^() {
+            BLOCK_WEAK_SELF
             SPMediaPickerController *pickerCtrl = [[SPMediaPickerController alloc]init];
-            [self.selectedIdentifiers removeAllObjects];
-            for (SPMedia *media in self.medias) {
-                [self.selectedIdentifiers addObject:media.identifier];
+            if (weakSelf.selectedIdentifiers.count == 0) {
+                for (SPMedia *media in self.medias) {
+                    [weakSelf.selectedIdentifiers addObject:media.identifier];
+                }
             }
             pickerCtrl.selectedIdentifiers = self.selectedIdentifiers.mutableCopy;
             SPNavigationController *nav = [[SPNavigationController alloc]initWithRootViewController:pickerCtrl];
             nav.modalPresentationStyle = UIModalPresentationFullScreen;
-            BLOCK_WEAK_SELF
             [pickerCtrl setResult:^(NSArray<SPMedia *> *medias) {
                 [weakSelf.medias removeAllObjects];
                 [weakSelf.medias addObjectsFromArray:medias];

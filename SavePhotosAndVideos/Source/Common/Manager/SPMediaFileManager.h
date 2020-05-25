@@ -100,6 +100,8 @@
 /*
   媒体模型
  */
+typedef void(^FetchImageSuccessBlock)(void);
+
 @interface SPMedia : NSObject<NSSecureCoding>
 
 @property (nonatomic,strong) UIImage *editedImage;
@@ -109,6 +111,8 @@
 @property (nonatomic,copy) NSString *identifier;
 
 @property (nonatomic,assign) PHAssetMediaType mediaType;
+
+@property (nonatomic,copy) FetchImageSuccessBlock completeBlock;
 
 - (instancetype)initWithAsset:(PHAsset*)asset;
 + (instancetype)mediaWithAsset:(PHAsset*)asset;
