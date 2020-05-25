@@ -42,8 +42,6 @@
     self.coverImgView = [UIImageView JA_imageViewWithImage:@"" superView:imgBgView constraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(imgBgView);
     }];
-    self.coverImgView.contentMode = UIViewContentModeScaleAspectFill;
-    self.coverImgView.layer.masksToBounds = YES;
     self.coverImgView.backgroundColor = [UIColor clearColor];
     
     self.placeholderLab = [UILabel JA_labelWithText:@"暂无图片和视频" textColor:UIColorFromHexStr(@"#999999") font:kSystemFont(14) textAlignment:NSTextAlignmentCenter superView:imgBgView constraints:^(MASConstraintMaker *make) {
@@ -96,9 +94,11 @@
             make.top.equalTo(self.coverImgView.mas_bottom).with.offset(10);
         }];
         if (_album.locked) {//加密
+            self.placeholderLab.text = @"验证密码后查看";
             self.coverImgView.image = kImageName(@"Album_Locked");
         }
         else {//非加密
+            self.placeholderLab.text = @"暂无图片和视频";
             self.coverImgView.image = kImageName(@"Album_Blank");
         }
     }

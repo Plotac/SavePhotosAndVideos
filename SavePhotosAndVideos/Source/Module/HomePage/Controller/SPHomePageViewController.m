@@ -14,13 +14,16 @@
 
 static NSString *const kHPCollCell = @"kHPCollCell";
 
-@interface SPHomePageViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
+@interface SPHomePageViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UIGestureRecognizerDelegate>
 
 @property (nonatomic,strong) UILabel *noDataLab;
-
 @property (nonatomic,strong) UICollectionView *collectionView;
 
+@property (nonatomic,strong) UILongPressGestureRecognizer *longPress;
+
 @property (nonatomic,strong) NSMutableArray *albums;
+
+@property (nonatomic,assign) BOOL isShaking;
 
 @end
 
@@ -30,6 +33,7 @@ static NSString *const kHPCollCell = @"kHPCollCell";
 - (void)sp_initExtendedData {
     [super sp_initExtendedData];
     self.albums = [NSMutableArray array];
+    self.isShaking = NO;
 }
 
 - (void)sp_viewDidLoad {
@@ -53,6 +57,13 @@ static NSString *const kHPCollCell = @"kHPCollCell";
     [self.collectionView reloadData];
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    if (self.isShaking) {
+        self.isShaking = NO;
+    }
+}
+
 #pragma mark - UICollectionViewDataSource & UICollectionViewDelegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.albums.count;
@@ -63,10 +74,21 @@ static NSString *const kHPCollCell = @"kHPCollCell";
     SPAlbum *album = [self.albums objectAtIndex:indexPath.item];
     cell.album = album;
     
+    if (self.isShaking) {
+        [self startShake:cell];
+    }else {
+        [self stopShake:cell];
+    }
+    
     return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.isShaking) {
+        self.isShaking = NO;
+        return;
+    }
+    
     SPAlbumHomePageController * albumHpCtrl = [[SPAlbumHomePageController alloc]init];
     SPAlbum *album = [self.albums objectAtIndex:indexPath.item];
     albumHpCtrl.album = album;
@@ -138,6 +160,22 @@ static NSString *const kHPCollCell = @"kHPCollCell";
     [self.collectionView reloadData];
 }
 
+- (void)longPress:(UILongPressGestureRecognizer*)longPress {
+    self.isShaking = YES;
+}
+
+- (void)tap:(UITapGestureRecognizer*)tap {
+    self.isShaking = NO;
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if ([touch.view isKindOfClass:[UICollectionView class]]) {
+        return YES;
+    }
+    return NO;
+}
+
 #pragma mark - Private
 - (void)initViews {
     self.noDataLab = [self setNoDataViewWithAlertText:@"暂无相册" lineFeedText:@"点击右上角新建相册"];
@@ -156,8 +194,12 @@ static NSString *const kHPCollCell = @"kHPCollCell";
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
+    self.longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+    [self.collectionView addGestureRecognizer:self.longPress];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tap:)];
+    tap.delegate = self;
+    [self.collectionView addGestureRecognizer:tap];
 }
-
 
 - (void)loginHandled {
     
@@ -170,11 +212,37 @@ static NSString *const kHPCollCell = @"kHPCollCell";
     [self presentViewController:nav animated:YES completion:nil];
 }
 
+- (void)startShake:(SPAlbumCell*)cell{
+    CAKeyframeAnimation * keyAnimaion = [CAKeyframeAnimation animation];
+    keyAnimaion.keyPath = @"transform.rotation";
+    keyAnimaion.values = @[@(-3 / 180.0 * M_PI),@(3 /180.0 * M_PI),@(-3/ 180.0 * M_PI)];//度数转弧度
+    keyAnimaion.removedOnCompletion = NO;
+    keyAnimaion.fillMode = kCAFillModeForwards;
+    keyAnimaion.duration = 0.4;
+    keyAnimaion.repeatCount = MAXFLOAT;
+    [cell.layer addAnimation:keyAnimaion forKey:@"cellShake"];
+}
+
+- (void)stopShake:(SPAlbumCell*)cell{
+    [cell.layer removeAnimationForKey:@"cellShake"];
+}
+
 - (NSMutableArray*)albums {
     if (_albums) {
         self.noDataLab.hidden = _albums.count == 0 ? NO : YES;
     }
     return _albums;
+}
+
+#pragma mark - Setter
+- (void)setIsShaking:(BOOL)isShaking {
+    _isShaking = isShaking;
+    if (_isShaking) {
+        [_collectionView removeGestureRecognizer:_longPress];
+    }else {
+        [_collectionView addGestureRecognizer:_longPress];
+    }
+    [_collectionView reloadData];
 }
 
 @end
