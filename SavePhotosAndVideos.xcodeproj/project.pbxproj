@@ -887,8 +887,8 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1.00;
 				DEVELOPMENT_TEAM = 3RG4QMG6EY;
-				GCC_PREFIX_HEADER = /Users/ja/SavePhotosAndVideos/SavePhotosAndVideos/Source/Common/SPAV.pch;
-				INFOPLIST_FILE = /Users/ja/SavePhotosAndVideos/SavePhotosAndVideos/SPAVInfo.plist;
+				GCC_PREFIX_HEADER = /Users/jinan/Desktop/GitProject/SavePhotosAndVideos/SavePhotosAndVideos/Source/Common/SPAV.pch;
+				INFOPLIST_FILE = "$(SRCROOT)/SavePhotosAndVideos/SPAVInfo.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -910,8 +910,8 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1.00;
 				DEVELOPMENT_TEAM = 3RG4QMG6EY;
-				GCC_PREFIX_HEADER = /Users/ja/SavePhotosAndVideos/SavePhotosAndVideos/Source/Common/SPAV.pch;
-				INFOPLIST_FILE = /Users/ja/SavePhotosAndVideos/SavePhotosAndVideos/SPAVInfo.plist;
+				GCC_PREFIX_HEADER = /Users/jinan/Desktop/GitProject/SavePhotosAndVideos/SavePhotosAndVideos/Source/Common/SPAV.pch;
+				INFOPLIST_FILE = "$(SRCROOT)/SavePhotosAndVideos/SPAVInfo.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
